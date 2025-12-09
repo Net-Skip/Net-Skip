@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -42,6 +40,7 @@
 	<array>
 		<string>paypal</string>
 		<string>instagram</string>
+		<string>instagram-stories</string>
 		<string>youtube</string>
 		<string>pocket</string>
 		<string>firefox-focus</string>
@@ -54,38 +53,66 @@
 		<string>mymail-mailto</string>
 		<string>readdle-spark</string>
 		<string>itms-books</string>
-		<string>org-appextension-feature-password-management</string>
 		<string>googlegmail</string>
 		<string>fastmail</string>
 		<string>protonmail</string>
 		<string>whatsapp</string>
+		<string>comgooglemaps-x-callback</string>
+		<string>foursquare</string>
+		<string>here-location</string>
+		<string>yandexmaps</string>
+		<string>yandexnavi</string>
+		<string>comgooglemaps</string>
+		<string>twitter</string>
+		<string>vk</string>
+		<string>waze</string>
+		<string>googlechrome</string>
+		<string>firefox</string>
+		<string>touch-http</string>
+		<string>yandexbrowser-open-url</string>
+		<string>vimeo</string>
+		<string>vine</string>
+		<string>coub</string>
+		<string>uber</string>
+		<string>citymapper</string>
+		<string>lyft</string>
+		<string>opera-http</string>
+		<string>ddgQuickLink</string>
+		<string>moovit</string>
+		<string>alook</string>
+		<string>dgis</string>
+		<string>microsoft-edge-http</string>
+		<string>brave</string>
+		<string>onionhttp</string>
+		<string>ucbrowser</string>
+		<string>dolphin</string>
+		<string>org-appextension-feature-password-management</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>UIDesignRequiresCompatibility</key>
-	<true/>
-	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-	<key>NSCameraUsageDescription</key>
-	<string>Net Skip uses your camera to scan QR codes and take photos and video.</string>
-	<key>NSFaceIDUsageDescription</key>
-	<string>Net Skip requires Face ID to access your saved passwords and payment methods.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Websites you visit may request your location.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Net Skip uses your microphone to record and upload audio.</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>This lets you save photos.</string>
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>QuickActionIntent</string>
 		<string>org.mozilla.ios.firefox.browsing</string>
 	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+		<string>fetch</string>
+		<string>location</string>
+		<string>remote-notification</string>
+		<string>voip</string>
+		<string>nearby-interaction</string>
+		<string>bluetooth-central</string>
+		<string>processing</string>
+	</array>
+	<key>UIDesignRequiresCompatibility</key>
+	<true/>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
 	<key>UTImportedTypeDeclarations</key>
