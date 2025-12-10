@@ -3,6 +3,7 @@ import Foundation
 import OSLog
 import Observation
 import SkipSQL
+import SkipSQLCore
 import SkipWeb
 
 let logger: Logger = Logger(subsystem: "net.skip", category: "NetSkipModel")

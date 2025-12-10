@@ -3,6 +3,7 @@ import XCTest
 import OSLog
 import Foundation
 import SkipSQL
+import SkipSQLCore
 import SkipWeb
 @testable import NetSkipModel
 
