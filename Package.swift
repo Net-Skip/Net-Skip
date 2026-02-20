@@ -18,8 +18,8 @@ let package = Package(
         .package(url: "https://source.skip.tools/skip-web.git", "0.0.0"..<"2.0.0"),
         .package(url: "https://source.skip.tools/skip-sql.git", "0.0.0"..<"2.0.0"),
         .package(url: "https://source.skip.tools/skip-script.git", "0.0.0"..<"2.0.0"),
-//        .package(url: "https://source.skip.tools/skip-xml.git", "0.0.0"..<"2.0.0"),
-//        .package(url: "https://source.skip.tools/skip-zip.git", "0.0.0"..<"2.0.0"),
+        .package(url: "https://source.skip.tools/skip-miniapp.git", "0.0.0"..<"2.0.0"),
+        .package(url: "https://source.skip.tools/skip-zip.git", "0.0.0"..<"2.0.0"),
     ],
     targets: [
         .target(name: "NetSkip", dependencies: [
@@ -27,6 +27,7 @@ let package = Package(
             .product(name: "AppFairUI", package: "appfair-app"),
             .product(name: "SkipUI", package: "skip-ui"),
             .product(name: "SkipWeb", package: "skip-web"),
+            .product(name: "SkipMiniApp", package: "skip-miniapp"),
         ], resources: [.process("Resources")], plugins: [.plugin(name: "skipstone", package: "skip")]),
         .testTarget(name: "NetSkipTests", dependencies: [
             "NetSkip",
