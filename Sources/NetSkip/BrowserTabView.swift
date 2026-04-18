@@ -186,7 +186,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
                         Label {
                             Text("New Tab", bundle: .module, comment: "more button string for creating a new tab")
                         } icon: {
-                            Image(systemName: "plus")
+                            Image("plus", bundle: .module)
                         }
                     }
                     Spacer()
@@ -366,7 +366,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
             Label {
                 Text("History and Favorites", bundle: .module, comment: "more button string for opening the history and favorites")
             } icon: {
-                Image(systemName: "book")
+                Image("book", bundle: .module)
             }
         }
         .accessibilityIdentifier("button.history.favorites")
@@ -377,7 +377,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
         let backLabel = Label {
             Text("Back", bundle: .module, comment: "back button label")
         } icon: {
-            Image(systemName: "chevron.left")
+            Image("chevron.left", bundle: .module)
         }
 
         if isSkip || !enabled {
@@ -406,7 +406,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
         let forwardLabel = Label {
             Text("Forward", bundle: .module, comment: "forward button label")
         } icon: {
-            Image(systemName: "chevron.right")
+            Image("chevron.right", bundle: .module)
         }
 
 
@@ -438,7 +438,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
             Label {
                 Text("Tab List", bundle: .module, comment: "tab list action label")
             } icon: {
-                Image(systemName: "square.on.square")
+                Image("square.on.square", bundle: .module)
             }
         } primaryAction: {
             tabListAction()
@@ -452,7 +452,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
                 Label {
                     Text("New Private Tab", bundle: .module, comment: "more button string for creating a new private tab")
                 } icon: {
-                    Image(systemName: "plus.square.fill.on.square.fill")
+                    Image("plus.square.fill.on.square.fill", bundle: .module)
                 }
             }
             .accessibilityIdentifier("menu.button.newprivatetab")
@@ -461,7 +461,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
                 Label {
                     Text("New Tab", bundle: .module, comment: "more button string for creating a new tab")
                 } icon: {
-                    Image(systemName: "plus.square.on.square")
+                    Image("plus.square.on.square", bundle: .module)
                 }
             }
             .accessibilityIdentifier("menu.button.newtab")
@@ -469,7 +469,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
             Label {
                 Text("New Tab", bundle: .module, comment: "new tab action label")
             } icon: {
-                Image(systemName: "plus.square.on.square")
+                Image("plus.square.on.square", bundle: .module)
             }
         } primaryAction: {
             newTabAction()
@@ -687,7 +687,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
                 Label {
                     Text("New Tab", bundle: .module, comment: "more button string for creating a new tab")
                 } icon: {
-                    Image(systemName: "plus.square.on.square")
+                    Image("plus.square.on.square", bundle: .module)
                 }
             }
             .accessibilityIdentifier("button.new")
@@ -696,7 +696,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
                 Label {
                     Text("Close Tab", bundle: .module, comment: "more button string for closing a tab")
                 } icon: {
-                    Image(systemName: "xmark")
+                    Image("xmark", bundle: .module)
                 }
             }
             .accessibilityIdentifier("button.close")
@@ -707,7 +707,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
                 Label {
                     Text("Reload", bundle: .module, comment: "more button string for reloading the current page")
                 } icon: {
-                    Image(systemName: "arrow.clockwise.circle")
+                    Image("arrow.clockwise.circle", bundle: .module)
                 }
             }
             .accessibilityIdentifier("button.reload")
@@ -715,7 +715,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
                 Label(title: {
                     Text("Home", bundle: .module, comment: "home button label")
                 }, icon: {
-                    Image(systemName: "house")
+                    Image("house", bundle: .module)
                 })
             }
             .accessibilityIdentifier("button.home")
@@ -729,7 +729,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
                 Label(title: {
                     Text("Find on Page", bundle: .module, comment: "more button string for finding on the current page")
                 }, icon: {
-                    Image(systemName: "magnifyingglass")
+                    Image("magnifyingglass", bundle: .module)
                 })
             }
 
@@ -754,7 +754,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
                     Text("Favorite", bundle: .module, comment: "more button string for adding a favorite")
                 } icon: {
                     // TODO: make star.filled when it is already a favorite
-                    Image(systemName: "star")
+                    Image("star", bundle: .module)
                 }
             }
             .accessibilityIdentifier("button.favorite")
@@ -765,7 +765,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
                 Label {
                     Text("Favorites", bundle: .module, comment: "more button string for opening the favorites list")
                 } icon: {
-                    Image(systemName: "list.star")
+                    Image("list.star", bundle: .module)
                 }
             }
             .accessibilityIdentifier("button.favorites")
@@ -774,7 +774,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
                 Label {
                     Text("History", bundle: .module, comment: "more button string for opening the history")
                 } icon: {
-                    Image(systemName: "calendar")
+                    Image("calendar", bundle: .module)
                 }
             }
             .accessibilityIdentifier("button.history")
@@ -783,7 +783,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
                 Label {
                     Text("Settings", bundle: .module, comment: "more button string for opening the settings")
                 } icon: {
-                    Image(systemName: "gearshape")
+                    Image("gearshape", bundle: .module)
                 }
             }
             .accessibilityIdentifier("button.settings")
@@ -791,7 +791,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
             Label {
                 Text("More", bundle: .module, comment: "more button label")
             } icon: {
-                Image(systemName: "ellipsis")
+                Image("ellipsis", bundle: .module)
             }
             .accessibilityIdentifier("button.more")
         }

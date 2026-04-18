@@ -174,7 +174,7 @@ import NetSkipModel
             HStack {
                 if !isURLBarFocused {
                     Button(action: { self.viewModel.navigator.reload() }, label: {
-                        Image(systemName: "textformat.size")
+                        Image("textformat.size", bundle: .module)
                     })
                     .buttonStyle(.plain)
                     .frame(width: showBottomBar ? nil : 0.0) // hide button when the bottom bar is hidden
@@ -237,7 +237,7 @@ import NetSkipModel
 
                 if isURLBarFocused {
                     Button(action: { self.viewModel.urlTextField = "" }, label: {
-                        Image(systemName: "xmark.circle.fill")
+                        Image("xmark.circle.fill", bundle: .module)
                             #if !SKIP
                             .symbolRenderingMode(.hierarchical)
                             #endif
@@ -245,7 +245,7 @@ import NetSkipModel
                     .buttonStyle(.plain)
                 } else if self.state.isLoading {
                     Button(action: { self.viewModel.navigator.stopLoading() }, label: {
-                        Image(systemName: "xmark")
+                        Image("xmark", bundle: .module)
                             #if !SKIP
                             .symbolRenderingMode(.hierarchical)
                             #endif
@@ -253,7 +253,7 @@ import NetSkipModel
                     .buttonStyle(.plain)
                 } else {
                     Button(action: { self.viewModel.navigator.reload() }, label: {
-                        Image(systemName: "arrow.clockwise")
+                        Image("arrow.clockwise", bundle: .module)
                             #if !SKIP
                             .symbolRenderingMode(.hierarchical)
                             #endif
@@ -280,7 +280,7 @@ import NetSkipModel
                         showSettings = true
                     }
                 }, label: {
-                    Image(systemName: "gearshape.circle.fill")
+                    Image("gearshape.circle.fill", bundle: .module)
                         .resizable()
                         .foregroundStyle(.gray)
                         #if !SKIP
@@ -299,7 +299,7 @@ import NetSkipModel
                         self.isURLBarFocused = false
                     }
                 }, label: {
-                    Image(systemName: "xmark.circle.fill")
+                    Image("xmark.circle.fill", bundle: .module)
                         .resizable()
                         .foregroundStyle(.gray)
                         #if !SKIP
