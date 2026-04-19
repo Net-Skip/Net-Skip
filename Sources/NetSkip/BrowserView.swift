@@ -23,11 +23,7 @@ import NetSkipModel
     @State var contentRulesEnabled: Bool = false
     @State var currentSuggestions: SearchSuggestions?
 
-    #if !SKIP
     @FocusState var isURLBarFocused: Bool
-    #else
-    @State var isURLBarFocused: Bool = false
-    #endif
 
     var state: WebViewState {
         self.viewModel.state
@@ -210,6 +206,7 @@ import NetSkipModel
                     }
                 }
                 #endif
+                #endif
                 .focused($isURLBarFocused)
                 .onChange(of: isURLBarFocused) { oldValue, newValue in
                     if newValue {
@@ -217,7 +214,6 @@ import NetSkipModel
                         showBottomBar = true
                     }
                 }
-                #endif
                 .onSubmit(of: .text) {
                     self.submitURL(viewModel.urlTextField)
                 }

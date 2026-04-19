@@ -4,22 +4,22 @@ import SkipWeb
 import NetSkipModel
 
 extension SearchEngine {
-    static var defaultSearchEngines: [SearchEngine] = [
-        .duckduckgo,
-        .google,
-        .swisscows,
-        .bing,
-        .yahoo,
-        .ecosia,
-        .qwant,
-        .startpage,
-        .searx,
-        .yandex,
-        .baidu,
-        .gigablast,
-        .dogpile,
-        .kagi,
-    ]
+    static var defaultSearchEngines: [SearchEngine] { return [
+        SearchEngine.duckduckgo,
+        SearchEngine.google,
+        SearchEngine.swisscows,
+        SearchEngine.bing,
+        SearchEngine.yahoo,
+        SearchEngine.ecosia,
+        SearchEngine.qwant,
+        SearchEngine.startpage,
+        SearchEngine.searx,
+        SearchEngine.yandex,
+        SearchEngine.baidu,
+        SearchEngine.gigablast,
+        SearchEngine.dogpile,
+        SearchEngine.kagi,
+    ] }
 
     /// The currently-selected search engine, or the first search engine in the list if it is unselected
     static func lookup(id: SearchEngine.ID) -> SearchEngine? {

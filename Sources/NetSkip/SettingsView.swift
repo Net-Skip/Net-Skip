@@ -2,6 +2,7 @@
 import SwiftUI
 import SkipWeb
 import NetSkipModel
+import AppFairUI
 
 struct SettingsView : View {
     var configuration: WebEngineConfiguration
@@ -18,15 +19,14 @@ struct SettingsView : View {
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
-        NavigationStack {
-            Form {
+        AppFairSettings(bundle: .module) {
                 Section {
                     Picker(selection: $appearance) {
                         Text("System", bundle: .module, comment: "settings appearance system label").tag("")
                         Text("Light", bundle: .module, comment: "settings appearance system label").tag("light")
                         Text("Dark", bundle: .module, comment: "settings appearance system label").tag("dark")
                     } label: {
-                        Text("Appearance", bundle: .module, comment: "settings appearance picker label").tag("")
+                        Text("Appearance", bundle: .module, comment: "settings appearance picker label")
                     }
 
                     Toggle(isOn: $buttonHaptics, label: {
@@ -106,6 +106,5 @@ struct SettingsView : View {
                     .buttonStyle(.plain)
                 }
             }
-        }
     }
 }
