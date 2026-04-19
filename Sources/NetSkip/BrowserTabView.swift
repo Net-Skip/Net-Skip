@@ -390,14 +390,9 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
         }
     }
 
-    var currentViewModel: BrowserViewModel! {
-        #if SKIP
-        // workaround for crash on Android because currentViewModel returns nil
+    var currentViewModel: BrowserViewModel? {
         tabs.first(where: { $0.id == self.selectedTab })
             ?? tabs.last
-        #else
-        tabs.first(where: { $0.id == self.selectedTab })
-        #endif
     }
 
     var currentState: WebViewState? {

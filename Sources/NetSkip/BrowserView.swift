@@ -40,10 +40,11 @@ import NetSkipModel
                 WebView(configuration: configuration, navigator: viewModel.navigator, state: $viewModel.state, onNavigationCommitted: {
                     logger.log("onNavigationCommitted")
                 })
-                suggestionsView()
-                    .frame(maxHeight: .infinity)
-                    .opacity(state.pageURL == nil || isURLBarFocused ? 1.0 : 0.0)
-                    .animation(.easeIn, value: isURLBarFocused)
+                let showSuggestions = state.pageURL == nil || isURLBarFocused
+                if showSuggestions {
+                    suggestionsView()
+                        .frame(maxHeight: .infinity)
+                }
             }
             urlBarView()
         }
