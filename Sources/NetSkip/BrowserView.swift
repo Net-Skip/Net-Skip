@@ -135,8 +135,12 @@ import NetSkipModel
     }
 
     func urlBarView() -> some View {
-        urlBarComponentView()
-            //.background(urlBarBackground)
+        VStack(spacing: 0.0) {
+            urlBarComponentView()
+            if showBottomBar {
+                Divider()
+            }
+        }
             #if !SKIP
             .onChange(of: state.pageURL, updatePageURL)
             .onChange(of: state.pageTitle, updatePageTitle)
@@ -152,55 +156,55 @@ import NetSkipModel
             #endif
     }
 
+    /// Extracts just the domain from a URL string for display
+    func domainFromURL(_ urlString: String) -> String {
+        guard let url = URL(string: urlString) else { return urlString }
+        var host = url.host ?? urlString
+        if host.hasPrefix("www.") {
+            host = host.replacingOccurrences(of: "www.", with: "")
+        }
+        return host
+    }
+
     @ViewBuilder func urlBarComponentView() -> some View {
         ZStack(alignment: .center) {
+            // Background capsule with progress bar
             ZStack(alignment: .bottom) {
-                RoundedRectangle(cornerRadius: 5.0, style: .continuous)
+                Capsule()
                     .fill(showBottomBar ? urlBarBackground : .clear)
 
                 ProgressView(value: state.estimatedProgress ?? 0.0)
                     .progressViewStyle(.linear)
-                    .frame(height: 0.2) // thin progress bar
+                    .frame(height: 2.0)
+                    .tint(.accentColor)
                     .opacity(state.isLoading ? 1.0 : 0.0)
             }
-            .frame(height: showBottomBar ? 40.0 : 25.0)
-            //.shadow(radius: 3.0) // grays out the URL bar while scrolling for some reason
-            .padding(.vertical, 4.0)
+            .frame(height: showBottomBar ? 44.0 : 25.0)
+            .padding(.top, 4.0)
+            .padding(.bottom, 0.0)
 
-            HStack {
-                if !isURLBarFocused {
-                    Button(action: { self.viewModel.navigator.reload() }, label: {
-                        Image("textformat.size", bundle: .module)
-                    })
-                    .buttonStyle(.plain)
-                    .frame(width: showBottomBar ? nil : 0.0) // hide button when the bottom bar is hidden
-                    .opacity(showBottomBar ? 1.0 : 0.0) // hide button when the bottom bar is hidden
-                }
-
+            // The TextField is ALWAYS in the view hierarchy so taps
+            // always land on it and @FocusState works on iOS.
+            // When not focused, we render its text as .clear so the
+            // domain overlay is visible instead. We do NOT use
+            // .opacity(0) because iOS skips hit testing for invisible views.
+            HStack(spacing: 6) {
                 TextField(text: $viewModel.urlTextField) {
-                    Text("Search or enter website name", bundle: .module, comment: "placeholder string for URL bar")
+                    // Use an empty placeholder — the domain overlay handles this visually
+                    Text(isURLBarFocused ? "Search or enter website name" : "")
                 }
                 .textFieldStyle(.plain)
-                //.font(Font.body)
+                .font(.system(size: isURLBarFocused ? 16.0 : 15.0))
+                // Make text invisible when not focused so the overlay shows through
+                .foregroundStyle(isURLBarFocused ? Color.primary : Color.clear)
                 #if !SKIP
                 #if os(iOS)
-                .animation(.none, value: showBottomBar)
-                .textScale(.secondary, isEnabled: !showBottomBar)
-                .multilineTextAlignment(isURLBarFocused ? .leading : .center)
-                .truncationMode(.middle)
                 .keyboardType(.webSearch)
                 .textContentType(.URL)
                 .autocorrectionDisabled(true)
                 .textInputAutocapitalization(.never)
-                //.toolbar {
-                //    ToolbarItemGroup(placement: .keyboard) {
-                //        Button("XXX") {
-                //            logger.log("Clicked Custom Search…")
-                //        }
-                //    }
-                //}
+                .multilineTextAlignment(isURLBarFocused ? .leading : .center)
                 .onReceive(NotificationCenter.default.publisher(for: UITextField.textDidBeginEditingNotification)) { obj in
-                    logger.log("received textDidBeginEditingNotification: \(obj.object as? NSObject)")
                     if let textField = obj.object as? UITextField {
                         textField.selectAll(nil)
                     }
@@ -208,19 +212,17 @@ import NetSkipModel
                 #endif
                 #endif
                 .focused($isURLBarFocused)
-                .onChange(of: isURLBarFocused) { oldValue, newValue in
+                .onChange(of: isURLBarFocused) { _, newValue in
                     if newValue {
-                        // whenever we focus the URL bar, we also restore the bottom bar
                         showBottomBar = true
                     }
                 }
-                .onSubmit(of: .text) {
+                .onSubmit {
                     self.submitURL(viewModel.urlTextField)
+                    self.isURLBarFocused = false
                 }
                 .task(id: viewModel.urlTextField) {
                     if searchSuggestions && isURLBarFocused && !viewModel.urlTextField.isEmpty {
-                        // query the search suggestions server
-                        logger.log("querying search suggestions for: \(viewModel.urlTextField)")
                         Task {
                             do {
                                 try await fetchSearchSuggestions(string: viewModel.urlTextField)
@@ -234,111 +236,107 @@ import NetSkipModel
                 if isURLBarFocused {
                     Button(action: { self.viewModel.urlTextField = "" }, label: {
                         Image("xmark.circle.fill", bundle: .module)
+                            .foregroundStyle(.secondary)
                             #if !SKIP
                             .symbolRenderingMode(.hierarchical)
                             #endif
                     })
                     .buttonStyle(.plain)
-                } else if self.state.isLoading {
-                    Button(action: { self.viewModel.navigator.stopLoading() }, label: {
-                        Image("xmark", bundle: .module)
-                            #if !SKIP
-                            .symbolRenderingMode(.hierarchical)
-                            #endif
-                    })
-                    .buttonStyle(.plain)
-                } else {
-                    Button(action: { self.viewModel.navigator.reload() }, label: {
-                        Image("arrow.clockwise", bundle: .module)
-                            #if !SKIP
-                            .symbolRenderingMode(.hierarchical)
-                            #endif
-                    })
-                    .buttonStyle(.plain)
-                    .frame(width: showBottomBar ? nil : 0.0) // hide button when the bottom bar is hidden
-                    .opacity(showBottomBar ? 1.0 : 0.0) // hide button when the bottom bar is hidden
                 }
             }
-            .padding(showBottomBar ? 4.0 : 0.0)
+            .padding(.horizontal, 12.0)
+
+            // Domain overlay: visible only when NOT focused.
+            // allowsHitTesting(false) lets taps fall through to the TextField.
+            if !isURLBarFocused {
+                HStack(spacing: 4) {
+                    if state.pageURL != nil && !state.isLoading {
+                        Image("lock", bundle: .module)
+                            .font(.system(size: 12))
+                            .foregroundStyle(.secondary)
+                    }
+
+                    if state.isLoading {
+                        Text("Loading...")
+                            .font(.system(size: 15))
+                            .foregroundStyle(.secondary)
+                    } else if let pageURL = state.pageURL {
+                        Text(domainFromURL(pageURL))
+                            .font(.system(size: 15))
+                            .foregroundStyle(.primary)
+                            .lineLimit(1)
+                    } else {
+                        Text("Search or enter website name", bundle: .module, comment: "placeholder string for URL bar")
+                            .font(.system(size: 15))
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .allowsHitTesting(false)
+                .frame(width: showBottomBar ? nil : 0.0)
+                .opacity(showBottomBar ? 1.0 : 0.0)
+            }
         }
-        .padding(.horizontal, showBottomBar ? 6.0 : 0.0)
-        .background(showBottomBar ? Color(white: 0.75, opacity: 0.1) : Color.clear)
-        #if !os(Android) // messes up the URL bar and causes it to be unresponsive
-        .ignoresSafeArea([.container])
-        #endif
+        .padding(.horizontal, showBottomBar ? 8.0 : 0.0)
     }
 
     @ViewBuilder func suggestionsView() -> some View {
-        VStack {
+        VStack(spacing: 0) {
+            // Top bar with cancel
             HStack {
-                Button(action: {
-                    withAnimation {
-                        showSettings = true
-                    }
-                }, label: {
-                    Image("gearshape.circle.fill", bundle: .module)
-                        .resizable()
-                        .foregroundStyle(.gray)
-                        #if !SKIP
-                        .symbolRenderingMode(.hierarchical)
-                        #endif
-                        .frame(width: 40, height: 40, alignment: .center)
-                        .padding()
-                })
-
-                Spacer()
-                TitleView()
                 Spacer()
                 Button(action: {
-                    // de-focuses the text view and hides the URL bar
                     withAnimation {
                         self.isURLBarFocused = false
                     }
                 }, label: {
-                    Image("xmark.circle.fill", bundle: .module)
-                        .resizable()
-                        .foregroundStyle(.gray)
-                        #if !SKIP
-                        .symbolRenderingMode(.hierarchical)
-                        #endif
-                        .frame(width: 40, height: 40, alignment: .center)
-                        .padding()
+                    Text("Cancel", bundle: .module, comment: "cancel button for dismissing suggestions")
+                        .fontWeight(.medium)
                 })
+                .buttonStyle(.plain)
+                .padding(.trailing, 16)
+                .padding(.top, 12)
             }
 
-            Spacer()
-
-            if let suggestions = currentSuggestions {
+            if let suggestions = currentSuggestions, !suggestions.suggestions.isEmpty {
                 List {
-                    Section(suggestions.engine.name() + ": " + (suggestions.suggestions.isEmpty ? "No Suggestions" : "\(suggestions.suggestions.count) Suggestions")) {
-                        ForEach(Array(suggestions.suggestions.enumerated()), id: \.0) { (index, suggestion) in
-                            Button {
-                                withAnimation {
-                                    self.submitURL(suggestion)
-                                    self.isURLBarFocused = false // close
-                                }
-                            } label: {
+                    ForEach(Array(suggestions.suggestions.enumerated()), id: \.0) { (index, suggestion) in
+                        Button {
+                            withAnimation {
+                                self.submitURL(suggestion)
+                                self.isURLBarFocused = false
+                            }
+                        } label: {
+                            HStack(spacing: 10) {
+                                Image("magnifyingglass", bundle: .module)
+                                    .foregroundStyle(.secondary)
+                                    .font(.system(size: 14))
                                 Text(suggestion)
                                     .frame(maxWidth: .infinity, alignment: .leading)
-                                    #if !SKIP
-                                    .contentShape(Rectangle()) // needed to make the tap target fill the area
-                                    #endif
                             }
-                            .buttonStyle(.plain)
+                            #if !SKIP
+                            .contentShape(Rectangle())
+                            #endif
                         }
+                        .buttonStyle(.plain)
                     }
                 }
+                .listStyle(.plain)
             } else {
-                // TODO: show favorites
-                Text("Favorites")
-                    .font(.title)
-                    .frame(maxHeight: .infinity)
+                Spacer()
+                VStack(spacing: 12) {
+                    Image("magnifyingglass", bundle: .module)
+                        .font(.system(size: 36))
+                        .foregroundStyle(.secondary)
+                    Text("Search or enter a URL", bundle: .module, comment: "start page prompt")
+                        .font(.headline)
+                        .foregroundStyle(.secondary)
+                }
+                Spacer()
             }
         }
         #if !SKIP
         .background(Color(UIColor.systemBackground))
         #endif
-        //.background(Color.white)
     }
 
     func fetchSearchSuggestions(string: String) async throws {

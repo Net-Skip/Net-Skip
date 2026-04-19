@@ -1,6 +1,15 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
+    "%lld" : {
+
+    },
+    "%lld Tabs" : {
+      "comment" : "tab count title"
+    },
     "About %@ %@" : {
       "comment" : "settings title menu for about app in the form ”About APP_NAME APP_VERSION”",
       "localizations" : {
@@ -179,6 +188,9 @@
           }
         }
       }
+    },
+    "Add to Favorites" : {
+      "comment" : "add to favorites button label"
     },
     "Appearance" : {
       "comment" : "settings appearance picker label",
@@ -1062,6 +1074,12 @@
           }
         }
       }
+    },
+    "Bookmarks" : {
+      "comment" : "bookmarks button label"
+    },
+    "Cancel" : {
+      "comment" : "cancel button for dismissing suggestions"
     },
     "Clear History" : {
       "comment" : "history page remove all sheet title",
@@ -2837,6 +2855,7 @@
     },
     "Favorite" : {
       "comment" : "more button string for adding a favorite",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3015,7 +3034,7 @@
       }
     },
     "Favorites" : {
-      "comment" : "favorites page list sheet title\nmore button string for opening the favorites list\ntab selection for viewing the favorites list",
+      "comment" : "favorites page list sheet title\ntab selection for viewing the favorites list",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3194,7 +3213,7 @@
       }
     },
     "Find on Page" : {
-      "comment" : "more button string for finding on the current page",
+      "comment" : "find on page button label",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4077,7 +4096,7 @@
       }
     },
     "History" : {
-      "comment" : "history page list sheet title\nmore button string for opening the history\ntab selection for viewing the history list",
+      "comment" : "history page list sheet title\ntab selection for viewing the history list",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4257,6 +4276,7 @@
     },
     "History and Favorites" : {
       "comment" : "more button string for opening the history and favorites",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4965,8 +4985,12 @@
         }
       }
     },
+    "Loading..." : {
+
+    },
     "More" : {
       "comment" : "more button label",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5319,6 +5343,7 @@
     },
     "New Private Tab" : {
       "comment" : "more button string for creating a new private tab",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5497,7 +5522,7 @@
       }
     },
     "New Tab" : {
-      "comment" : "more button string for creating a new tab\nnew tab action label",
+      "comment" : "more button string for creating a new tab",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5855,6 +5880,7 @@
       }
     },
     "No Suggestions" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6206,7 +6232,7 @@
       }
     },
     "Reload" : {
-      "comment" : "more button string for reloading the current page",
+      "comment" : "reload button label",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6742,6 +6768,9 @@
         }
       }
     },
+    "Search or enter a URL" : {
+      "comment" : "start page prompt"
+    },
     "Search or enter website name" : {
       "comment" : "placeholder string for URL bar",
       "localizations" : {
@@ -7268,7 +7297,7 @@
       }
     },
     "Settings" : {
-      "comment" : "more button string for opening the settings\nsettings sheet title",
+      "comment" : "settings button label\nsettings sheet title",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -7445,6 +7474,9 @@
           }
         }
       }
+    },
+    "Share" : {
+      "comment" : "share button label"
     },
     "StartPage" : {
       "comment" : "search engine name for StartPage",
@@ -7973,6 +8005,7 @@
     },
     "Tab List" : {
       "comment" : "tab list action label",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -8151,7 +8184,7 @@
       }
     },
     "Tabs" : {
-      "comment" : "active tabs sheet title",
+      "comment" : "active tabs sheet title\ntabs button label",
       "localizations" : {
         "ar" : {
           "stringUnit" : {

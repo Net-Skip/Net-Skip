@@ -1,10 +1,14 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 import SwiftUI
+#if SKIP || os(iOS)
 import SkipWeb
+#endif
 import NetSkipModel
 
 public struct ContentView: View {
+    #if SKIP || os(iOS)
     let config = WebEngineConfiguration(javaScriptEnabled: true)
+    #endif
     let store = try! NetSkipWebBrowserStore(url: URL.documentsDirectory.appendingPathComponent("netskip.sqlite"))
 
     public init() {
@@ -15,9 +19,10 @@ public struct ContentView: View {
             #if SKIP || os(iOS)
             BrowserTabView(configuration: config, store: store)
                 #if SKIP
-                // eliminate blank space on Android: https://github.com/skiptools/skip/issues/99#issuecomment-2010650774
                 .toolbar(.hidden, for: .navigationBar)
                 #endif
+            #else
+            Text("Net Skip requires iOS")
             #endif
         }
         .task {
@@ -26,14 +31,11 @@ public struct ContentView: View {
     }
 
     @MainActor func loadContentBlockerRules() async {
-        #if !SKIP
-        // Content blocker from a source like:
-        // https://github.com/brave/brave-core/blob/master/ios/brave-ios/Sources/Brave/WebFilters/ContentBlocker/Lists/block-ads.json
+        #if !SKIP && os(iOS)
         guard let ruleListStore = WebContentRuleListStore.default() else { return }
 
         for blockerID in [
             "block-ads",
-            // "block-cookies", // TODO: add block cookies preference
         ] {
             if let blockerURL = Bundle.module.url(forResource: blockerID, withExtension: "json") {
                 logger.info("loading content blocker rules from: \(blockerURL)")

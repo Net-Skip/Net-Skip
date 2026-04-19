@@ -1,11 +1,15 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 import SwiftUI
+#if SKIP || os(iOS)
 import SkipWeb
+#endif
 import NetSkipModel
 import AppFairUI
 
 struct SettingsView : View {
+    #if SKIP || os(iOS)
     var configuration: WebEngineConfiguration
+    #endif
 
     @Binding var appearance: String
     @Binding var buttonHaptics: Bool

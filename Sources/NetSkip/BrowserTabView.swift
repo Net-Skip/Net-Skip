@@ -57,19 +57,19 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
         browserTabView()
             .toolbar {
                 ToolbarItemGroup(placement: toolbarPlacement) {
-                    toolbarButton1()
+                    backButton()
                     Spacer()
-                    toolbarButton2()
+                    forwardButton()
                     Spacer()
-                    moreButton()
+                    shareButton()
                     Spacer()
-                    toolbarButton3()
+                    showHistoryFavoritesButton()
                     Spacer()
-                    toolbarButton4()
+                    tabsButton()
                 }
             }
-        .background(Color.clear) // Set the background color of the content to clear
-        .toolbarBackground(Color.white.opacity(0.5), for: .bottomBar) // Set the translucent background color for the toolbar
+        .background(Color.clear)
+        .toolbarBackground(Color.white.opacity(0.5), for: .bottomBar)
         .toolbar(showBottomBar ? .visible : .hidden, for: .bottomBar)
         .sheet(isPresented: $showSettings) { settingsView() }
         .sheet(isPresented: $showHistoryFavorites) { historyFavoritesPageInfoTabView() }
@@ -120,9 +120,15 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
                 }
             }
         }
-        .onChange(of: selectedTab) {
-            self.showBottomBar = true // always show the bottom bar when we change tabs
-            self.selectedTabState = selectedTab.description // persist the last selected tab so we can restore it when re-starting
+        .onChange(of: selectedTab) { oldTab, newTab in
+            // Capture snapshot of the tab being left
+            if let oldVM = tabs.first(where: { $0.id == oldTab }) {
+                if oldVM.state.url != nil {
+                    captureTabSnapshot(tab: oldVM)
+                }
+            }
+            self.showBottomBar = true
+            self.selectedTabState = newTab.description
         }
         .onAppear {
             logger.info("restoring active tabs")
@@ -142,10 +148,30 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
         // restore the saved tabs
         let activeTabs = trying { try store.loadItems(type: PageInfo.PageType.active, ids: []) }
 
+        var hasBlankTab = false
+        var blankTabIdsToRemove: [PageInfo.ID] = []
+
         for activeTab in activeTabs ?? [] {
+            let isBlank = activeTab.url == nil || activeTab.url == "" || activeTab.url == "about:blank"
+
+            // Only keep one blank tab; remove duplicates from the database
+            if isBlank {
+                if hasBlankTab {
+                    blankTabIdsToRemove.append(activeTab.id)
+                    continue
+                }
+                hasBlankTab = true
+            }
+
             logger.log("restoring tab \(activeTab.id): \(activeTab.url ?? "NONE") title=\(activeTab.title ?? "")")
             let viewModel = newViewModel(activeTab)
             self.tabs.append(viewModel)
+        }
+
+        // Clean up duplicate blank tabs from the database
+        if !blankTabIdsToRemove.isEmpty {
+            logger.info("removing \(blankTabIdsToRemove.count) duplicate blank tabs")
+            try? store.removeItems(type: .active, ids: Set(blankTabIdsToRemove))
         }
 
         // always have at least one tab open
@@ -167,29 +193,79 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
         return BrowserViewModel(id: newID, navigator: WebViewNavigator(initialURL: newURL), configuration: configuration, store: store)
     }
 
+    // MARK: - Tab Snapshots
+
+    func snapshotDirectory() -> URL {
+        let dir = URL.cachesDirectory.appendingPathComponent("tab-snapshots")
+        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        return dir
+    }
+
+    func snapshotPath(for tabId: PageInfo.ID) -> URL {
+        return snapshotDirectory().appendingPathComponent("\(tabId).png")
+    }
+
+    func captureTabSnapshot(tab: BrowserViewModel) {
+        guard let webEngine = tab.navigator.webEngine else { return }
+        let tabId = tab.id
+        Task { @MainActor in
+            do {
+                let config = SkipWebSnapshotConfiguration(snapshotWidth: 300)
+                let snapshot = try await webEngine.takeSnapshot(configuration: config)
+                let path = snapshotPath(for: tabId)
+                try snapshot.pngData.write(to: path)
+            } catch {
+                logger.warning("Failed to capture tab snapshot: \(error)")
+            }
+        }
+    }
+
+    func captureAllTabSnapshots() {
+        for tab in tabs {
+            if tab.state.url != nil {
+                captureTabSnapshot(tab: tab)
+            }
+        }
+    }
+
+    func removeTabSnapshot(tabId: PageInfo.ID) {
+        let path = snapshotPath(for: tabId)
+        try? FileManager.default.removeItem(at: path)
+    }
+
+    func loadSnapshotImage(for tabId: PageInfo.ID) -> UIImage? {
+        let path = snapshotPath(for: tabId)
+        guard let data = try? Data(contentsOf: path) else { return nil }
+        return UIImage(data: data)
+    }
+
+    // MARK: - Tab Overview
+
     func activeTabsView() -> some View {
         NavigationStack {
-            PageInfoListView(type: PageInfo.PageType.active, store: store, onSelect: { pageInfo in
-                logger.info("select tab: \(pageInfo.url ?? "NONE")")
-                withAnimation {
-                    self.selectedTab = pageInfo.id
+            ScrollView {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 160), spacing: 12)], spacing: 12) {
+                    ForEach(tabs) { tab in
+                        tabCardView(tab: tab)
+                    }
                 }
-            }, onDelete: { pageInfos in
-                //logger.info("delete tabs: \(pageInfos.map(\.url))")
-                closeTabs(Set(pageInfos.map(\.id)))
-            }, toolbarItems: {
-                ToolbarItemGroup(placement: .bottomBar) {
+                .padding(12)
+            }
+            .background(Color(white: 0.12))
+            .navigationTitle(Text("\(tabs.count) Tabs", bundle: .module, comment: "tab count title"))
+            #if !SKIP
+            .navigationBarTitleDisplayMode(.inline)
+            #endif
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
                     Button(action: {
                         newTabAction()
                         showActiveTabs = false
                     }) {
-                        Label {
-                            Text("New Tab", bundle: .module, comment: "more button string for creating a new tab")
-                        } icon: {
-                            Image("plus", bundle: .module)
-                        }
+                        Image("plus", bundle: .module)
                     }
-                    Spacer()
+                }
+                ToolbarItem(placement: .confirmationAction) {
                     Button {
                         showActiveTabs = false
                     } label: {
@@ -197,11 +273,95 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
                             .bold()
                     }
                 }
-            })
+            }
         }
         #if !SKIP
         .presentationDetents([.medium, .large])
         #endif
+    }
+
+    @ViewBuilder func tabCardView(tab: BrowserViewModel) -> some View {
+        let isActive = tab.id == selectedTab
+        let title = tab.state.pageTitle ?? ""
+        let urlString = tab.state.url?.absoluteString ?? ""
+        let domain = tabDomainFromURL(urlString)
+        let snapshotImage = loadSnapshotImage(for: tab.id)
+
+        Button {
+            withAnimation {
+                self.selectedTab = tab.id
+                self.showActiveTabs = false
+            }
+        } label: {
+            VStack(alignment: .leading, spacing: 0) {
+                // Title bar
+                HStack(spacing: 4) {
+                    if !urlString.isEmpty {
+                        Image("lock", bundle: .module)
+                            .font(.system(size: 9))
+                            .foregroundStyle(Color.white.opacity(0.7))
+                    }
+                    Text(title.isEmpty ? (domain.isEmpty ? "New Tab" : domain) : title)
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundStyle(Color.white)
+                        .lineLimit(1)
+                    Spacer(minLength: 4)
+                    // Close button
+                    Button {
+                        removeTabSnapshot(tabId: tab.id)
+                        closeTabs([tab.id])
+                    } label: {
+                        Image("xmark", bundle: .module)
+                            .font(.system(size: 10, weight: .bold))
+                            .foregroundStyle(Color.white.opacity(0.6))
+                    }
+                    .buttonStyle(.plain)
+                }
+                .padding(.horizontal, 10)
+                .padding(.vertical, 8)
+                .background(isActive ? Color.accentColor : Color(white: 0.28))
+
+                // Snapshot preview area
+                ZStack {
+                    Color(white: 0.95)
+                    if let snapshotImage = snapshotImage {
+                        Image(uiImage: snapshotImage)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                    } else {
+                        // Fallback: show domain text
+                        VStack(spacing: 8) {
+                            Image("magnifyingglass", bundle: .module)
+                                .font(.system(size: 24))
+                                .foregroundStyle(Color.gray.opacity(0.4))
+                            if !domain.isEmpty {
+                                Text(domain)
+                                    .font(.system(size: 13))
+                                    .foregroundStyle(Color.gray.opacity(0.6))
+                            }
+                        }
+                    }
+                }
+                .frame(height: 180)
+                .clipped()
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .strokeBorder(isActive ? Color.accentColor : Color(white: 0.3), lineWidth: isActive ? 2.5 : 0.5)
+            )
+            .shadow(color: .black.opacity(0.3), radius: 3, y: 2)
+        }
+        .buttonStyle(.plain)
+    }
+
+    func tabDomainFromURL(_ urlString: String) -> String {
+        guard let url = URL(string: urlString) else { return urlString }
+        var host = url.host ?? ""
+        if host.hasPrefix("www.") {
+            host = host.replacingOccurrences(of: "www.", with: "")
+        }
+        return host
     }
 
     #if !SKIP
@@ -234,7 +394,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
         #if SKIP
         // workaround for crash on Android because currentViewModel returns nil
         tabs.first(where: { $0.id == self.selectedTab })
-            ?? newViewModel(PageInfo(url: nil))
+            ?? tabs.last
         #else
         tabs.first(where: { $0.id == self.selectedTab })
         #endif
@@ -345,33 +505,6 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
         })
     }
 
-    func toolbarButton1() -> some View {
-        backButton()
-    }
-
-    func toolbarButton2() -> some View {
-        forwardButton()
-    }
-
-    func toolbarButton3() -> some View {
-        showHistoryFavoritesButton()
-    }
-
-    func toolbarButton4() -> some View {
-        tabListButton()
-    }
-
-    @ViewBuilder func showHistoryFavoritesButton() -> some View {
-        Button(action: showHistoryFavoritesAction) {
-            Label {
-                Text("History and Favorites", bundle: .module, comment: "more button string for opening the history and favorites")
-            } icon: {
-                Image("book", bundle: .module)
-            }
-        }
-        .accessibilityIdentifier("button.history.favorites")
-    }
-
     @ViewBuilder func backButton() -> some View {
         let enabled = currentState?.canGoBack == true
         let backLabel = Label {
@@ -381,7 +514,6 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
         }
 
         if isSkip || !enabled {
-            // TODO: SkipUI does not support Menu with primaryAction in toolbar
             Button {
                 backAction()
             } label: {
@@ -409,9 +541,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
             Image("chevron.right", bundle: .module)
         }
 
-
         if isSkip || !enabled {
-            // TODO: SkipUI does not support Menu with primaryAction in toolbar
             Button {
                 forwardAction()
             } label: {
@@ -431,58 +561,112 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
         }
     }
 
-    @ViewBuilder func tabListButton() -> some View {
-        Menu {
-            tabListMenu()
-        } label: {
+    @ViewBuilder func shareButton() -> some View {
+        ShareLink(item: currentState?.pageURL ?? fallbackURL) {
             Label {
-                Text("Tab List", bundle: .module, comment: "tab list action label")
+                Text("Share", bundle: .module, comment: "share button label")
             } icon: {
-                Image("square.on.square", bundle: .module)
+                Image("ios_share", bundle: .module)
             }
-        } primaryAction: {
-            tabListAction()
         }
-        .accessibilityIdentifier("button.tablist")
+        .disabled(currentState?.pageURL == nil)
+        .accessibilityIdentifier("button.share")
     }
 
-    @ViewBuilder func newTabButton() -> some View {
-        Menu {
-            Button(action: newPrivateTabAction) {
-                Label {
-                    Text("New Private Tab", bundle: .module, comment: "more button string for creating a new private tab")
-                } icon: {
-                    Image("plus.square.fill.on.square.fill", bundle: .module)
-                }
+    @ViewBuilder func showHistoryFavoritesButton() -> some View {
+        Button(action: showHistoryFavoritesAction) {
+            Label {
+                Text("Bookmarks", bundle: .module, comment: "bookmarks button label")
+            } icon: {
+                Image("book", bundle: .module)
             }
-            .accessibilityIdentifier("menu.button.newprivatetab")
+        }
+        .accessibilityIdentifier("button.history.favorites")
+    }
 
+    @ViewBuilder func tabsButton() -> some View {
+        Menu {
             Button(action: { newTabAction() }) {
                 Label {
                     Text("New Tab", bundle: .module, comment: "more button string for creating a new tab")
                 } icon: {
-                    Image("plus.square.on.square", bundle: .module)
+                    Image("plus", bundle: .module)
                 }
             }
             .accessibilityIdentifier("menu.button.newtab")
+
+            Button(action: closeTabAction) {
+                Label {
+                    Text("Close Tab", bundle: .module, comment: "more button string for closing a tab")
+                } icon: {
+                    Image("xmark", bundle: .module)
+                }
+            }
+            .accessibilityIdentifier("menu.button.close")
+
+            Divider()
+
+            Button(action: reloadAction) {
+                Label {
+                    Text("Reload", bundle: .module, comment: "reload button label")
+                } icon: {
+                    Image("arrow.clockwise", bundle: .module)
+                }
+            }
+
+            Button(action: homeAction) {
+                Label {
+                    Text("Home", bundle: .module, comment: "home button label")
+                } icon: {
+                    Image("house", bundle: .module)
+                }
+            }
+
+            Button(action: findOnPageAction) {
+                Label {
+                    Text("Find on Page", bundle: .module, comment: "find on page button label")
+                } icon: {
+                    Image("magnifyingglass", bundle: .module)
+                }
+            }
+
+            Button(action: favoriteAction) {
+                Label {
+                    Text("Add to Favorites", bundle: .module, comment: "add to favorites button label")
+                } icon: {
+                    Image("star", bundle: .module)
+                }
+            }
+
+            Divider()
+
+            Button(action: settingsAction) {
+                Label {
+                    Text("Settings", bundle: .module, comment: "settings button label")
+                } icon: {
+                    Image("gearshape", bundle: .module)
+                }
+            }
         } label: {
             Label {
-                Text("New Tab", bundle: .module, comment: "new tab action label")
+                Text("Tabs", bundle: .module, comment: "tabs button label")
             } icon: {
-                Image("plus.square.on.square", bundle: .module)
+                tabCountIcon()
             }
         } primaryAction: {
-            newTabAction()
+            tabListAction()
         }
-        .accessibilityIdentifier("button.newtab")
+        .accessibilityIdentifier("button.tabs")
     }
 
-    @ViewBuilder func newTabMenu() -> some View {
-        // TODO
-    }
-
-    @ViewBuilder func tabListMenu() -> some View {
-        // TODO
+    @ViewBuilder func tabCountIcon() -> some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 4)
+                .strokeBorder(lineWidth: 1.5)
+                .frame(width: 22, height: 22)
+            Text("\(tabs.count)")
+                .font(.system(size: 11, weight: .bold))
+        }
     }
 
     @ViewBuilder func backHistoryMenu() -> some View {
@@ -596,6 +780,9 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
     }
 
     func closeTabs(_ ids: Set<PageInfo.ID>) {
+        for id in ids {
+            removeTabSnapshot(tabId: id)
+        }
         withAnimation {
             self.tabs.removeAll(where: { ids.contains($0.id) })
             // remove the pages from the tab list
@@ -621,9 +808,21 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
     }
 
     func newTabAction(url: String? = nil) {
-        logger.info("newTabAction")
+        logger.info("newTabAction url=\(url ?? "nil")")
         hapticFeedback()
-        let info = PageInfo(url: url) // open to a blank page
+
+        // If requesting a blank tab, reuse an existing blank tab instead of creating another
+        if url == nil {
+            for tab in tabs {
+                if tab.state.url == nil && (tab.state.pageURL == nil || tab.state.pageURL == "about:blank") {
+                    self.selectedTab = tab.id
+                    logTabs()
+                    return
+                }
+            }
+        }
+
+        let info = PageInfo(url: url)
         let vm = newViewModel(info)
         self.tabs.append(vm)
         self.selectedTab = vm.id
@@ -643,6 +842,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
     func tabListAction() {
         logger.info("tabListAction")
         hapticFeedback()
+        captureAllTabSnapshots()
         self.showActiveTabs = true
     }
 
@@ -681,143 +881,13 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
         showSettings = true
     }
 
-    func moreButton() -> some View {
-        Menu {
-            Button(action: { newTabAction() }) {
-                Label {
-                    Text("New Tab", bundle: .module, comment: "more button string for creating a new tab")
-                } icon: {
-                    Image("plus.square.on.square", bundle: .module)
-                }
-            }
-            .accessibilityIdentifier("button.new")
-
-            Button(action: closeTabAction) {
-                Label {
-                    Text("Close Tab", bundle: .module, comment: "more button string for closing a tab")
-                } icon: {
-                    Image("xmark", bundle: .module)
-                }
-            }
-            .accessibilityIdentifier("button.close")
-
-            Divider()
-
-            Button(action: reloadAction) {
-                Label {
-                    Text("Reload", bundle: .module, comment: "more button string for reloading the current page")
-                } icon: {
-                    Image("arrow.clockwise.circle", bundle: .module)
-                }
-            }
-            .accessibilityIdentifier("button.reload")
-            Button(action: homeAction) {
-                Label(title: {
-                    Text("Home", bundle: .module, comment: "home button label")
-                }, icon: {
-                    Image("house", bundle: .module)
-                })
-            }
-            .accessibilityIdentifier("button.home")
-
-            Divider()
-
-            Button {
-                logger.log("find on page button tapped")
-                findOnPageAction()
-            } label: {
-                Label(title: {
-                    Text("Find on Page", bundle: .module, comment: "more button string for finding on the current page")
-                }, icon: {
-                    Image("magnifyingglass", bundle: .module)
-                })
-            }
-
-//            Button {
-//                logger.log("text zoom button tapped")
-//            } label: {
-//                Text("Text Zoom", bundle: .module, comment: "more button string for text zoom")
-//            }
-
-//            Button {
-//                logger.log("disable blocker button tapped")
-//            } label: {
-//                Text("Disable Blocker", bundle: .module, comment: "more button string for disabling the blocker")
-//            }
-
-            // share button
-            ShareLink(item: currentState?.pageURL ?? fallbackURL)
-                .disabled(currentState?.pageURL == nil)
-
-            Button(action: favoriteAction) {
-                Label {
-                    Text("Favorite", bundle: .module, comment: "more button string for adding a favorite")
-                } icon: {
-                    // TODO: make star.filled when it is already a favorite
-                    Image("star", bundle: .module)
-                }
-            }
-            .accessibilityIdentifier("button.favorite")
-
-            Divider()
-
-            Button(action: favoritesAction) {
-                Label {
-                    Text("Favorites", bundle: .module, comment: "more button string for opening the favorites list")
-                } icon: {
-                    Image("list.star", bundle: .module)
-                }
-            }
-            .accessibilityIdentifier("button.favorites")
-
-            Button(action: historyAction) {
-                Label {
-                    Text("History", bundle: .module, comment: "more button string for opening the history")
-                } icon: {
-                    Image("calendar", bundle: .module)
-                }
-            }
-            .accessibilityIdentifier("button.history")
-
-            Button(action: settingsAction) {
-                Label {
-                    Text("Settings", bundle: .module, comment: "more button string for opening the settings")
-                } icon: {
-                    Image("gearshape", bundle: .module)
-                }
-            }
-            .accessibilityIdentifier("button.settings")
-        } label: {
-            Label {
-                Text("More", bundle: .module, comment: "more button label")
-            } icon: {
-                Image("ellipsis", bundle: .module)
-            }
-            .accessibilityIdentifier("button.more")
-        }
-    }
 }
 
 struct TitleView : View {
-    @State var isBeating = false
-
     var body: some View {
-        VStack(alignment: .center, spacing: 25.0) {
-            VStack {
-                Text("Net Skip", bundle: .module, comment: "title screen headline")
-                    .font(Font.system(size: 35, weight: .bold))
-                    .lineLimit(1)
-                    .foregroundStyle(LinearGradient(colors: [.red, .blue, .green, .yellow], startPoint: .leading, endPoint: .trailing))
-//                Text("(a humane web browser)", bundle: .module, comment: "title screen sub-headline")
-//                    .font(Font.subheadline.bold())
-            }
-//            Image(systemName: "heart.fill")
-//                .font(.largeTitle)
-//                .foregroundStyle(.red)
-//                .scaleEffect(isBeating ? 1.5 : 1.0)
-//                .animation(.easeInOut(duration: 1).repeatForever(), value: isBeating)
-//                .onAppear { isBeating = true }
-        }
+        Text("Net Skip", bundle: .module, comment: "title screen headline")
+            .font(.system(size: 28, weight: .bold))
+            .foregroundStyle(.primary)
     }
 }
 
