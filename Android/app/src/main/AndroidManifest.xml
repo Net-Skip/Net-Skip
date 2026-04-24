@@ -18,6 +18,8 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.READ_CLIPBOARD"/>
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
+
+    <!-- Google Api Error: Invalid request - You must let us know whether your app uses any Foreground Service permissions.
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"/>
@@ -25,14 +27,19 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE"/>
+    -->
+
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
-    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
+
+    <!-- Google Api Error: Invalid request - All developers requesting access to the photo and video permissions are required to tell Google Play about the core functionality of their app -->
+    <!-- <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/> -->
+    <!-- <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/> -->
+
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO"/>
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
@@ -52,15 +59,22 @@
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.MANAGE_OWN_CALLS"/>
-    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+
+    <!-- Google Api Error: Invalid request - You must let us know whether your app uses any full-screen intent permissions -->
+    <!-- <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/> -->
+
+    <!-- Google Api Error: Invalid request - This release includes the REQUEST_INSTALL_PACKAGES permission, which hasn't been declared in Play Console. -->
+    <!-- <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/> -->
+
     <uses-permission android:name="android.permission.READ_PHONE_NUMBERS"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
     <uses-permission android:name="android.permission.READ_APP_BADGE"/>
 
-    <uses-permission android:name="com.android.vending.BILLING"/>
+    <!-- Google Api Error: Invalid request - Artifact with version code 228 uses Play Billing Library version AIDL and must update to at least version 6.0.1 to make use of the latest monetization features on Google Play. Learn more (https://developer.android.com/google/play/billing/deprecation-faq) -->
+    <!--<uses-permission android:name="com.android.vending.BILLING"/>-->
+
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
     <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT"/>
 
