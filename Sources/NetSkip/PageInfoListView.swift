@@ -36,6 +36,9 @@ struct PageInfoListView<ToolbarItems : ToolbarContent> : View {
         .onAppear {
             loadPageInfoItems()
         }
+        .onChange(of: type) {
+            loadPageInfoItems()
+        }
         .toolbar {
             #if !SKIP
             // Skip is unable to match this API call to determine whether it results in a View. Consider adding additional type information

@@ -269,6 +269,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
                         EmptyView()
                     }
                     .pickerStyle(.segmented)
+                    .colorScheme(.dark)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 8)
                 }
@@ -306,7 +307,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
             }
         }
         #if !SKIP
-        .presentationDetents([.medium, .large])
+        .presentationDetents([.large])
         #endif
     }
 
