@@ -18,10 +18,14 @@ import NetSkipModel
     @Binding var userAgent: String
     @Binding var blockAds: Bool
     @Binding var enableJavaScript: Bool
+    @Binding var pageLoadHaptics: Bool
+    @Binding var requestDesktopSite: Bool
+    @Binding var textZoom: Double
 
     /// Whether content rules are currently enabled
     @State var contentRulesEnabled: Bool = false
     @State var currentSuggestions: SearchSuggestions?
+    @State var triggerPageLoadHaptic: Bool = false
 
     @FocusState var isURLBarFocused: Bool
 
@@ -40,6 +44,9 @@ import NetSkipModel
                 WebView(configuration: configuration, navigator: viewModel.navigator, state: $viewModel.state, onNavigationCommitted: {
                     logger.log("onNavigationCommitted")
                 })
+                .refreshable {
+                    viewModel.navigator.reload()
+                }
                 let showSuggestions = state.pageURL == nil || isURLBarFocused
                 if showSuggestions {
                     suggestionsView()
@@ -49,16 +56,19 @@ import NetSkipModel
             urlBarView()
         }
         .frame(maxHeight: .infinity)
+        #if !SKIP
+        .sensoryFeedback(.impact, trigger: triggerPageLoadHaptic)
+        #endif
         .onAppear {
-            // synchronize web view with preferences
             updateWebView()
         }
         .onChange(of: enableJavaScript, initial: false, { _, _ in self.updateWebView() })
         .onChange(of: blockAds, initial: false, { _, _ in self.updateWebView() })
+        .onChange(of: requestDesktopSite, initial: false, { _, _ in self.updateWebView() })
+        .onChange(of: textZoom, initial: false, { _, _ in self.applyTextZoom() })
         #if !SKIP
         .onReceive(NotificationCenter.default.publisher(for: .webContentRulesLoaded).receive(on: DispatchQueue.main)) { _ in
             logger.log("reveived webContentRulesLoaded")
-            // wen content rules are loaded asynchonously, so refresh them when they are loaded
             updateWebView()
         }
         #endif
@@ -69,6 +79,8 @@ import NetSkipModel
         let engine: SearchEngine
         let suggestions: [String]
     }
+
+    private static let desktopUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15"
 
     /// Synchronize settings with the current platform web view
     private func updateWebView() {
@@ -83,6 +95,15 @@ import NetSkipModel
         }
 
         webView.configuration.defaultWebpagePreferences.allowsContentJavaScript = enableJavaScript
+
+        // Apply user agent
+        if requestDesktopSite {
+            webView.customUserAgent = Self.desktopUserAgent
+        } else if !userAgent.isEmpty {
+            webView.customUserAgent = userAgent
+        } else {
+            webView.customUserAgent = nil // use default
+        }
 
         if blockAds == true && self.contentRulesEnabled == false {
             WebContentRuleListStore.default().getAvailableContentRuleListIdentifiers { contentRuleIDs in
@@ -132,7 +153,19 @@ import NetSkipModel
                     try store.saveItems(type: .active, items: [pageInfo])
                 }
             }
+            // Fire page load haptic
+            if pageLoadHaptics {
+                triggerPageLoadHaptic.toggle()
+            }
         }
+    }
+
+    private func applyTextZoom() {
+        #if !SKIP
+        if let webView = self.webView {
+            webView.pageZoom = textZoom
+        }
+        #endif
     }
 
     func urlBarView() -> some View {
@@ -352,7 +385,12 @@ import NetSkipModel
         if let url = state.pageURL, let title = state.pageTitle {
             logger.info("addPageToHistory: \(title) \(url)")
             trying {
-                // TODO: update pre-existing history if the URL aleady exists
+                // Update existing history entry if URL already exists, otherwise create new
+                if let netStore = store as? NetSkipWebBrowserStore {
+                    if try netStore.updateExistingItem(type: .history, url: url, title: title) != nil {
+                        return // updated existing entry
+                    }
+                }
                 _ = try store.saveItems(type: .history, items: [PageInfo(url: url, title: title)])
             }
         }

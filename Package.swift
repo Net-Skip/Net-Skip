@@ -19,7 +19,6 @@ let package = Package(
         .package(url: "https://source.skip.tools/skip-sql.git", "0.0.0"..<"2.0.0"),
         .package(url: "https://source.skip.tools/skip-script.git", "0.0.0"..<"2.0.0"),
         .package(url: "https://source.skip.tools/skip-miniapp.git", "0.0.0"..<"2.0.0"),
-//        .package(url: "https://source.skip.tools/skip-zip.git", "0.0.0"..<"2.0.0"),
     ],
     targets: [
         .target(name: "NetSkip", dependencies: [
@@ -40,8 +39,6 @@ let package = Package(
             .product(name: "SkipWeb", package: "skip-web"),
             .product(name: "SkipSQL", package: "skip-sql"),
             .product(name: "SkipScript", package: "skip-script"),
-//            .product(name: "SkipXML", package: "skip-xml"),
-//            .product(name: "SkipZip", package: "skip-zip"),
         ], resources: [.process("Resources")], plugins: [.plugin(name: "skipstone", package: "skip")]),
         .testTarget(name: "NetSkipModelTests", dependencies: [
             "NetSkipModel",
@@ -49,3 +46,18 @@ let package = Package(
         ], resources: [.process("Resources")], plugins: [.plugin(name: "skipstone", package: "skip")]),
     ]
 )
+
+if let dependencyRoot = Context.environment["NET_SKIP_DEPENDENCY_ROOT"] {
+    package.dependencies = package.dependencies.map { dep in
+        switch dep.kind {
+        case .sourceControl(_, let location, _):
+            // turn "https://source.skip.tools/skip.git" into "skip"
+            guard let baseName = location.split(separator: "/").last?.split(separator: ".").first else {
+                return dep
+            }
+            return Package.Dependency.package(path: dependencyRoot + "/" + baseName)
+        default:
+            return dep
+        }
+    }
+}

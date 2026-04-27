@@ -152,6 +152,29 @@ public class NetSkipWebBrowserStore : WebBrowserStore {
         return items
     }
 
+    /// Update the date (and optionally title) of an existing history/favorite entry matching the URL.
+    /// Returns the ID of the updated row, or nil if no match was found.
+    public func updateExistingItem(type: PageInfo.PageType, url: String, title: String?) throws -> PageInfo.ID? {
+        let table = type.tableName
+        let findStmt = try ctx.prepare(sql: "SELECT id FROM \(table) WHERE url = ? LIMIT 1")
+        try findStmt.bind(SQLValue.text(url), at: 1)
+        defer { do { try findStmt.close() } catch {} }
+        guard try findStmt.next() else { return nil }
+        let existingID = findStmt.long(at: 0)
+
+        let updateStmt = try ctx.prepare(sql: "UPDATE \(table) SET date = ?, title = COALESCE(?, title) WHERE id = ?")
+        try updateStmt.bind(SQLValue.real(Date().timeIntervalSince1970), at: 1)
+        if let title = title {
+            try updateStmt.bind(SQLValue.text(title), at: 2)
+        } else {
+            try updateStmt.bind(SQLValue.null, at: 2)
+        }
+        try updateStmt.bind(SQLValue.long(existingID), at: 3)
+        defer { do { try updateStmt.close() } catch {} }
+        try updateStmt.update()
+        return existingID
+    }
+
     public func removeItems(type: PageInfo.PageType, ids: Set<PageInfo.ID>) throws {
         let table = type.tableName
 

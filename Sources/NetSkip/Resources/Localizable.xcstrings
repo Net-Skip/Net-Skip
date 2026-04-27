@@ -1081,8 +1081,26 @@
     "Cancel" : {
       "comment" : "cancel button for dismissing suggestions"
     },
+    "Clear All Browsing Data" : {
+      "comment" : "settings button to clear all data"
+    },
+    "Clear all browsing data including history, favorites, and open tabs?" : {
+
+    },
+    "Clear all browsing history?" : {
+
+    },
+    "Clear All Data" : {
+
+    },
+    "Clear all favorites?" : {
+
+    },
+    "Clear Favorites" : {
+      "comment" : "settings button to clear favorites"
+    },
     "Clear History" : {
-      "comment" : "history page remove all sheet title",
+      "comment" : "history page remove all sheet title\nsettings button to clear browsing history",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1796,6 +1814,12 @@
           }
         }
       }
+    },
+    "Data" : {
+
+    },
+    "Desktop Site" : {
+
     },
     "Dogpile" : {
       "comment" : "search engine name for Dogpile",
@@ -4988,6 +5012,9 @@
     "Loading..." : {
 
     },
+    "Mobile Site" : {
+
+    },
     "More" : {
       "comment" : "more button label",
       "extractionState" : "stale",
@@ -6057,6 +6084,9 @@
           }
         }
       }
+    },
+    "Page Load Haptics" : {
+      "comment" : "settings toggle label for page load haptic feedback"
     },
     "Qwant" : {
       "comment" : "search engine name for Qwant",
@@ -8881,6 +8911,12 @@
           }
         }
       }
+    },
+    "Zoom In" : {
+      "comment" : "zoom in button label"
+    },
+    "Zoom Out" : {
+      "comment" : "zoom out button label"
     }
   },
   "version" : "1.0"

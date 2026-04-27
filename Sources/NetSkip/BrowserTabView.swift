@@ -46,6 +46,8 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
     @AppStorage("userAgent") var userAgent: String = ""
     @AppStorage("blockAds") var blockAds: Bool = true
     @AppStorage("enableJavaScript") var enableJavaScript: Bool = true
+    @AppStorage("requestDesktopSite") var requestDesktopSite: Bool = false
+    @AppStorage("textZoom") var textZoom: Double = 1.0
     @AppStorage("selectedTabState") var selectedTabState: String = "" // app storage does not support Int64 (PageInfo.ID), so we serialize it as a string
 
     public init(configuration: WebEngineConfiguration, store: WebBrowserStore) {
@@ -92,7 +94,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
         /// We need to wrap a separate BrowserView because @AppStorage does not trigger `onChange` events, which we need to synchronize between the browser state and the preferences
         TabView(selection: $selectedTab) {
             ForEach($tabs) { tab in
-                BrowserView(configuration: configuration, store: store, submitURL: { self.submitURL(text: $0) }, viewModel: tab, searchEngine: $searchEngine, searchSuggestions: $searchSuggestions, showSettings: $showSettings, showBottomBar: $showBottomBar, userAgent: $userAgent, blockAds: $blockAds, enableJavaScript: $enableJavaScript)
+                BrowserView(configuration: configuration, store: store, submitURL: { self.submitURL(text: $0) }, viewModel: tab, searchEngine: $searchEngine, searchSuggestions: $searchSuggestions, showSettings: $showSettings, showBottomBar: $showBottomBar, userAgent: $userAgent, blockAds: $blockAds, enableJavaScript: $enableJavaScript, pageLoadHaptics: $pageLoadHaptics, requestDesktopSite: $requestDesktopSite, textZoom: $textZoom)
             }
         }
         //.toolbarBackground(Color.clear, for: .bottomBar)
@@ -138,7 +140,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
     }
 
     func settingsView() -> some View {
-        SettingsView(configuration: configuration, appearance: $appearance, buttonHaptics: $buttonHaptics, pageLoadHaptics: $pageLoadHaptics, searchEngine: $searchEngine, searchSuggestions: $searchSuggestions, userAgent: $userAgent, blockAds: $blockAds, enableJavaScript: $enableJavaScript)
+        SettingsView(configuration: configuration, store: store, appearance: $appearance, buttonHaptics: $buttonHaptics, pageLoadHaptics: $pageLoadHaptics, searchEngine: $searchEngine, searchSuggestions: $searchSuggestions, userAgent: $userAgent, blockAds: $blockAds, enableJavaScript: $enableJavaScript)
             #if !SKIP
             .environment(\.openURL, openURLAction(newTab: true))
             #endif
@@ -635,6 +637,32 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
 
             Divider()
 
+            Button(action: zoomInAction) {
+                Label {
+                    Text("Zoom In", bundle: .module, comment: "zoom in button label")
+                } icon: {
+                    Image("zoom_in", bundle: .module)
+                }
+            }
+
+            Button(action: zoomOutAction) {
+                Label {
+                    Text("Zoom Out", bundle: .module, comment: "zoom out button label")
+                } icon: {
+                    Image("zoom_out", bundle: .module)
+                }
+            }
+
+            Button(action: toggleDesktopSiteAction) {
+                Label {
+                    Text(requestDesktopSite ? "Mobile Site" : "Desktop Site", bundle: .module, comment: "desktop/mobile site toggle button label")
+                } icon: {
+                    Image(requestDesktopSite ? "smartphone" : "computer", bundle: .module)
+                }
+            }
+
+            Divider()
+
             Button(action: settingsAction) {
                 Label {
                     Text("Settings", bundle: .module, comment: "settings button label")
@@ -874,6 +902,25 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
         logger.info("settingsAction")
         hapticFeedback()
         showSettings = true
+    }
+
+    func zoomInAction() {
+        logger.info("zoomInAction")
+        hapticFeedback()
+        textZoom = min(textZoom + 0.1, 3.0)
+    }
+
+    func zoomOutAction() {
+        logger.info("zoomOutAction")
+        hapticFeedback()
+        textZoom = max(textZoom - 0.1, 0.5)
+    }
+
+    func toggleDesktopSiteAction() {
+        logger.info("toggleDesktopSiteAction: \(!requestDesktopSite)")
+        hapticFeedback()
+        requestDesktopSite.toggle()
+        currentNavigator?.reload()
     }
 
 }

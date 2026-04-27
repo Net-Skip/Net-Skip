@@ -36,6 +36,7 @@ public struct ContentView: View {
 
         for blockerID in [
             "block-ads",
+            "block-cookies",
         ] {
             if let blockerURL = Bundle.module.url(forResource: blockerID, withExtension: "json") {
                 logger.info("loading content blocker rules from: \(blockerURL)")
