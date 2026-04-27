@@ -131,6 +131,12 @@ import NetSkipModel
         if let webView = self.webView {
             webView.pageZoom = textZoom
         }
+        #else
+        // Android: use the native WebView settings.textZoom (integer percentage)
+        if let webView = self.webView {
+            let pct = Int(textZoom * 100.0)
+            webView.getSettings().setTextZoom(pct)
+        }
         #endif
     }
 

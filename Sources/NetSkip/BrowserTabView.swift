@@ -31,6 +31,8 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
     @State var showFavorites = false
     @State var showHistoryFavorites = false
     @State var historyFavoriesSelection = 1
+    @State var showFindBar = false
+    @State var findText = ""
 
     @State var triggerImpact = false
     @State var triggerWarning = false
@@ -56,7 +58,12 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
     }
 
     public var body: some View {
-        browserTabView()
+        VStack(spacing: 0) {
+            browserTabView()
+            if showFindBar {
+                findBar()
+            }
+        }
             .toolbar {
                 ToolbarItemGroup(placement: toolbarPlacement) {
                     backButton()
@@ -427,36 +434,29 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
 
 
     func historyFavoritesPageInfoTabView() -> some View {
-        TabView(selection: $historyFavoriesSelection,
-                content:  {
-            NavigationStack {
-                pageInfoPicker()
-                historyPageInfoView()
-            }
-            .tag(1)
-            NavigationStack {
-                pageInfoPicker()
-                favoritesPageInfoView()
-            }
-            .tag(2)
-        })
-        #if !SKIP
-        .presentationDetents([.medium, .large])
-        .presentationDragIndicator(.hidden)
-        #endif
-    }
+        NavigationStack {
+            VStack(spacing: 0) {
+                Picker(selection: $historyFavoriesSelection) {
+                    Text("History", bundle: .module, comment: "tab selection for viewing the history list")
+                        .tag(1)
+                    Text("Favorites", bundle: .module, comment: "tab selection for viewing the favorites list")
+                        .tag(2)
+                } label: {
+                    EmptyView()
+                }
+                .pickerStyle(.segmented)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 8)
 
-    func pageInfoPicker() -> some View {
-        Picker(selection: $historyFavoriesSelection) {
-            Text("History", bundle: .module, comment: "tab selection for viewing the history list")
-                .tag(1)
-            Text("Favorites", bundle: .module, comment: "tab selection for viewing the favorites list")
-                .tag(2)
-        } label: {
-            EmptyView()
+                if historyFavoriesSelection == 1 {
+                    historyPageInfoView()
+                } else {
+                    favoritesPageInfoView()
+                }
+            }
         }
         #if !SKIP
-        .pickerStyle(.segmented)
+        .presentationDetents([.medium, .large])
         #endif
     }
 
@@ -598,7 +598,55 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
         .accessibilityIdentifier("button.tabs")
     }
 
+    @ViewBuilder func findBar() -> some View {
+        HStack(spacing: 8) {
+            TextField("Find on page", text: $findText)
+                .textFieldStyle(.plain)
+                .font(.system(size: 15))
+                #if !SKIP
+                .autocorrectionDisabled(true)
+                #endif
+                .onSubmit {
+                    executeFindOnPage(findText)
+                }
+                .padding(.horizontal, 8)
+                .padding(.vertical, 6)
+                .background(Color.gray.opacity(0.15))
+                .cornerRadius(8)
+
+            Button(action: {
+                executeFindOnPage(findText)
+            }) {
+                Image("magnifyingglass", bundle: .module)
+                    .foregroundStyle(Color.accentColor)
+            }
+            .buttonStyle(.plain)
+            .disabled(findText.isEmpty)
+
+            Button(action: {
+                clearFindHighlights()
+                showFindBar = false
+                findText = ""
+            }) {
+                Image("xmark", bundle: .module)
+                    .foregroundStyle(.secondary)
+            }
+            .buttonStyle(.plain)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 6)
+        .background(Color(white: 0.95))
+    }
+
     @ViewBuilder func tabCountIcon() -> some View {
+        #if !SKIP
+        // iOS: Label icons in toolbars require a static Image, not a dynamic view.
+        // Pre-render the tab count badge to a UIImage via ImageRenderer and cache it.
+        let img = Self.renderedTabCountImage(for: tabs.count)
+        Image(uiImage: img)
+            .renderingMode(.template)
+        #else
+        // Android/Skip: dynamic views work fine as toolbar icons
         ZStack {
             RoundedRectangle(cornerRadius: 4)
                 .strokeBorder(lineWidth: 1.5)
@@ -606,7 +654,34 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
             Text("\(tabs.count)")
                 .font(.system(size: 11, weight: .bold))
         }
+        #endif
     }
+
+    #if !SKIP
+    /// Cache of pre-rendered tab count badge images keyed by count.
+    private static var tabCountImageCache: [Int: UIImage] = [:]
+
+    /// Returns a cached UIImage for the given tab count, rendering it if needed.
+    private static func renderedTabCountImage(for count: Int) -> UIImage {
+        if let cached = tabCountImageCache[count] {
+            return cached
+        }
+        let badge = ZStack {
+            RoundedRectangle(cornerRadius: 4)
+                .strokeBorder(lineWidth: 1.5)
+                .frame(width: 22, height: 22)
+            Text("\(count)")
+                .font(.system(size: 11, weight: .bold))
+        }
+        .foregroundStyle(Color.primary)
+
+        let renderer = ImageRenderer(content: badge)
+        renderer.scale = UIScreen.main.scale
+        let image = renderer.uiImage ?? UIImage()
+        tabCountImageCache[count] = image
+        return image
+    }
+    #endif
 
     @ViewBuilder func hamburgerMenu() -> some View {
         Menu {
@@ -849,8 +924,29 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
         #if !SKIP
         if let interaction = currentWebView?.findInteraction {
             interaction.presentFindNavigator(showingReplace: false)
+            return
         }
         #endif
+        // Fallback: show the custom find bar (used on Android, or iOS without findInteraction)
+        showFindBar = true
+        findText = ""
+    }
+
+    func executeFindOnPage(_ text: String) {
+        guard !text.isEmpty else { return }
+        if let engine = currentViewModel?.navigator.webEngine {
+            Task {
+                _ = try? await engine.evaluate(js: "window.find('\(text.replacingOccurrences(of: "'", with: "\\'"))', false, false, true)")
+            }
+        }
+    }
+
+    func clearFindHighlights() {
+        if let engine = currentViewModel?.navigator.webEngine {
+            Task {
+                _ = try? await engine.evaluate(js: "window.getSelection().removeAllRanges()")
+            }
+        }
     }
 
     func newTabAction(url: String? = nil) {
