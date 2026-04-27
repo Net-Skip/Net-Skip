@@ -16,14 +16,11 @@ import NetSkipModel
     @Binding var showSettings: Bool
     @Binding var showBottomBar: Bool
     @Binding var userAgent: String
-    @Binding var blockAds: Bool
     @Binding var enableJavaScript: Bool
     @Binding var pageLoadHaptics: Bool
     @Binding var requestDesktopSite: Bool
     @Binding var textZoom: Double
 
-    /// Whether content rules are currently enabled
-    @State var contentRulesEnabled: Bool = false
     @State var currentSuggestions: SearchSuggestions?
     @State var triggerPageLoadHaptic: Bool = false
 
@@ -40,6 +37,7 @@ import NetSkipModel
 
     var body: some View {
         VStack(spacing: 0.0) {
+            urlBarView()
             ZStack {
                 WebView(configuration: configuration, navigator: viewModel.navigator, state: $viewModel.state, onNavigationCommitted: {
                     logger.log("onNavigationCommitted")
@@ -53,7 +51,6 @@ import NetSkipModel
                         .frame(maxHeight: .infinity)
                 }
             }
-            urlBarView()
         }
         .frame(maxHeight: .infinity)
         #if !SKIP
@@ -63,15 +60,8 @@ import NetSkipModel
             updateWebView()
         }
         .onChange(of: enableJavaScript, initial: false, { _, _ in self.updateWebView() })
-        .onChange(of: blockAds, initial: false, { _, _ in self.updateWebView() })
         .onChange(of: requestDesktopSite, initial: false, { _, _ in self.updateWebView() })
         .onChange(of: textZoom, initial: false, { _, _ in self.applyTextZoom() })
-        #if !SKIP
-        .onReceive(NotificationCenter.default.publisher(for: .webContentRulesLoaded).receive(on: DispatchQueue.main)) { _ in
-            logger.log("reveived webContentRulesLoaded")
-            updateWebView()
-        }
-        #endif
     }
 
     struct SearchSuggestions : Identifiable {
@@ -103,30 +93,6 @@ import NetSkipModel
             webView.customUserAgent = userAgent
         } else {
             webView.customUserAgent = nil // use default
-        }
-
-        if blockAds == true && self.contentRulesEnabled == false {
-            WebContentRuleListStore.default().getAvailableContentRuleListIdentifiers { contentRuleIDs in
-                guard let contentRuleID = contentRuleIDs?.first else {
-                    logger.log("updateWebView: content rules: no identifiers found")
-                    return
-                }
-                logger.log("updateWebView: content rules: enabling \(contentRuleID)")
-                WebContentRuleListStore.default().lookUpContentRuleList(forIdentifier: contentRuleID) { contentRuleList, error in
-                    logger.log("updateWebView: lookup content rule \(contentRuleID) \(contentRuleList) \(error)")
-                    if let contentRuleList = contentRuleList {
-                        DispatchQueue.main.async {
-                            logger.log("updateWebView: activating contentRuleList: \(contentRuleList)")
-                            webView.configuration.userContentController.add(contentRuleList)
-                            self.contentRulesEnabled = true
-                        }
-                    }
-                }
-            }
-        } else if blockAds == false && self.contentRulesEnabled == true {
-            logger.log("updateWebView: content rules: disabling content rules")
-            self.contentRulesEnabled = false
-            webView.configuration.userContentController.removeAllContentRuleLists()
         }
         #endif
     }

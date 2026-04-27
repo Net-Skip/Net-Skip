@@ -63,11 +63,11 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
                     Spacer()
                     forwardButton()
                     Spacer()
-                    shareButton()
+                    tabsButton()
                     Spacer()
                     showHistoryFavoritesButton()
                     Spacer()
-                    tabsButton()
+                    hamburgerMenu()
                 }
             }
         .background(Color.clear)
@@ -94,7 +94,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
         /// We need to wrap a separate BrowserView because @AppStorage does not trigger `onChange` events, which we need to synchronize between the browser state and the preferences
         TabView(selection: $selectedTab) {
             ForEach($tabs) { tab in
-                BrowserView(configuration: configuration, store: store, submitURL: { self.submitURL(text: $0) }, viewModel: tab, searchEngine: $searchEngine, searchSuggestions: $searchSuggestions, showSettings: $showSettings, showBottomBar: $showBottomBar, userAgent: $userAgent, blockAds: $blockAds, enableJavaScript: $enableJavaScript, pageLoadHaptics: $pageLoadHaptics, requestDesktopSite: $requestDesktopSite, textZoom: $textZoom)
+                BrowserView(configuration: configuration, store: store, submitURL: { self.submitURL(text: $0) }, viewModel: tab, searchEngine: $searchEngine, searchSuggestions: $searchSuggestions, showSettings: $showSettings, showBottomBar: $showBottomBar, userAgent: $userAgent, enableJavaScript: $enableJavaScript, pageLoadHaptics: $pageLoadHaptics, requestDesktopSite: $requestDesktopSite, textZoom: $textZoom)
             }
         }
         //.toolbarBackground(Color.clear, for: .bottomBar)
@@ -140,7 +140,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
     }
 
     func settingsView() -> some View {
-        SettingsView(configuration: configuration, store: store, appearance: $appearance, buttonHaptics: $buttonHaptics, pageLoadHaptics: $pageLoadHaptics, searchEngine: $searchEngine, searchSuggestions: $searchSuggestions, userAgent: $userAgent, blockAds: $blockAds, enableJavaScript: $enableJavaScript)
+        SettingsView(configuration: configuration, store: store, appearance: $appearance, buttonHaptics: $buttonHaptics, pageLoadHaptics: $pageLoadHaptics, searchEngine: $searchEngine, searchSuggestions: $searchSuggestions, userAgent: $userAgent, enableJavaScript: $enableJavaScript)
             #if !SKIP
             .environment(\.openURL, openURLAction(newTab: true))
             #endif
@@ -558,18 +558,6 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
         }
     }
 
-    @ViewBuilder func shareButton() -> some View {
-        ShareLink(item: currentState?.pageURL ?? fallbackURL) {
-            Label {
-                Text("Share", bundle: .module, comment: "share button label")
-            } icon: {
-                Image("ios_share", bundle: .module)
-            }
-        }
-        .disabled(currentState?.pageURL == nil)
-        .accessibilityIdentifier("button.share")
-    }
-
     @ViewBuilder func showHistoryFavoritesButton() -> some View {
         Button(action: showHistoryFavoritesAction) {
             Label {
@@ -585,24 +573,43 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
         Menu {
             Button(action: { newTabAction() }) {
                 Label {
-                    Text("New Tab", bundle: .module, comment: "more button string for creating a new tab")
+                    Text("New Tab", bundle: .module, comment: "new tab button label")
                 } icon: {
                     Image("plus", bundle: .module)
                 }
             }
-            .accessibilityIdentifier("menu.button.newtab")
 
             Button(action: closeTabAction) {
                 Label {
-                    Text("Close Tab", bundle: .module, comment: "more button string for closing a tab")
+                    Text("Close Tab", bundle: .module, comment: "close tab button label")
                 } icon: {
                     Image("xmark", bundle: .module)
                 }
             }
-            .accessibilityIdentifier("menu.button.close")
+        } label: {
+            Label {
+                Text("Tabs", bundle: .module, comment: "tabs button label")
+            } icon: {
+                tabCountIcon()
+            }
+        } primaryAction: {
+            tabListAction()
+        }
+        .accessibilityIdentifier("button.tabs")
+    }
 
-            Divider()
+    @ViewBuilder func tabCountIcon() -> some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 4)
+                .strokeBorder(lineWidth: 1.5)
+                .frame(width: 22, height: 22)
+            Text("\(tabs.count)")
+                .font(.system(size: 11, weight: .bold))
+        }
+    }
 
+    @ViewBuilder func hamburgerMenu() -> some View {
+        Menu {
             Button(action: reloadAction) {
                 Label {
                     Text("Reload", bundle: .module, comment: "reload button label")
@@ -627,11 +634,39 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
                 }
             }
 
+            Divider()
+
             Button(action: favoriteAction) {
                 Label {
                     Text("Add to Favorites", bundle: .module, comment: "add to favorites button label")
                 } icon: {
                     Image("star", bundle: .module)
+                }
+            }
+
+            ShareLink(item: currentState?.pageURL ?? fallbackURL) {
+                Label {
+                    Text("Share", bundle: .module, comment: "share button label")
+                } icon: {
+                    Image("ios_share", bundle: .module)
+                }
+            }
+
+            Divider()
+
+            Button(action: favoritesAction) {
+                Label {
+                    Text("Bookmarks", bundle: .module, comment: "bookmarks menu label")
+                } icon: {
+                    Image("book", bundle: .module)
+                }
+            }
+
+            Button(action: historyAction) {
+                Label {
+                    Text("History", bundle: .module, comment: "history menu label")
+                } icon: {
+                    Image("history", bundle: .module)
                 }
             }
 
@@ -655,7 +690,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
 
             Button(action: toggleDesktopSiteAction) {
                 Label {
-                    Text(requestDesktopSite ? "Mobile Site" : "Desktop Site", bundle: .module, comment: "desktop/mobile site toggle button label")
+                    Text(requestDesktopSite ? "Mobile Site" : "Desktop Site", bundle: .module, comment: "desktop/mobile site toggle")
                 } icon: {
                     Image(requestDesktopSite ? "smartphone" : "computer", bundle: .module)
                 }
@@ -672,24 +707,12 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
             }
         } label: {
             Label {
-                Text("Tabs", bundle: .module, comment: "tabs button label")
+                Text("Menu", bundle: .module, comment: "hamburger menu label")
             } icon: {
-                tabCountIcon()
+                Image("menu", bundle: .module)
             }
-        } primaryAction: {
-            tabListAction()
         }
-        .accessibilityIdentifier("button.tabs")
-    }
-
-    @ViewBuilder func tabCountIcon() -> some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 4)
-                .strokeBorder(lineWidth: 1.5)
-                .frame(width: 22, height: 22)
-            Text("\(tabs.count)")
-                .font(.system(size: 11, weight: .bold))
-        }
+        .accessibilityIdentifier("button.menu")
     }
 
     @ViewBuilder func backHistoryMenu() -> some View {

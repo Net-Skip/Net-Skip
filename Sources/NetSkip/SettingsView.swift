@@ -18,7 +18,6 @@ struct SettingsView : View {
     @Binding var searchEngine: SearchEngine.ID
     @Binding var searchSuggestions: Bool
     @Binding var userAgent: String
-    @Binding var blockAds: Bool
     @Binding var enableJavaScript: Bool
 
     @State var confirmClearHistory: Bool = false
@@ -61,13 +60,16 @@ struct SettingsView : View {
                 })
             }
 
-            Section {
+            Section("Privacy") {
                 Toggle(isOn: $enableJavaScript, label: {
                     Text("Enable JavaScript", bundle: .module, comment: "settings toggle label for enabling JavaScript")
                 })
-                Toggle(isOn: $blockAds, label: {
-                    Text("Block Ads", bundle: .module, comment: "settings toggle label for blocking ads")
-                })
+                HStack {
+                    Text("Ad & Tracker Blocking", bundle: .module, comment: "settings label for content blocking status")
+                    Spacer()
+                    Text("On", bundle: .module, comment: "content blocking enabled label")
+                        .foregroundStyle(.secondary)
+                }
             }
 
             Section("Data") {

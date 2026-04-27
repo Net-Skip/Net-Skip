@@ -189,6 +189,9 @@
         }
       }
     },
+    "Ad & Tracker Blocking" : {
+      "comment" : "settings label for content blocking status"
+    },
     "Add to Favorites" : {
       "comment" : "add to favorites button label"
     },
@@ -898,6 +901,7 @@
     },
     "Block Ads" : {
       "comment" : "settings toggle label for blocking ads",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1076,7 +1080,7 @@
       }
     },
     "Bookmarks" : {
-      "comment" : "bookmarks button label"
+      "comment" : "bookmarks button label\nbookmarks menu label"
     },
     "Cancel" : {
       "comment" : "cancel button for dismissing suggestions"
@@ -1458,7 +1462,7 @@
       }
     },
     "Close Tab" : {
-      "comment" : "more button string for closing a tab",
+      "comment" : "close tab button label",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4120,7 +4124,7 @@
       }
     },
     "History" : {
-      "comment" : "history page list sheet title\ntab selection for viewing the history list",
+      "comment" : "history menu label\nhistory page list sheet title\ntab selection for viewing the history list",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5012,6 +5016,9 @@
     "Loading..." : {
 
     },
+    "Menu" : {
+      "comment" : "hamburger menu label"
+    },
     "Mobile Site" : {
 
     },
@@ -5549,7 +5556,7 @@
       }
     },
     "New Tab" : {
-      "comment" : "more button string for creating a new tab",
+      "comment" : "new tab button label",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -6085,8 +6092,14 @@
         }
       }
     },
+    "On" : {
+      "comment" : "content blocking enabled label"
+    },
     "Page Load Haptics" : {
       "comment" : "settings toggle label for page load haptic feedback"
+    },
+    "Privacy" : {
+
     },
     "Qwant" : {
       "comment" : "search engine name for Qwant",
