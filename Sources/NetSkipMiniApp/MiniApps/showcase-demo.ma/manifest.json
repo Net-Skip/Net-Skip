@@ -1,0 +1,16 @@
+{
+    "app_id": "tools.skip.showcase.demo",
+    "name": "MiniApp Demo",
+    "short_name": "Demo",
+    "description": "A simple demonstration of MiniApp capabilities",
+    "lang": "en",
+    "icons": [{ "src": "icon.png", "sizes": "48x48" }],
+    "version": { "code": 1, "name": "1.0.0" },
+    "platform_version": { "min_code": 1 },
+    "pages": ["pages/index/index"],
+    "window": {
+        "navigation_bar_title_text": "MiniApp Demo",
+        "background_color": "#f0f4f8",
+        "navigation_style": "custom"
+    }
+}

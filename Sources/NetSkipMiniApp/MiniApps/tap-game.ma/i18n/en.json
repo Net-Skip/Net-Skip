@@ -1,0 +1,11 @@
+{
+    "game.title": "Tap Game",
+    "game.subtitle": "Tap the targets as fast as you can!",
+    "game.start": "Start",
+    "game.playAgain": "Play Again",
+    "game.over": "Time's Up!",
+    "game.score": "Score",
+    "game.time": "Time",
+    "game.best": "Best",
+    "game.newBest": "New best score: {score}"
+}

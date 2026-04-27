@@ -42,9 +42,6 @@ import NetSkipModel
                 WebView(configuration: configuration, navigator: viewModel.navigator, state: $viewModel.state, onNavigationCommitted: {
                     logger.log("onNavigationCommitted")
                 })
-                .refreshable {
-                    viewModel.navigator.reload()
-                }
                 let showSuggestions = state.pageURL == nil || isURLBarFocused
                 if showSuggestions {
                     suggestionsView()
@@ -196,12 +193,10 @@ import NetSkipModel
             // .opacity(0) because iOS skips hit testing for invisible views.
             HStack(spacing: 6) {
                 TextField(text: $viewModel.urlTextField) {
-                    // Use an empty placeholder — the domain overlay handles this visually
                     Text(isURLBarFocused ? "Search or enter website name" : "")
                 }
                 .textFieldStyle(.plain)
                 .font(.system(size: isURLBarFocused ? 16.0 : 15.0))
-                // Make text invisible when not focused so the overlay shows through
                 .foregroundStyle(isURLBarFocused ? Color.primary : Color.clear)
                 #if !SKIP
                 #if os(iOS)
@@ -246,6 +241,22 @@ import NetSkipModel
                             #if !SKIP
                             .symbolRenderingMode(.hierarchical)
                             #endif
+                    })
+                    .buttonStyle(.plain)
+                } else if state.isLoading {
+                    // Stop loading button
+                    Button(action: { self.viewModel.navigator.stopLoading() }, label: {
+                        Image("xmark", bundle: .module)
+                            .font(.system(size: 14))
+                            .foregroundStyle(.secondary)
+                    })
+                    .buttonStyle(.plain)
+                } else if state.pageURL != nil {
+                    // Reload button
+                    Button(action: { self.viewModel.navigator.reload() }, label: {
+                        Image("arrow.clockwise", bundle: .module)
+                            .font(.system(size: 14))
+                            .foregroundStyle(.secondary)
                     })
                     .buttonStyle(.plain)
                 }

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../app.css">
+    <link rel="stylesheet" href="index.css">
+    <title>MiniApp Demo</title>
+</head>
+<body x-data="page">
+    <h1 x-text="$t('app.title')">MINIAPP DEMO</h1>
+
+    <div class="card">
+        <h2 x-text="$t('counter.title')">COUNTER</h2>
+        <div class="counter-display" x-text="store.count">0</div>
+        <div style="text-align:center">
+            <button @click="onDecrement">-</button>
+            <button @click="onIncrement">+</button>
+            <button @click="onResetCount" x-text="$t('counter.reset')">Reset</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2 x-text="$t('notepad.title')">NOTEPAD</h2>
+        <input x-model="store.noteInput" :placeholder="$t('notepad.placeholder')">
+        <div style="text-align:center">
+            <button @click="onSaveNote" x-text="$t('notepad.save')">Save</button>
+            <button @click="onLoadNote" x-text="$t('notepad.load')">Load</button>
+        </div>
+        <div class="note-saved" x-text="store.noteStatus"></div>
+    </div>
+
+    <div class="card">
+        <h2 x-text="$t('network.title')">NETWORK REQUESTS</h2>
+        <div style="text-align:center">
+            <button @click="onDoGet" x-text="$t('network.get')">GET</button>
+            <button @click="onDoPost" x-text="$t('network.post')">POST JSON</button>
+            <button @click="onDoHeaders" x-text="$t('network.headers')">Headers</button>
+            <button @click="onDoStatus404" x-text="$t('network.status404')">404 Status</button>
+        </div>
+        <div class="result-box" x-text="store.networkResult"></div>
+    </div>
+
+    <div class="card">
+        <h2 x-text="$t('sysinfo.title')">SYSTEM INFO</h2>
+        <div class="result-box" x-text="store.sysInfo"></div>
+    </div>
+
+    <div class="card">
+        <h2 x-text="$t('animation.title')">ANIMATION</h2>
+        <div class="anim-container">
+            <div :class="store.spinning ? 'anim-box spinning' : 'anim-box'"></div>
+        </div>
+        <div style="text-align:center">
+            <button @click="onToggleAnim" x-text="$t('animation.toggle')">Toggle</button>
+        </div>
+    </div>
+</body>
+</html>

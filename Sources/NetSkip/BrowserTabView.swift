@@ -2,6 +2,7 @@
 import SwiftUI
 import SkipWeb
 import NetSkipModel
+import NetSkipMiniApp
 
 #if SKIP || os(iOS)
 
@@ -50,7 +51,12 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
     @AppStorage("enableJavaScript") var enableJavaScript: Bool = true
     @AppStorage("requestDesktopSite") var requestDesktopSite: Bool = false
     @AppStorage("textZoom") var textZoom: Double = 1.0
-    @AppStorage("selectedTabState") var selectedTabState: String = "" // app storage does not support Int64 (PageInfo.ID), so we serialize it as a string
+    @AppStorage("enableMiniApps") var enableMiniApps: Bool = false
+    @AppStorage("selectedTabState") var selectedTabState: String = ""
+
+    @State var tabsSegment: Int = 1 // 1 = Pages, 2 = Apps
+    @State var runningMiniApps: Set<String> = [] // IDs of launched miniapps
+    @State var activeMiniAppItem: MiniAppLaunchItem? = nil // app storage does not support Int64 (PageInfo.ID), so we serialize it as a string
 
     public init(configuration: WebEngineConfiguration, store: WebBrowserStore) {
         self.configuration = configuration
@@ -147,7 +153,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
     }
 
     func settingsView() -> some View {
-        SettingsView(configuration: configuration, store: store, appearance: $appearance, buttonHaptics: $buttonHaptics, pageLoadHaptics: $pageLoadHaptics, searchEngine: $searchEngine, searchSuggestions: $searchSuggestions, userAgent: $userAgent, enableJavaScript: $enableJavaScript)
+        SettingsView(configuration: configuration, store: store, appearance: $appearance, buttonHaptics: $buttonHaptics, pageLoadHaptics: $pageLoadHaptics, searchEngine: $searchEngine, searchSuggestions: $searchSuggestions, userAgent: $userAgent, enableJavaScript: $enableJavaScript, enableMiniApps: $enableMiniApps)
             #if !SKIP
             .environment(\.openURL, openURLAction(newTab: true))
             #endif
@@ -252,26 +258,41 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
 
     func activeTabsView() -> some View {
         NavigationStack {
-            ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 160), spacing: 12)], spacing: 12) {
-                    ForEach(tabs) { tab in
-                        tabCardView(tab: tab)
+            VStack(spacing: 0) {
+                if enableMiniApps {
+                    Picker(selection: $tabsSegment) {
+                        Text("Pages", bundle: .module, comment: "tab segment for pages")
+                            .tag(1)
+                        Text("Apps", bundle: .module, comment: "tab segment for miniapps")
+                            .tag(2)
+                    } label: {
+                        EmptyView()
                     }
+                    .pickerStyle(.segmented)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
                 }
-                .padding(12)
+
+                if tabsSegment == 1 || !enableMiniApps {
+                    pagesTabContent
+                } else {
+                    miniAppsTabContent
+                }
             }
             .background(Color(white: 0.12))
-            .navigationTitle(Text("\(tabs.count) Tabs", bundle: .module, comment: "tab count title"))
+            .navigationTitle(Text(tabsSegment == 1 || !enableMiniApps ? "\(tabs.count) Tabs" : "Mini Apps", bundle: .module, comment: "tabs title"))
             #if !SKIP
             .navigationBarTitleDisplayMode(.inline)
             #endif
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button(action: {
-                        newTabAction()
-                        showActiveTabs = false
-                    }) {
-                        Image("plus", bundle: .module)
+                    if tabsSegment == 1 || !enableMiniApps {
+                        Button(action: {
+                            newTabAction()
+                            showActiveTabs = false
+                        }) {
+                            Image("plus", bundle: .module)
+                        }
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
@@ -287,6 +308,110 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
         #if !SKIP
         .presentationDetents([.medium, .large])
         #endif
+    }
+
+    var pagesTabContent: some View {
+        ScrollView {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 160), spacing: 12)], spacing: 12) {
+                ForEach(tabs) { tab in
+                    tabCardView(tab: tab)
+                }
+            }
+            .padding(12)
+        }
+    }
+
+    var miniAppsTabContent: some View {
+        ScrollView {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 160), spacing: 12)], spacing: 12) {
+                ForEach(sampleMiniApps) { app in
+                    miniAppCardView(app: app)
+                }
+            }
+            .padding(12)
+        }
+        .sheet(item: $activeMiniAppItem) { item in
+            miniAppSheet(appID: item.appID)
+        }
+    }
+
+    @ViewBuilder func miniAppCardView(app: MiniAppCatalogEntry) -> some View {
+        let isRunning = runningMiniApps.contains(app.id)
+
+        Button {
+            activeMiniAppItem = MiniAppLaunchItem(appID: app.id)
+            if !isRunning {
+                runningMiniApps.insert(app.id)
+            }
+        } label: {
+            VStack(alignment: .leading, spacing: 0) {
+                // Title bar
+                HStack(spacing: 4) {
+                    Image("widgets", bundle: .module)
+                        .font(.system(size: 10))
+                        .foregroundStyle(Color.white.opacity(0.7))
+                    Text(app.name)
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundStyle(Color.white)
+                        .lineLimit(1)
+                    Spacer(minLength: 4)
+                    if isRunning {
+                        Button {
+                            closeMiniApp(id: app.id)
+                        } label: {
+                            Image("close", bundle: .module)
+                                .font(.system(size: 10, weight: .bold))
+                                .foregroundStyle(Color.white.opacity(0.6))
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+                .padding(.horizontal, 10)
+                .padding(.vertical, 8)
+                .background(isRunning ? Color.accentColor : Color(white: 0.28))
+
+                // Content area
+                ZStack {
+                    Color(white: 0.95)
+                    VStack(spacing: 6) {
+                        Image("widgets", bundle: .module)
+                            .font(.system(size: 28))
+                            .foregroundStyle(isRunning ? Color.accentColor : Color.gray.opacity(0.4))
+                        Text(isRunning ? "Tap to resume" : app.description)
+                            .font(.system(size: 11))
+                            .foregroundStyle(Color.gray.opacity(0.7))
+                            .multilineTextAlignment(.center)
+                            .lineLimit(2)
+                            .padding(.horizontal, 8)
+                    }
+                }
+                .frame(height: 140)
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .strokeBorder(isRunning ? Color.accentColor : Color(white: 0.3), lineWidth: isRunning ? 2.0 : 0.5)
+            )
+            .shadow(color: .black.opacity(0.3), radius: 3, y: 2)
+        }
+        .buttonStyle(.plain)
+    }
+
+    func miniAppSheet(appID: String) -> some View {
+        Group {
+            if let entry = sampleMiniApps.first(where: { $0.id == appID }) {
+                MiniAppHostingView(entry: entry, onDismiss: {
+                    activeMiniAppItem = nil
+                })
+            }
+        }
+    }
+
+    func closeMiniApp(id: String) {
+        runningMiniApps.remove(id)
+        // Clear the miniapp's persistent storage
+        let storageDir = miniAppStorageBaseDirectory.appendingPathComponent(id)
+        try? FileManager.default.removeItem(at: storageDir)
     }
 
     @ViewBuilder func tabCardView(tab: BrowserViewModel) -> some View {
@@ -1070,6 +1195,11 @@ struct TitleView : View {
         self.configuration = configuration
         self.store = store
     }
+}
+
+struct MiniAppLaunchItem: Identifiable {
+    let appID: String
+    var id: String { appID }
 }
 
 #endif

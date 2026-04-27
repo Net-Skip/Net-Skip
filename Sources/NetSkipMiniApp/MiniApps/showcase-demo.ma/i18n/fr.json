@@ -1,0 +1,22 @@
+{
+    "app.title": "Démo MiniApp",
+    "counter.title": "Compteur",
+    "counter.reset": "Réinitialiser",
+    "notepad.title": "Bloc-notes",
+    "notepad.placeholder": "Écrivez une note...",
+    "notepad.save": "Enregistrer",
+    "notepad.load": "Charger",
+    "notepad.saved": "Enregistré !",
+    "notepad.loaded": "Chargé : {note}",
+    "notepad.notFound": "Aucune note enregistrée",
+    "network.title": "Requêtes réseau",
+    "network.get": "GET",
+    "network.post": "POST JSON",
+    "network.headers": "En-têtes",
+    "network.status404": "Statut 404",
+    "network.loading": "Chargement...",
+    "network.tapPrompt": "Appuyez sur un bouton pour lancer une requête",
+    "sysinfo.title": "Infos système",
+    "animation.title": "Animation",
+    "animation.toggle": "Basculer"
+}

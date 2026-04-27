@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../app.css">
+    <link rel="stylesheet" href="home.css">
+</head>
+<body x-data="page">
+    <div class="page-title" x-text="store.greeting"></div>
+
+    <div class="card">
+        <div class="card-title" x-text="$t('home.dashboard')"></div>
+        <div class="stat-row">
+            <div class="stat-item">
+                <div class="stat-value" x-text="store.visitCount"></div>
+                <div class="stat-label" x-text="$t('home.visits')"></div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">3</div>
+                <div class="stat-label" x-text="$t('home.tabs')"></div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">10</div>
+                <div class="stat-label" x-text="$t('home.maxDepth')"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title" x-text="$t('home.navDemo')"></div>
+        <p style="font-size: 14px; color: #666; margin-bottom: 12px;" x-text="$t('home.navDescription')"></p>
+        <p style="font-size: 13px; color: #8e8e93;" x-text="$t('home.navHint')"></p>
+    </div>
+</body>
+</html>

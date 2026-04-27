@@ -1,0 +1,33 @@
+.anim-container {
+    display: flex;
+    justify-content: center;
+    padding: 16px 0;
+}
+.anim-box {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #4A90D9, #7B2FBE);
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+.anim-box.spinning {
+    animation: spin 1.5s linear infinite;
+}
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+.result-box {
+    margin-top: 8px;
+    padding: 10px;
+    background: #f8f8f8;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 12px;
+    font-family: monospace;
+    white-space: pre-wrap;
+    word-break: break-all;
+    color: #333;
+    max-height: 200px;
+    overflow-y: auto;
+}

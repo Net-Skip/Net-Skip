@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../app.css">
+    <link rel="stylesheet" href="index.css">
+    <title>Tap Game</title>
+</head>
+<body x-data="page">
+    <div class="header">
+        <div class="stat"><span class="stat-label" x-text="$t('game.score')">Score</span><span class="stat-value" x-text="store.score">0</span></div>
+        <div class="stat"><span class="stat-label" x-text="$t('game.time')">Time</span><span class="stat-value" x-text="store.timeLeft">30</span></div>
+        <div class="stat"><span class="stat-label" x-text="$t('game.best')">Best</span><span class="stat-value" x-text="store.bestScore">0</span></div>
+    </div>
+
+    <div class="arena">
+        <div class="start-screen" x-show="store.state === 'start'">
+            <div class="title" x-text="$t('game.title')">Tap Game</div>
+            <div class="subtitle" x-text="$t('game.subtitle')">Tap the targets as fast as you can!</div>
+            <button class="start-btn" @click="onStartGame" x-text="$t('game.start')">Start</button>
+        </div>
+
+        <div class="target"
+             x-show="store.targetVisible"
+             :style="'left:' + store.targetX + 'px;top:' + store.targetY + 'px;width:' + store.targetSize + 'px;height:' + store.targetSize + 'px'"
+             @click="onHitTarget">
+        </div>
+    </div>
+
+    <div class="game-over" x-show="store.state === 'over'">
+        <div class="go-title" x-text="$t('game.over')">Time's Up!</div>
+        <div class="go-score"><span x-text="$t('game.score')">Score</span>: <span x-text="store.score">0</span></div>
+        <div class="go-best"><span x-text="$t('game.best')">Best</span>: <span x-text="store.bestScore">0</span></div>
+        <button class="start-btn" @click="onStartGame" x-text="$t('game.playAgain')">Play Again</button>
+    </div>
+</body>
+</html>

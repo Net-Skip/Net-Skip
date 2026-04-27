@@ -1,0 +1,11 @@
+{
+    "game.title": "点击游戏",
+    "game.subtitle": "尽快点击目标！",
+    "game.start": "开始",
+    "game.playAgain": "再玩一次",
+    "game.over": "时间到！",
+    "game.score": "得分",
+    "game.time": "时间",
+    "game.best": "最佳",
+    "game.newBest": "新最高分：{score}"
+}

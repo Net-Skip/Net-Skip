@@ -1,0 +1,28 @@
+{
+    "app_id": "tools.skip.showcase.tabbed",
+    "name": "Tabbed App",
+    "short_name": "Tabs",
+    "description": "Demonstrates tab bar navigation with per-tab stacks",
+    "lang": "en",
+    "icons": [{ "src": "icon.png", "sizes": "48x48" }],
+    "version": { "code": 1, "name": "1.0.0" },
+    "platform_version": { "min_code": 1 },
+    "pages": [
+        "pages/home/home",
+        "pages/list/list",
+        "pages/profile/profile",
+        "pages/detail/detail"
+    ],
+    "window": {
+        "navigation_bar_title_text": "Tabbed App",
+        "background_color": "#f8f9fa",
+        "navigation_style": "custom"
+    },
+    "tab_bar": {
+        "tabs": [
+            { "page": "pages/home/home", "text": "tab.home", "icon": "icons/home.svg" },
+            { "page": "pages/list/list", "text": "tab.list", "icon": "icons/list.svg" },
+            { "page": "pages/profile/profile", "text": "tab.profile", "icon": "icons/person.svg" }
+        ]
+    }
+}

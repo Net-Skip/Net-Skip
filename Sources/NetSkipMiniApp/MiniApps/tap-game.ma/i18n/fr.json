@@ -1,0 +1,11 @@
+{
+    "game.title": "Jeu de Tapotement",
+    "game.subtitle": "Tapez sur les cibles aussi vite que possible !",
+    "game.start": "Commencer",
+    "game.playAgain": "Rejouer",
+    "game.over": "Temps écoulé !",
+    "game.score": "Score",
+    "game.time": "Temps",
+    "game.best": "Meilleur",
+    "game.newBest": "Nouveau meilleur score : {score}"
+}

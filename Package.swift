@@ -8,6 +8,7 @@ let package = Package(
     products: [
         .library(name: "NetSkipApp", type: .dynamic, targets: ["NetSkip"]),
         .library(name: "NetSkipModel", type: .dynamic, targets: ["NetSkipModel"]),
+        .library(name: "NetSkipMiniApp", type: .dynamic, targets: ["NetSkipMiniApp"]),
     ],
     dependencies: [
         .package(url: "https://github.com/appfair/appfair-app.git", from: "1.0.0"),
@@ -18,11 +19,12 @@ let package = Package(
         .package(url: "https://source.skip.tools/skip-web.git", "0.0.0"..<"2.0.0"),
         .package(url: "https://source.skip.tools/skip-sql.git", "0.0.0"..<"2.0.0"),
         .package(url: "https://source.skip.tools/skip-script.git", "0.0.0"..<"2.0.0"),
-        .package(url: "https://source.skip.tools/skip-miniapp.git", "0.0.0"..<"2.0.0"),
+        .package(url: "https://source.skip.tools/skip-miniapp.git", branch: "main"),
     ],
     targets: [
         .target(name: "NetSkip", dependencies: [
             "NetSkipModel",
+            "NetSkipMiniApp",
             .product(name: "AppFairUI", package: "appfair-app"),
             .product(name: "SkipUI", package: "skip-ui"),
             .product(name: "SkipWeb", package: "skip-web"),
@@ -42,6 +44,15 @@ let package = Package(
         ], resources: [.process("Resources")], plugins: [.plugin(name: "skipstone", package: "skip")]),
         .testTarget(name: "NetSkipModelTests", dependencies: [
             "NetSkipModel",
+            .product(name: "SkipTest", package: "skip")
+        ], resources: [.process("Resources")], plugins: [.plugin(name: "skipstone", package: "skip")]),
+        .target(name: "NetSkipMiniApp", dependencies: [
+            .product(name: "SkipFoundation", package: "skip-foundation"),
+            .product(name: "SkipUI", package: "skip-ui"),
+            .product(name: "SkipMiniApp", package: "skip-miniapp"),
+        ], resources: [.process("Resources"), .copy("MiniApps")], plugins: [.plugin(name: "skipstone", package: "skip")]),
+        .testTarget(name: "NetSkipMiniAppTests", dependencies: [
+            "NetSkipMiniApp",
             .product(name: "SkipTest", package: "skip")
         ], resources: [.process("Resources")], plugins: [.plugin(name: "skipstone", package: "skip")]),
     ]

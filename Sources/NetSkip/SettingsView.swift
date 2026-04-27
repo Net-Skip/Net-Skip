@@ -19,6 +19,7 @@ struct SettingsView : View {
     @Binding var searchSuggestions: Bool
     @Binding var userAgent: String
     @Binding var enableJavaScript: Bool
+    @Binding var enableMiniApps: Bool
 
     @State var confirmClearHistory: Bool = false
     @State var confirmClearFavorites: Bool = false
@@ -70,6 +71,12 @@ struct SettingsView : View {
                     Text("On", bundle: .module, comment: "content blocking enabled label")
                         .foregroundStyle(.secondary)
                 }
+            }
+
+            Section("Experimental") {
+                Toggle(isOn: $enableMiniApps, label: {
+                    Text("MiniApps", bundle: .module, comment: "settings toggle label for enabling miniapps experimental feature")
+                })
             }
 
             Section("Data") {

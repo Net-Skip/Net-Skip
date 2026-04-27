@@ -1,0 +1,22 @@
+{
+    "app.title": "小程序演示",
+    "counter.title": "计数器",
+    "counter.reset": "重置",
+    "notepad.title": "记事本",
+    "notepad.placeholder": "输入笔记...",
+    "notepad.save": "保存",
+    "notepad.load": "加载",
+    "notepad.saved": "已保存！",
+    "notepad.loaded": "已加载：{note}",
+    "notepad.notFound": "未找到已保存的笔记",
+    "network.title": "网络请求",
+    "network.get": "GET 请求",
+    "network.post": "POST JSON",
+    "network.headers": "请求头",
+    "network.status404": "404 状态",
+    "network.loading": "加载中...",
+    "network.tapPrompt": "点击按钮发起请求",
+    "sysinfo.title": "系统信息",
+    "animation.title": "动画",
+    "animation.toggle": "切换"
+}

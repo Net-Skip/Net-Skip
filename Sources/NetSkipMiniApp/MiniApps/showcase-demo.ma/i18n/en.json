@@ -1,0 +1,22 @@
+{
+    "app.title": "MiniApp Demo",
+    "counter.title": "Counter",
+    "counter.reset": "Reset",
+    "notepad.title": "Notepad",
+    "notepad.placeholder": "Type a note...",
+    "notepad.save": "Save",
+    "notepad.load": "Load",
+    "notepad.saved": "Saved!",
+    "notepad.loaded": "Loaded: {note}",
+    "notepad.notFound": "No saved note found",
+    "network.title": "Network Requests",
+    "network.get": "GET",
+    "network.post": "POST JSON",
+    "network.headers": "Headers",
+    "network.status404": "404 Status",
+    "network.loading": "Loading...",
+    "network.tapPrompt": "Tap a button to make a request",
+    "sysinfo.title": "System Info",
+    "animation.title": "Animation",
+    "animation.toggle": "Toggle"
+}

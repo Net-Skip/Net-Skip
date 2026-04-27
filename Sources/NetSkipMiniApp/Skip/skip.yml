@@ -1,0 +1,7 @@
+# Skip configuration for NetSkipMiniApp module
+skip:
+  resources:
+    - path: 'Resources'
+      mode: 'process'
+    - path: 'MiniApps'
+      mode: 'copy'
