@@ -6,7 +6,7 @@ Page({
     },
 
     onLoad: function() {
-        skip.setNavigationBarTitle({ title: 'nav.home' });
+        skip.nav.setNavigationBarTitle({ title: 'nav.home' });
         skip.log('Home page loaded');
         try {
             var file = skip.fs.root.getFileHandle('visits.txt');

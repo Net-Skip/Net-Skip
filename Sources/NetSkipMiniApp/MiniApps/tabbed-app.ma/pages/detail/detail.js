@@ -19,7 +19,7 @@ Page({
         var title = skip.i18n.t('list.item' + id + '.title');
         var desc = skip.i18n.t('detail.desc' + id);
 
-        skip.setNavigationBarTitle({ title: title });
+        skip.nav.setNavigationBarTitle({ title: title });
         this.setData({
             itemId: id,
             title: title,
@@ -30,6 +30,6 @@ Page({
 
     onGoBack: function() {
         skip.log('Navigating back from detail');
-        skip.navigateBack({ delta: 1 });
+        skip.nav.navigateBack({ delta: 1 });
     }
 });

@@ -348,6 +348,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
 
     @ViewBuilder func miniAppCardView(app: MiniAppCatalogEntry) -> some View {
         let isRunning = runningMiniApps.contains(app.id)
+        let snapshotImage = loadMiniAppSnapshotImage(for: app.id)
 
         Button {
             activeMiniAppItem = MiniAppLaunchItem(appID: app.id)
@@ -381,22 +382,29 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
                 .padding(.vertical, 8)
                 .background(isRunning ? Color.accentColor : Color(white: 0.28))
 
-                // Content area
+                // Content area — show snapshot if available, otherwise placeholder
                 ZStack {
                     Color(white: 0.95)
-                    VStack(spacing: 6) {
-                        Image("widgets", bundle: .module)
-                            .font(.system(size: 28))
-                            .foregroundStyle(isRunning ? Color.accentColor : Color.gray.opacity(0.4))
-                        Text(isRunning ? "Tap to resume" : app.description)
-                            .font(.system(size: 11))
-                            .foregroundStyle(Color.gray.opacity(0.7))
-                            .multilineTextAlignment(.center)
-                            .lineLimit(2)
-                            .padding(.horizontal, 8)
+                    if let snapshotImage = snapshotImage {
+                        Image(uiImage: snapshotImage)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                    } else {
+                        VStack(spacing: 6) {
+                            Image("widgets", bundle: .module)
+                                .font(.system(size: 28))
+                                .foregroundStyle(isRunning ? Color.accentColor : Color.gray.opacity(0.4))
+                            Text(app.description)
+                                .font(.system(size: 11))
+                                .foregroundStyle(Color.gray.opacity(0.7))
+                                .multilineTextAlignment(.center)
+                                .lineLimit(2)
+                                .padding(.horizontal, 8)
+                        }
                     }
                 }
                 .frame(height: 140)
+                .clipped()
             }
             .clipShape(RoundedRectangle(cornerRadius: 10))
             .overlay(
@@ -413,16 +421,35 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
             if let entry = sampleMiniApps.first(where: { $0.id == appID }) {
                 MiniAppHostingView(entry: entry, onDismiss: {
                     activeMiniAppItem = nil
+                }, onSnapshot: { pngData in
+                    saveMiniAppSnapshot(appID: appID, pngData: pngData)
                 })
             }
         }
     }
 
+    func saveMiniAppSnapshot(appID: String, pngData: Data) {
+        let path = miniAppSnapshotPath(for: appID)
+        do {
+            try pngData.write(to: path)
+        } catch {
+            logger.warning("Failed to save miniapp snapshot: \(error)")
+        }
+    }
+
+    func loadMiniAppSnapshotImage(for appID: String) -> UIImage? {
+        let path = miniAppSnapshotPath(for: appID)
+        guard let data = try? Data(contentsOf: path) else { return nil }
+        return UIImage(data: data)
+    }
+
     func closeMiniApp(id: String) {
         runningMiniApps.remove(id)
-        // Clear the miniapp's persistent storage
+        // Clear the miniapp's persistent storage and snapshot
         let storageDir = miniAppStorageBaseDirectory.appendingPathComponent(id)
         try? FileManager.default.removeItem(at: storageDir)
+        let snapshotFile = miniAppSnapshotPath(for: id)
+        try? FileManager.default.removeItem(at: snapshotFile)
     }
 
     @ViewBuilder func tabCardView(tab: BrowserViewModel) -> some View {

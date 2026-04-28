@@ -63,7 +63,7 @@ Page({
         this.setData({ networkResult: skip.i18n.t('network.loading') });
         skip.log('GET https://httpbin.org/get');
         try {
-            var response = await skip.fetch('https://httpbin.org/get');
+            var response = await skip.net.fetch('https://httpbin.org/get');
             var data = await response.json();
             this.setData({ networkResult: 'Status: ' + response.status + '\nOrigin: ' + data.origin + '\nURL: ' + data.url });
             skip.log('GET success');
@@ -77,7 +77,7 @@ Page({
         this.setData({ networkResult: skip.i18n.t('network.loading') });
         skip.log('POST https://httpbin.org/post');
         try {
-            var response = await skip.fetch('https://httpbin.org/post', {
+            var response = await skip.net.fetch('https://httpbin.org/post', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
@@ -92,7 +92,7 @@ Page({
     onDoHeaders: async function() {
         this.setData({ networkResult: skip.i18n.t('network.loading') });
         try {
-            var response = await skip.fetch('https://httpbin.org/headers', {
+            var response = await skip.net.fetch('https://httpbin.org/headers', {
                 headers: { 'X-MiniApp': 'skip-showcase', 'Accept': 'application/json' }
             });
             var data = await response.json();
@@ -105,7 +105,7 @@ Page({
     onDoStatus404: async function() {
         this.setData({ networkResult: skip.i18n.t('network.loading') });
         try {
-            var response = await skip.fetch('https://httpbin.org/status/404');
+            var response = await skip.net.fetch('https://httpbin.org/status/404');
             this.setData({ networkResult: 'ok: ' + response.ok + '\nstatus: ' + response.status });
             skip.log('404 response: ok=' + response.ok);
         } catch (e) {

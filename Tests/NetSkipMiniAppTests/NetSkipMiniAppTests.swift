@@ -5,7 +5,7 @@ import Foundation
 
 @Suite struct NetSkipMiniAppTests {
     @Test func sampleCatalog() {
-        #expect(sampleMiniApps.count == 4)
+        #expect(sampleMiniApps.count == 5)
         #expect(sampleMiniApps[0].id == "showcase-demo")
     }
 }

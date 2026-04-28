@@ -5,7 +5,7 @@ Page({
     },
 
     onLoad: function() {
-        skip.setNavigationBarTitle({ title: 'nav.list' });
+        skip.nav.setNavigationBarTitle({ title: 'nav.list' });
         skip.log('List page loaded');
         this.setData({
             items: [
@@ -21,6 +21,6 @@ Page({
     onItemTap: function(event) {
         var itemId = event.detail.id;
         skip.log('Navigating to detail for item ' + itemId);
-        skip.navigateTo({ url: 'pages/detail/detail', query: 'id=' + itemId });
+        skip.nav.navigateTo({ url: 'pages/detail/detail', query: 'id=' + itemId });
     }
 });

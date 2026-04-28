@@ -1,0 +1,16 @@
+{
+    "app.title": "Rappels",
+    "filter.active": "Actifs",
+    "filter.all": "Tous",
+    "search.placeholder": "Rechercher",
+    "empty.title": "Aucun rappel",
+    "empty.subtitle": "Appuyez sur + pour en ajouter",
+    "add.placeholder": "Nouveau rappel",
+    "edit.title": "Modifier le rappel",
+    "edit.titlePlaceholder": "Titre",
+    "edit.notePlaceholder": "Ajouter une note...",
+    "edit.cancel": "Annuler",
+    "edit.save": "Enregistrer",
+    "count.total": "rappels",
+    "count.completed": "termin\u00e9s"
+}

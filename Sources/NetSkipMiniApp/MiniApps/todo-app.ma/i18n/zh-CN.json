@@ -1,0 +1,16 @@
+{
+    "app.title": "提醒事项",
+    "filter.active": "未完成",
+    "filter.all": "全部",
+    "search.placeholder": "搜索",
+    "empty.title": "没有提醒事项",
+    "empty.subtitle": "点击 + 添加一个",
+    "add.placeholder": "新提醒事项",
+    "edit.title": "编辑提醒",
+    "edit.titlePlaceholder": "标题",
+    "edit.notePlaceholder": "添加备注...",
+    "edit.cancel": "取消",
+    "edit.save": "保存",
+    "count.total": "个提醒",
+    "count.completed": "已完成"
+}

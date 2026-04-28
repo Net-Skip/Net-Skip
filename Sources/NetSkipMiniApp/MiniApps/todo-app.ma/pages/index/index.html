@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../app.css">
+    <link rel="stylesheet" href="index.css">
+    <title>Reminders</title>
+</head>
+<body x-data="page">
+    <!-- Header -->
+    <div class="header">
+        <div class="header-row">
+            <h1 x-text="$t('app.title')">Reminders</h1>
+        </div>
+        <div class="count-badge" x-text="store.countLabel"></div>
+    </div>
+
+    <!-- Filter -->
+    <div class="filter-bar">
+        <button class="filter-btn" :class="store.filter === 'active' ? 'active' : ''"
+                @click="onFilter({ mode: 'active' })" x-text="$t('filter.active')">Active</button>
+        <button class="filter-btn" :class="store.filter === 'all' ? 'active' : ''"
+                @click="onFilter({ mode: 'all' })" x-text="$t('filter.all')">All</button>
+    </div>
+
+    <!-- Search -->
+    <div class="search-wrap">
+        <input class="search-box" type="text" x-model="store.searchText"
+               :placeholder="$t('search.placeholder')"
+               @input="onSearch({ text: store.searchText })">
+    </div>
+
+    <!-- Empty state -->
+    <div x-show="store.items.length === 0" class="empty-state">
+        <div class="empty-icon">&#9745;</div>
+        <div class="empty-text" x-text="$t('empty.title')">No reminders</div>
+        <div class="empty-sub" x-text="$t('empty.subtitle')">Add one below</div>
+    </div>
+
+    <!-- List -->
+    <div x-show="store.items.length > 0" class="list-group">
+        <template x-for="item in store.items" :key="item.id">
+            <div class="todo-item">
+                <button class="check-btn" :class="item.done ? 'done' : ''"
+                        @click="onToggle({ id: item.id })"></button>
+                <div class="todo-content" @click="onEdit({ id: item.id })">
+                    <div class="todo-title" :class="item.done ? 'done' : ''" x-text="item.title"></div>
+                    <div class="todo-note" x-show="item.note" x-text="item.note"></div>
+                    <div class="todo-date" x-text="item.dateLabel"></div>
+                </div>
+                <button class="delete-btn" @click="onDelete({ id: item.id })">&times;</button>
+            </div>
+        </template>
+    </div>
+
+    <!-- Add bar -->
+    <div class="add-bar">
+        <div class="add-row">
+            <input class="add-input" type="text" x-model="store.newTitle"
+                   :placeholder="$t('add.placeholder')">
+            <button class="add-btn" @click="onAdd({ title: store.newTitle })">+</button>
+        </div>
+    </div>
+
+    <!-- Edit modal -->
+    <div x-show="store.editing" class="modal-overlay" @click.self="onCancelEdit">
+        <div class="modal-card">
+            <div class="modal-title" x-text="$t('edit.title')">Edit Reminder</div>
+            <input class="modal-input" type="text" x-model="store.editTitle"
+                   :placeholder="$t('edit.titlePlaceholder')">
+            <textarea class="modal-textarea" x-model="store.editNote"
+                      :placeholder="$t('edit.notePlaceholder')"></textarea>
+            <div class="modal-actions">
+                <button class="modal-btn cancel" @click="onCancelEdit" x-text="$t('edit.cancel')">Cancel</button>
+                <button class="modal-btn save" @click="onSaveEdit({ title: store.editTitle, note: store.editNote })" x-text="$t('edit.save')">Save</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

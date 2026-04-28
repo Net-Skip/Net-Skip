@@ -1,0 +1,16 @@
+{
+    "app.title": "Reminders",
+    "filter.active": "Active",
+    "filter.all": "All",
+    "search.placeholder": "Search",
+    "empty.title": "No reminders",
+    "empty.subtitle": "Tap + to add one",
+    "add.placeholder": "New reminder",
+    "edit.title": "Edit Reminder",
+    "edit.titlePlaceholder": "Title",
+    "edit.notePlaceholder": "Add a note...",
+    "edit.cancel": "Cancel",
+    "edit.save": "Save",
+    "count.total": "reminders",
+    "count.completed": "completed"
+}

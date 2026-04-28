@@ -6,7 +6,7 @@ Page({
     },
 
     onLoad: function() {
-        skip.setNavigationBarTitle({ title: 'nav.profile' });
+        skip.nav.setNavigationBarTitle({ title: 'nav.profile' });
         skip.log('Profile page loaded');
         this.setData({
             username: skip.i18n.t('profile.username')
@@ -21,11 +21,11 @@ Page({
 
     onReLaunch: function() {
         skip.log('reLaunch to home');
-        skip.reLaunch({ url: 'pages/home/home' });
+        skip.nav.reLaunch({ url: 'pages/home/home' });
     },
 
     onSwitchToList: function() {
         skip.log('switchTab to list');
-        skip.switchTab({ url: 'pages/list/list' });
+        skip.nav.switchTab({ url: 'pages/list/list' });
     }
 });

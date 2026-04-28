@@ -1,0 +1,16 @@
+{
+    "app_id": "tools.skip.todo",
+    "name": "Reminders",
+    "short_name": "Reminders",
+    "description": "SQLite-backed task manager",
+    "lang": "en",
+    "icons": [{ "src": "icon.png", "sizes": "48x48" }],
+    "version": { "code": 1, "name": "1.0.0" },
+    "platform_version": { "min_code": 1 },
+    "pages": ["pages/index/index"],
+    "window": {
+        "navigation_bar_title_text": "Reminders",
+        "background_color": "#f2f2f7",
+        "navigation_style": "custom"
+    }
+}

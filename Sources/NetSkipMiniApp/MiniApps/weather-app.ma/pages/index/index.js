@@ -125,7 +125,7 @@ Page({
         skip.log('Fetching: ' + url);
 
         try {
-            var response = await skip.fetch(url);
+            var response = await skip.net.fetch(url);
             if (!response.ok) {
                 this.setData({ loading: false, error: skip.i18n.t('weather.error') + ' (' + response.status + ')' });
                 return;

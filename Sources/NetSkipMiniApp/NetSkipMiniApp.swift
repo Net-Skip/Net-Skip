@@ -4,6 +4,7 @@ import OSLog
 import SwiftUI
 import SkipMiniApp
 import SkipMiniAppModel
+import SkipMiniAppSQL
 
 let miniAppLogger = Logger(subsystem: "NetSkip", category: "MiniApp")
 
@@ -48,6 +49,12 @@ public let sampleMiniApps: [MiniAppCatalogEntry] = [
         description: "Live forecast with Open-Meteo",
         directoryName: "weather-app.ma"
     ),
+    MiniAppCatalogEntry(
+        id: "todo-app",
+        name: "Reminders",
+        description: "SQLite-backed task manager",
+        directoryName: "todo-app.ma"
+    ),
 ]
 
 /// Returns the URL to the miniapp directory in the bundle, if found.
@@ -67,10 +74,12 @@ public var miniAppStorageBaseDirectory: URL {
 public struct MiniAppHostingView: View {
     let entry: MiniAppCatalogEntry
     let onDismiss: (() -> Void)?
+    let onSnapshot: ((Data) -> Void)?
 
-    public init(entry: MiniAppCatalogEntry, onDismiss: (() -> Void)? = nil) {
+    public init(entry: MiniAppCatalogEntry, onDismiss: (() -> Void)? = nil, onSnapshot: ((Data) -> Void)? = nil) {
         self.entry = entry
         self.onDismiss = onDismiss
+        self.onSnapshot = onSnapshot
     }
 
     public var body: some View {
@@ -82,11 +91,13 @@ public struct MiniAppHostingView: View {
                     .fileSystem(baseDirectory: miniAppStorageBaseDirectory),
                     .network,
                     .i18n,
+                    .sql(baseDirectory: miniAppStorageBaseDirectory),
                     .logging(onLog: { logEntry in
                         miniAppLogger.info("[\(entry.id)] \(logEntry.message)")
                     })
                 ],
-                onDismiss: onDismiss
+                onDismiss: onDismiss,
+                onSnapshot: onSnapshot
             )
         } else {
             VStack {
@@ -95,5 +106,17 @@ public struct MiniAppHostingView: View {
             }
         }
     }
+}
+
+/// Returns the snapshot cache directory for miniapp previews.
+public var miniAppSnapshotDirectory: URL {
+    let dir = URL.cachesDirectory.appendingPathComponent("miniapp-snapshots")
+    try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+    return dir
+}
+
+/// Returns the file URL for a miniapp's snapshot image.
+public func miniAppSnapshotPath(for appID: String) -> URL {
+    miniAppSnapshotDirectory.appendingPathComponent("\(appID).png")
 }
 #endif
