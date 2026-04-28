@@ -33,6 +33,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
     @State var showHistoryFavorites = false
     @State var historyFavoriesSelection = 1
     @State var showFindBar = false
+    @State var showPageZoom = false
     @State var findText = ""
 
     @State var triggerImpact = false
@@ -64,23 +65,28 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
     }
 
     public var body: some View {
-        VStack(spacing: 0) {
-            browserTabView()
-            if showFindBar {
-                findBar()
+        ZStack(alignment: .bottom) {
+            VStack(spacing: 0) {
+                browserTabView()
+                if showFindBar {
+                    findBar()
+                }
+            }
+            if showPageZoom {
+                pageZoomBar()
             }
         }
             .toolbar {
                 ToolbarItemGroup(placement: toolbarPlacement) {
                     backButton()
                     Spacer()
-                    forwardButton()
-                    Spacer()
                     tabsButton()
+                    Spacer()
+                    ellipsisMenu()
                     Spacer()
                     showHistoryFavoritesButton()
                     Spacer()
-                    hamburgerMenu()
+                    forwardButton()
                 }
             }
         .background(Color.clear)
@@ -205,7 +211,10 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
     func newViewModel(_ pageInfo: PageInfo) -> BrowserViewModel {
         let newID = (try? store.saveItems(type: .active, items: [pageInfo]).first) ?? PageInfo.ID(0)
         let newURL = URL(string: pageInfo.url ?? fallbackURL)
-        return BrowserViewModel(id: newID, navigator: WebViewNavigator(initialURL: newURL), configuration: configuration, store: store)
+        let vm = BrowserViewModel(id: newID, navigator: WebViewNavigator(initialURL: newURL), configuration: configuration, store: store)
+        vm.savedTitle = pageInfo.title ?? ""
+        vm.savedURL = pageInfo.url ?? ""
+        return vm
     }
 
     // MARK: - Tab Snapshots
@@ -284,6 +293,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
             .navigationTitle(Text(tabsSegment == 1 || !enableMiniApps ? "\(tabs.count) Tabs" : "Mini Apps", bundle: .module, comment: "tabs title"))
             #if !SKIP
             .navigationBarTitleDisplayMode(.inline)
+            .toolbarColorScheme(.dark, for: .navigationBar)
             #endif
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -417,8 +427,8 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
 
     @ViewBuilder func tabCardView(tab: BrowserViewModel) -> some View {
         let isActive = tab.id == selectedTab
-        let title = tab.state.pageTitle ?? ""
-        let urlString = tab.state.url?.absoluteString ?? ""
+        let title = tab.state.pageTitle ?? tab.savedTitle
+        let urlString = tab.state.url?.absoluteString ?? tab.savedURL
         let domain = tabDomainFromURL(urlString)
         let snapshotImage = loadSnapshotImage(for: tab.id)
 
@@ -628,12 +638,15 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
         })
     }
 
+    let toolbarIconSize: CGFloat = 22.0
+
     @ViewBuilder func backButton() -> some View {
         let enabled = currentState?.canGoBack == true
         let backLabel = Label {
             Text("Back", bundle: .module, comment: "back button label")
         } icon: {
             Image("chevron.left", bundle: .module)
+                .font(.system(size: toolbarIconSize))
         }
 
         if isSkip || !enabled {
@@ -662,6 +675,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
             Text("Forward", bundle: .module, comment: "forward button label")
         } icon: {
             Image("chevron.right", bundle: .module)
+                .font(.system(size: toolbarIconSize))
         }
 
         if isSkip || !enabled {
@@ -690,6 +704,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
                 Text("Bookmarks", bundle: .module, comment: "bookmarks button label")
             } icon: {
                 Image("book", bundle: .module)
+                    .font(.system(size: toolbarIconSize))
             }
         }
         .accessibilityIdentifier("button.history.favorites")
@@ -717,6 +732,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
                 Text("Tabs", bundle: .module, comment: "tabs button label")
             } icon: {
                 tabCountIcon()
+                    .font(.system(size: toolbarIconSize))
             }
         } primaryAction: {
             tabListAction()
@@ -764,6 +780,68 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
         .background(Color(white: 0.95))
     }
 
+    @ViewBuilder func pageZoomBar() -> some View {
+        HStack(spacing: 0) {
+            Spacer()
+
+            HStack(spacing: 2) {
+                // Decrease zoom button (small A)
+                Button(action: {
+                    hapticFeedback()
+                    textZoom = max(textZoom - 0.15, 0.5)
+                }) {
+                    Text(verbatim: "A")
+                        .font(.system(size: 13, weight: .medium))
+                        .frame(width: 40, height: 36)
+                }
+                .buttonStyle(.plain)
+                .disabled(textZoom <= 0.5)
+
+                // Current zoom percentage (tap to reset to 100%)
+                Button(action: {
+                    hapticFeedback()
+                    textZoom = 1.0
+                }) {
+                    let pct = Int((textZoom * 100).rounded())
+                    Text(verbatim: "\(pct)%")
+                        .font(.system(size: 14, weight: .semibold))
+                        .frame(width: 56, height: 36)
+                }
+                .buttonStyle(.plain)
+
+                // Increase zoom button (large A)
+                Button(action: {
+                    hapticFeedback()
+                    textZoom = min(textZoom + 0.15, 3.0)
+                }) {
+                    Text(verbatim: "A")
+                        .font(.system(size: 19, weight: .medium))
+                        .frame(width: 40, height: 36)
+                }
+                .buttonStyle(.plain)
+                .disabled(textZoom >= 3.0)
+            }
+            .background(Color.gray.opacity(0.15))
+            .cornerRadius(8)
+
+            Spacer()
+
+            // Dismiss button
+            Button(action: {
+                showPageZoom = false
+            }) {
+                Image("xmark.circle.fill", bundle: .module)
+                    .font(.system(size: 22))
+                    .foregroundStyle(.secondary)
+            }
+            .buttonStyle(.plain)
+            .padding(.leading, 8)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 6)
+        .background(Color(white: 0.95))
+    }
+
     @ViewBuilder func tabCountIcon() -> some View {
         #if !SKIP
         // iOS: Label icons in toolbars require a static Image, not a dynamic view.
@@ -774,11 +852,11 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
         #else
         // Android/Skip: dynamic views work fine as toolbar icons
         ZStack {
-            RoundedRectangle(cornerRadius: 4)
-                .strokeBorder(lineWidth: 1.5)
-                .frame(width: 22, height: 22)
+            RoundedRectangle(cornerRadius: 5)
+                .strokeBorder(lineWidth: 2.0)
+                .frame(width: 28, height: 28)
             Text("\(tabs.count)")
-                .font(.system(size: 11, weight: .bold))
+                .font(.system(size: 14, weight: .bold))
         }
         #endif
     }
@@ -793,11 +871,11 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
             return cached
         }
         let badge = ZStack {
-            RoundedRectangle(cornerRadius: 4)
-                .strokeBorder(lineWidth: 1.5)
-                .frame(width: 22, height: 22)
+            RoundedRectangle(cornerRadius: 5)
+                .strokeBorder(lineWidth: 2.0)
+                .frame(width: 28, height: 28)
             Text("\(count)")
-                .font(.system(size: 11, weight: .bold))
+                .font(.system(size: 14, weight: .bold))
         }
         .foregroundStyle(Color.primary)
 
@@ -809,7 +887,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
     }
     #endif
 
-    @ViewBuilder func hamburgerMenu() -> some View {
+    @ViewBuilder func ellipsisMenu() -> some View {
         Menu {
             Button(action: reloadAction) {
                 Label {
@@ -873,19 +951,11 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
 
             Divider()
 
-            Button(action: zoomInAction) {
+            Button(action: pageZoomAction) {
                 Label {
-                    Text("Zoom In", bundle: .module, comment: "zoom in button label")
+                    Text("Page Zoom", bundle: .module, comment: "page zoom button label")
                 } icon: {
-                    Image("zoom_in", bundle: .module)
-                }
-            }
-
-            Button(action: zoomOutAction) {
-                Label {
-                    Text("Zoom Out", bundle: .module, comment: "zoom out button label")
-                } icon: {
-                    Image("zoom_out", bundle: .module)
+                    Image("textformat.size", bundle: .module)
                 }
             }
 
@@ -910,7 +980,8 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
             Label {
                 Text("Menu", bundle: .module, comment: "hamburger menu label")
             } icon: {
-                Image("menu", bundle: .module)
+                Image("ellipsis", bundle: .module)
+                    .font(.system(size: toolbarIconSize))
             }
         }
         .accessibilityIdentifier("button.menu")
@@ -1054,6 +1125,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
         }
         #endif
         // Fallback: show the custom find bar (used on Android, or iOS without findInteraction)
+        showPageZoom = false
         showFindBar = true
         findText = ""
     }
@@ -1149,16 +1221,11 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
         showSettings = true
     }
 
-    func zoomInAction() {
-        logger.info("zoomInAction")
+    func pageZoomAction() {
+        logger.info("pageZoomAction")
         hapticFeedback()
-        textZoom = min(textZoom + 0.1, 3.0)
-    }
-
-    func zoomOutAction() {
-        logger.info("zoomOutAction")
-        hapticFeedback()
-        textZoom = max(textZoom - 0.1, 0.5)
+        showFindBar = false
+        showPageZoom = true
     }
 
     func toggleDesktopSiteAction() {
@@ -1182,13 +1249,17 @@ struct TitleView : View {
 
 @Observable public class BrowserViewModel: Identifiable {
     /// The persistent ID of the page
-    // SKIP INSERT: @Suppress("MUST_BE_INITIALIZED_OR_FINAL_OR_ABSTRACT") // var to workaround Kotlin to 2 error: ”Property must be initialized, be final, or be abstract.”
+    // SKIP INSERT: @Suppress("MUST_BE_INITIALIZED_OR_FINAL_OR_ABSTRACT") // var to workaround Kotlin to 2 error: "Property must be initialized, be final, or be abstract."
     public let id: PageInfo.ID
     let navigator: WebViewNavigator
     let configuration: WebEngineConfiguration
     let store: WebBrowserStore
     var state = WebViewState()
-    var urlTextField = ""
+    var urlTextField: String = ""
+
+    /// Saved metadata from the database, used as fallback before the page loads
+    var savedTitle: String = ""
+    var savedURL: String = ""
 
     public init(id: PageInfo.ID, navigator: WebViewNavigator, configuration: WebEngineConfiguration, store: WebBrowserStore) {
         self.id = id

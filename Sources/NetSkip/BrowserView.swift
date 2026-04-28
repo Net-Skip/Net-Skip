@@ -125,8 +125,11 @@ import NetSkipModel
 
     private func applyTextZoom() {
         #if !SKIP
+        // iOS: WKWebView.pageZoom on iOS scales the viewport rather than the content,
+        // so values > 1.0 make content appear smaller. Use the reciprocal to get
+        // the expected behavior where textZoom > 1.0 means "zoom in" (larger text).
         if let webView = self.webView {
-            webView.pageZoom = textZoom
+            webView.pageZoom = 1.0 / textZoom
         }
         #else
         // Android: use the native WebView settings.textZoom (integer percentage)
