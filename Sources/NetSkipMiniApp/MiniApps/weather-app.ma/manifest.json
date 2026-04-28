@@ -1,0 +1,16 @@
+{
+    "app_id": "tools.skip.weather",
+    "name": "Weather",
+    "short_name": "Weather",
+    "description": "Live weather forecast powered by Open-Meteo",
+    "lang": "en",
+    "icons": [{ "src": "icon.png", "sizes": "48x48" }],
+    "version": { "code": 1, "name": "1.0.0" },
+    "platform_version": { "min_code": 1 },
+    "pages": ["pages/index/index"],
+    "window": {
+        "navigation_bar_title_text": "Weather",
+        "background_color": "#e8f0fe",
+        "navigation_style": "custom"
+    }
+}

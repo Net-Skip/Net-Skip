@@ -42,6 +42,12 @@ public let sampleMiniApps: [MiniAppCatalogEntry] = [
         description: "Multi-tab app with navigation",
         directoryName: "tabbed-app.ma"
     ),
+    MiniAppCatalogEntry(
+        id: "weather-app",
+        name: "Weather",
+        description: "Live forecast with Open-Meteo",
+        directoryName: "weather-app.ma"
+    ),
 ]
 
 /// Returns the URL to the miniapp directory in the bundle, if found.

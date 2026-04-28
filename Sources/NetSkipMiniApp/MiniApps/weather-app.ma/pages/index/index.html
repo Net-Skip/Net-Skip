@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../app.css">
+    <link rel="stylesheet" href="index.css">
+    <title>Weather</title>
+</head>
+<body x-data="page">
+    <h1 x-text="$t('app.title')">WEATHER</h1>
+
+    <!-- City selector -->
+    <div class="card">
+        <h2 x-text="$t('cities.title')">CITIES</h2>
+        <div class="city-row">
+            <template x-for="city in store.cities" :key="city.id">
+                <button @click="onSelectCity({ id: city.id })"
+                        :class="store.selectedCity === city.id ? 'active' : ''"
+                        x-text="city.name"></button>
+            </template>
+        </div>
+    </div>
+
+    <!-- Loading state -->
+    <div x-show="store.loading" class="loading-text" x-text="$t('weather.loading')">Loading...</div>
+
+    <!-- Error state -->
+    <div x-show="store.error" class="error-text" x-text="store.error"></div>
+
+    <!-- Current weather -->
+    <div x-show="!store.loading && !store.error && store.currentTemp !== '--'" class="card">
+        <div class="location-name" x-text="store.cityName"></div>
+        <div class="location-coords" x-text="store.coords"></div>
+        <div class="current-weather">
+            <div class="weather-icon" x-text="store.currentIcon"></div>
+            <div class="current-temp" x-text="store.currentTemp"></div>
+            <div class="current-desc" x-text="store.currentDesc"></div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-item">
+                <div class="detail-value" x-text="store.humidity"></div>
+                <div class="detail-label" x-text="$t('weather.humidity')">Humidity</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-value" x-text="store.wind"></div>
+                <div class="detail-label" x-text="$t('weather.wind')">Wind</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Unit toggle -->
+    <div x-show="!store.loading && !store.error && store.currentTemp !== '--'" class="unit-toggle">
+        <button @click="onToggleUnit({ unit: 'C' })" :class="store.unit === 'C' ? 'active' : ''">°C</button>
+        <button @click="onToggleUnit({ unit: 'F' })" :class="store.unit === 'F' ? 'active' : ''">°F</button>
+    </div>
+
+    <!-- 5-day forecast -->
+    <div x-show="!store.loading && !store.error && store.forecast.length > 0" class="card">
+        <h2 x-text="$t('forecast.title')">5-DAY FORECAST</h2>
+        <template x-for="day in store.forecast" :key="day.name">
+            <div class="forecast-day">
+                <span class="forecast-day-name" x-text="day.name"></span>
+                <span class="forecast-icon" x-text="day.icon"></span>
+                <span class="forecast-temps">
+                    <span class="forecast-hi" x-text="day.hi"></span>
+                    <span class="forecast-lo" x-text="day.lo"></span>
+                </span>
+            </div>
+        </template>
+    </div>
+</body>
+</html>
