@@ -15,8 +15,10 @@ permissions:
 
 jobs:
   call-workflow:
-    uses: skiptools/actions/.github/workflows/skip-app.yml@v1
+    #uses: skiptools/actions/.github/workflows/skip-app.yml@v1
+    uses: skiptools/actions/.github/workflows/skip-app.yml@skip-source
     with:
+      skip-source: 'appindex'
       run-local-tests: false
     secrets:
       # TODO: enable once Android build is ready

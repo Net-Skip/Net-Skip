@@ -1,0 +1,13 @@
+Net Skip adalah peramban web gratis dan sumber terbuka dari App Fair. Peramban ini menyajikan pengalaman menjelajah yang minimalis dan elegan, sehingga menghasilkan pengalaman menjelajah web tercepat yang tersedia di perangkat seluler mana pun, di mana pun.
+
+Berbeda dengan kebanyakan peramban lain di pasaran, Net Skip paling baik dicirikan oleh apa yang *tidak* dimilikinya:
+
+  • Tanpa iklan atau pelacakan tersemat
+  • Tanpa fitur kriptokurensi atau program hadiah
+  • Tanpa pembelian dalam aplikasi atau langganan
+  • Tanpa telemetri, analitik, atau pengumpulan data pengguna
+  • Tanpa monetisasi apa pun terhadap pengguna aplikasi
+
+Kode sumber Net Skip – bersama dengan semua proyek App Fair – gratis dan sumber terbuka, dan didistribusikan di bawah lisensi bebas dan sumber terbuka. Anda dapat mengakses kode sumbernya untuk ditinjau dan dimodifikasi di https://github.com/Net-Skip/Net-Skip/.
+
+Net Skip adalah bagian dari Proyek App Fair, sebuah organisasi nirlaba yang berbasis di Persemakmuran Massachusetts yang didirikan untuk menciptakan dan memelihara barang publik digital dalam bentuk aplikasi seluler. Pelajari lebih lanjut tentang Proyek App Fair di https://appfair.org dan bantu kami membangun pasar aplikasi kami dengan menyebarkan informasi tentang Net Skip dan aplikasi proyek kami lainnya.
