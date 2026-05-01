@@ -1,0 +1,1518 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "1Password Fill Browser Action" : {
+      "comment" : "UTType description for 1Password browser fill action UTI",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "إجراء التعبئة في المتصفح من 1Password"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "1Password Browser-Ausfüllaktion"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "1Password Fill Browser Action"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Acción de relleno de navegador de 1Password"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Action de remplissage du navigateur 1Password"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "1Password ब्राउज़र भरण क्रिया"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aksi Isi Otomatis Peramban 1Password"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Azione di riempimento browser 1Password"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "1Passwordブラウザ入力アクション"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "1Password 브라우저 채우기 동작"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ação de Preenchimento do Navegador 1Password"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Действие заполнения в браузере 1Password"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "1Password 浏览器填充操作"
+          }
+        }
+      }
+    },
+    "CFBundleDisplayName" : {
+      "comment" : "Bundle display name",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Net Skip"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip"
+          }
+        }
+      }
+    },
+    "CFBundleName" : {
+      "comment" : "Bundle name",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "NetSkip"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "NetSkip"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "NetSkip"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "NetSkip"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "NetSkip"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "NetSkip"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "NetSkip"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "NetSkip"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "NetSkip"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "NetSkip"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "NetSkip"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "NetSkip"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "NetSkip"
+          }
+        }
+      }
+    },
+    "NSBluetoothAlwaysUsageDescription" : {
+      "comment" : "Privacy - Bluetooth Always Usage Description",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "يستخدم Net Skip البلوتوث للسماح للمواقع التي تزورها بالتواصل مع الأجهزة القريبة مثل أجهزة تتبع اللياقة وأذرع التحكم وأجهزة إنترنت الأشياء عبر واجهة Web Bluetooth عند منحها الإذن."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip verwendet Bluetooth, damit besuchte Websites mit deiner Erlaubnis über die Web-Bluetooth-API mit Geräten in der Nähe wie Fitness-Trackern, Spielecontrollern und IoT-Geräten kommunizieren können."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Net Skip uses Bluetooth so that websites you visit can communicate with nearby devices such as fitness trackers, game controllers, and IoT hardware via the Web Bluetooth API when you grant them permission."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip usa Bluetooth para que los sitios web que visitas puedan comunicarse con dispositivos cercanos como pulseras de actividad, mandos de juego y hardware IoT a través de la API Web Bluetooth cuando les concedes permiso."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip utilise le Bluetooth pour permettre aux sites web que vous consultez de communiquer, avec votre autorisation, avec des appareils à proximité tels que des trackers d’activité, des manettes et du matériel IoT via l’API Web Bluetooth."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip ब्लूटूथ का उपयोग करता है ताकि जिन वेबसाइटों पर आप जाते हैं वे आपकी अनुमति देने पर Web Bluetooth API के माध्यम से फ़िटनेस ट्रैकर, गेम कंट्रोलर और IoT हार्डवेयर जैसे आस-पास के उपकरणों से संवाद कर सकें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip menggunakan Bluetooth agar situs web yang Anda kunjungi dapat berkomunikasi dengan perangkat di sekitar seperti pelacak kebugaran, pengontrol gim, dan perangkat IoT melalui Web Bluetooth API saat Anda memberinya izin."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip utilizza il Bluetooth affinché i siti web che visiti possano comunicare con dispositivi nelle vicinanze come fitness tracker, controller di gioco e dispositivi IoT tramite l’API Web Bluetooth quando concedi loro l’autorizzazione."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skipは、許可した場合に閲覧中のウェブサイトがWeb Bluetooth APIを介してフィットネストラッカー、ゲームコントローラ、IoTデバイスなど近くのデバイスと通信できるようにBluetoothを使用します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip는 사용자가 권한을 허용하면 방문한 웹사이트가 Web Bluetooth API를 통해 피트니스 트래커, 게임 컨트롤러, IoT 기기 등 주변 기기와 통신할 수 있도록 블루투스를 사용합니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O Net Skip usa Bluetooth para que os sites visitados possam se comunicar com dispositivos próximos, como monitores de atividades, controles de jogos e dispositivos IoT, pela API Web Bluetooth quando você conceder permissão."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip использует Bluetooth, чтобы посещаемые сайты могли с вашего разрешения взаимодействовать с находящимися рядом устройствами — фитнес-трекерами, игровыми контроллерами и оборудованием IoT — через Web Bluetooth API."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip 使用蓝牙，以便您访问的网站在您授权后可通过 Web Bluetooth API 与健身追踪器、游戏手柄和 IoT 设备等附近设备通信。"
+          }
+        }
+      }
+    },
+    "NSCalendarsUsageDescription" : {
+      "comment" : "Privacy - Calendars Usage Description",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "يحتاج Net Skip إلى الوصول إلى تقويمك حتى تتمكن المواقع التي تزورها من إضافة أحداث مثل الحجوزات والمواعيد ودعوات الاجتماعات عند منحها الإذن."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip benötigt Zugriff auf deinen Kalender, damit besuchte Websites mit deiner Erlaubnis Termine wie Buchungen, Reservierungen und Besprechungseinladungen hinzufügen können."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Net Skip needs access to your calendar so that websites you visit can add events such as bookings, reservations, and meeting invitations when you grant them permission."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip necesita acceder a tu calendario para que los sitios web que visitas puedan añadir eventos como reservas, citas e invitaciones a reuniones cuando les concedes permiso."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip a besoin d’accéder à votre calendrier pour permettre aux sites web que vous consultez d’ajouter, avec votre autorisation, des événements tels que des réservations, des rendez-vous et des invitations à des réunions."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip को आपके कैलेंडर तक पहुँच की आवश्यकता है ताकि जिन वेबसाइटों पर आप जाते हैं वे आपकी अनुमति देने पर बुकिंग, आरक्षण और मीटिंग आमंत्रण जैसे ईवेंट जोड़ सकें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip memerlukan akses ke kalender Anda agar situs web yang Anda kunjungi dapat menambahkan acara seperti pemesanan, reservasi, dan undangan rapat saat Anda memberinya izin."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip necessita dell’accesso al tuo calendario affinché i siti web che visiti possano aggiungere eventi come prenotazioni, appuntamenti e inviti a riunioni quando concedi loro l’autorizzazione."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skipは、許可した場合に閲覧中のウェブサイトが予約や会議の招待などの予定をカレンダーに追加できるよう、カレンダーへのアクセスを必要とします。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip는 사용자가 권한을 허용하면 방문한 웹사이트가 예약, 일정, 회의 초대 등의 이벤트를 추가할 수 있도록 캘린더 접근 권한이 필요합니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O Net Skip precisa acessar seu calendário para que os sites visitados possam adicionar eventos como reservas, agendamentos e convites de reuniões quando você conceder permissão."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip требуется доступ к вашему календарю, чтобы посещаемые сайты могли с вашего разрешения добавлять события — бронирования, встречи и приглашения на совещания."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip 需要访问您的日历，以便您访问的网站在您授权后可添加预订、预约和会议邀请等事件。"
+          }
+        }
+      }
+    },
+    "NSCameraUsageDescription" : {
+      "comment" : "Privacy - Camera Usage Description",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "يحتاج Net Skip إلى الوصول إلى الكاميرا حتى تتمكن المواقع التي تزورها من استخدامها لمكالمات الفيديو ومسح رموز QR والتقاط الصور عند منحها الإذن."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip benötigt Zugriff auf deine Kamera, damit besuchte Websites sie mit deiner Erlaubnis für Videoanrufe, das Scannen von QR-Codes und das Aufnehmen von Fotos verwenden können."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Net Skip needs access to your camera so that websites you visit can use it for video calls, scanning QR codes, and capturing photos when you grant them permission."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip necesita acceder a tu cámara para que los sitios web que visitas puedan usarla para videollamadas, escanear códigos QR y hacer fotos cuando les concedes permiso."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip a besoin d’accéder à votre caméra afin que les sites web que vous consultez puissent l’utiliser, avec votre autorisation, pour les appels vidéo, la lecture de codes QR et la prise de photos."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip को आपके कैमरे तक पहुँच की आवश्यकता है ताकि जिन वेबसाइटों पर आप जाते हैं वे आपकी अनुमति देने पर वीडियो कॉल, QR कोड स्कैन और फ़ोटो खींचने के लिए इसका उपयोग कर सकें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip memerlukan akses ke kamera Anda agar situs web yang Anda kunjungi dapat menggunakannya untuk panggilan video, memindai kode QR, dan mengambil foto saat Anda memberinya izin."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip necessita dell’accesso alla tua fotocamera affinché i siti web che visiti possano usarla per videochiamate, scansione di codici QR e scatto di foto quando concedi loro l’autorizzazione."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skipは、許可した場合に閲覧中のウェブサイトがビデオ通話、QRコードのスキャン、写真撮影に利用できるよう、カメラへのアクセスを必要とします。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip는 사용자가 권한을 허용하면 방문한 웹사이트가 영상 통화, QR 코드 스캔, 사진 촬영에 사용할 수 있도록 카메라 접근 권한이 필요합니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O Net Skip precisa acessar sua câmera para que os sites visitados possam usá-la em chamadas de vídeo, leitura de códigos QR e captura de fotos quando você conceder permissão."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip требуется доступ к камере, чтобы посещаемые сайты могли с вашего разрешения использовать её для видеозвонков, сканирования QR-кодов и съёмки фотографий."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip 需要访问您的相机，以便您访问的网站在您授权后可用于视频通话、扫描二维码和拍摄照片。"
+          }
+        }
+      }
+    },
+    "NSContactsUsageDescription" : {
+      "comment" : "Privacy - Contacts Usage Description",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "يحتاج Net Skip إلى الوصول إلى جهات اتصالك حتى تتمكن من ملء الأسماء وعناوين البريد الإلكتروني وأرقام الهواتف تلقائياً في نماذج الويب."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip benötigt Zugriff auf deine Kontakte, damit du Namen, E-Mail-Adressen und Telefonnummern schnell automatisch in Webformulare eintragen kannst."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Net Skip needs access to your contacts so that you can quickly autofill names, email addresses, and phone numbers into web forms."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip necesita acceder a tus contactos para que puedas autocompletar rápidamente nombres, direcciones de correo y números de teléfono en formularios web."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip a besoin d’accéder à vos contacts pour vous permettre de remplir rapidement et automatiquement noms, adresses e-mail et numéros de téléphone dans les formulaires web."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip को आपके संपर्कों तक पहुँच की आवश्यकता है ताकि आप वेब फ़ॉर्म में नाम, ईमेल पते और फ़ोन नंबर शीघ्रता से ऑटोफ़िल कर सकें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip memerlukan akses ke kontak Anda agar Anda dapat mengisi nama, alamat email, dan nomor telepon di formulir web secara otomatis dengan cepat."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip necessita dell’accesso ai tuoi contatti per consentirti di compilare automaticamente nomi, indirizzi e-mail e numeri di telefono nei moduli web."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skipは、Webフォームに名前、メールアドレス、電話番号をすばやく自動入力できるよう、連絡先へのアクセスを必要とします。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip는 웹 양식에 이름, 이메일 주소, 전화번호를 빠르게 자동 입력할 수 있도록 연락처 접근 권한이 필요합니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O Net Skip precisa acessar seus contatos para que você possa preencher automaticamente nomes, endereços de e-mail e números de telefone em formulários da web."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip требуется доступ к вашим контактам, чтобы быстро автоматически подставлять имена, адреса электронной почты и номера телефонов в веб-формы."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip 需要访问您的通讯录，以便您可以在网页表单中快速自动填写姓名、电子邮件地址和电话号码。"
+          }
+        }
+      }
+    },
+    "NSFaceIDUsageDescription" : {
+      "comment" : "Privacy - Face ID Usage Description",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "يستخدم Net Skip ميزة Face ID لفتح جلسات التصفح الخاص وتعبئة كلمات المرور المحفوظة بأمان عند تسجيل الدخول إلى المواقع."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip verwendet Face ID, um private Browsersitzungen zu entsperren und gespeicherte Passwörter beim Anmelden bei Websites sicher automatisch auszufüllen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Net Skip uses Face ID to unlock private browsing sessions and to securely autofill saved passwords when signing in to websites."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip usa Face ID para desbloquear sesiones de navegación privada y autocompletar de forma segura las contraseñas guardadas al iniciar sesión en sitios web."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip utilise Face ID pour déverrouiller les sessions de navigation privée et remplir automatiquement et en toute sécurité les mots de passe enregistrés lors de la connexion aux sites web."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip निजी ब्राउज़िंग सत्रों को अनलॉक करने और वेबसाइटों में साइन इन करते समय सहेजे गए पासवर्ड सुरक्षित रूप से ऑटोफ़िल करने के लिए Face ID का उपयोग करता है।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip menggunakan Face ID untuk membuka sesi penjelajahan pribadi dan mengisi otomatis kata sandi tersimpan dengan aman saat masuk ke situs web."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip utilizza Face ID per sbloccare le sessioni di navigazione privata e compilare automaticamente in modo sicuro le password salvate al momento dell’accesso ai siti web."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skipは、プライベートブラウズセッションのロック解除や、ウェブサイトへのサインイン時に保存されたパスワードを安全に自動入力するためにFace IDを使用します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip는 비공개 탐색 세션을 잠금 해제하고 웹사이트 로그인 시 저장된 비밀번호를 안전하게 자동 입력하기 위해 Face ID를 사용합니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O Net Skip usa o Face ID para desbloquear sessões de navegação privada e preencher automaticamente, com segurança, as senhas salvas ao entrar em sites."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip использует Face ID для разблокировки приватных сеансов просмотра и безопасной автоматической подстановки сохранённых паролей при входе на сайты."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip 使用面容 ID 解锁隐私浏览会话，并在登录网站时安全地自动填充已保存的密码。"
+          }
+        }
+      }
+    },
+    "NSHomeKitUsageDescription" : {
+      "comment" : "Privacy - HomeKit Usage Description",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "يحتاج Net Skip إلى الوصول إلى HomeKit حتى تتمكن المواقع التي تزورها من التفاعل مع ملحقات المنزل الذكي المتوافقة عند منحها الإذن."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip benötigt Zugriff auf HomeKit, damit besuchte Websites mit deiner Erlaubnis mit kompatiblem Smart-Home-Zubehör interagieren können."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Net Skip needs access to HomeKit so that websites you visit can interact with compatible smart home accessories when you grant them permission."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip necesita acceder a HomeKit para que los sitios web que visitas puedan interactuar con accesorios de hogar inteligente compatibles cuando les concedes permiso."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip a besoin d’accéder à HomeKit pour permettre aux sites web que vous consultez d’interagir, avec votre autorisation, avec des accessoires domotiques compatibles."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip को HomeKit तक पहुँच की आवश्यकता है ताकि जिन वेबसाइटों पर आप जाते हैं वे आपकी अनुमति देने पर संगत स्मार्ट होम सहायक उपकरणों के साथ इंटरैक्ट कर सकें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip memerlukan akses ke HomeKit agar situs web yang Anda kunjungi dapat berinteraksi dengan aksesori rumah pintar yang kompatibel saat Anda memberinya izin."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip necessita dell’accesso a HomeKit affinché i siti web che visiti possano interagire con gli accessori per la casa intelligente compatibili quando concedi loro l’autorizzazione."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skipは、許可した場合に閲覧中のウェブサイトが対応するスマートホームアクセサリと連携できるよう、HomeKitへのアクセスを必要とします。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip는 사용자가 권한을 허용하면 방문한 웹사이트가 호환되는 스마트 홈 액세서리와 상호작용할 수 있도록 HomeKit 접근 권한이 필요합니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O Net Skip precisa acessar o HomeKit para que os sites visitados possam interagir com acessórios de casa inteligente compatíveis quando você conceder permissão."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip требуется доступ к HomeKit, чтобы посещаемые сайты могли с вашего разрешения взаимодействовать с совместимыми аксессуарами умного дома."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip 需要访问 HomeKit，以便您访问的网站在您授权后可与兼容的智能家居配件交互。"
+          }
+        }
+      }
+    },
+    "NSLocationAlwaysAndWhenInUseUsageDescription" : {
+      "comment" : "Privacy - Location Always and When In Use Usage Description",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "يستخدم Net Skip موقعك لتوفير ميزات تعتمد على الموقع للمواقع التي تزورها، بما في ذلك التحديثات المستمرة لصفحات الملاحة والخرائط عند منحها الإذن."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip verwendet deinen Standort, um besuchten Websites standortbezogene Funktionen bereitzustellen, einschließlich fortlaufender Aktualisierungen für Navigations- und Kartenseiten, sofern du dies erlaubst."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Net Skip uses your location to provide location-aware features to websites you visit, including continuous updates for navigation and mapping pages when you grant them permission."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip usa tu ubicación para ofrecer funciones basadas en la ubicación a los sitios web que visitas, incluidas actualizaciones continuas para páginas de navegación y mapas cuando les concedes permiso."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip utilise votre position pour fournir des fonctionnalités géolocalisées aux sites web que vous consultez, y compris des mises à jour continues pour les pages de navigation et de cartographie, lorsque vous leur en accordez l’autorisation."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip आपके स्थान का उपयोग उन वेबसाइटों को स्थान-आधारित सुविधाएँ प्रदान करने के लिए करता है जिन पर आप जाते हैं, जिसमें आपकी अनुमति देने पर नेविगेशन और मानचित्र पृष्ठों के लिए निरंतर अपडेट शामिल हैं।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip menggunakan lokasi Anda untuk menyediakan fitur berbasis lokasi pada situs web yang Anda kunjungi, termasuk pembaruan berkelanjutan untuk halaman navigasi dan peta saat Anda memberinya izin."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip utilizza la tua posizione per fornire funzionalità basate sulla posizione ai siti web che visiti, inclusi aggiornamenti continui per le pagine di navigazione e mappe quando concedi loro l’autorizzazione."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skipは、許可した場合に閲覧中のウェブサイトに位置情報機能を提供し、ナビゲーションや地図のページで継続的な位置情報の更新を行うため、位置情報を使用します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip는 사용자가 권한을 허용하면 방문한 웹사이트에 위치 기반 기능을 제공하며, 내비게이션 및 지도 페이지에서 위치 정보를 지속적으로 업데이트합니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O Net Skip usa sua localização para oferecer recursos baseados em localização aos sites visitados, incluindo atualizações contínuas para páginas de navegação e mapas quando você conceder permissão."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip использует ваше местоположение для предоставления функций на основе местоположения сайтам, которые вы посещаете, включая непрерывное обновление для страниц навигации и карт с вашего разрешения."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip 使用您的位置为您访问的网站提供基于位置的功能，包括在您授权后为导航和地图页面持续更新位置信息。"
+          }
+        }
+      }
+    },
+    "NSLocationWhenInUseUsageDescription" : {
+      "comment" : "Privacy - Location When In Use Usage Description",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "يستخدم Net Skip موقعك لتوفير ميزات تعتمد على الموقع للمواقع التي تزورها، مثل الخرائط ونتائج البحث المحلية ومعلومات الطقس عند منحها الإذن."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip verwendet deinen Standort, um besuchten Websites standortbezogene Funktionen wie Karten, lokale Suchergebnisse und Wetterinformationen bereitzustellen, sofern du dies erlaubst."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Net Skip uses your location to provide location-aware features to websites you visit, such as maps, local search results, and weather information when you grant them permission."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip usa tu ubicación para ofrecer funciones basadas en la ubicación a los sitios web que visitas, como mapas, resultados de búsqueda local e información meteorológica cuando les concedes permiso."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip utilise votre position pour fournir des fonctionnalités géolocalisées aux sites web que vous consultez, telles que cartes, résultats de recherche locale et informations météo, lorsque vous leur en accordez l’autorisation."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip आपके स्थान का उपयोग उन वेबसाइटों को स्थान-आधारित सुविधाएँ प्रदान करने के लिए करता है जिन पर आप जाते हैं, जैसे आपकी अनुमति देने पर मानचित्र, स्थानीय खोज परिणाम और मौसम की जानकारी।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip menggunakan lokasi Anda untuk menyediakan fitur berbasis lokasi pada situs web yang Anda kunjungi, seperti peta, hasil pencarian lokal, dan informasi cuaca saat Anda memberinya izin."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip utilizza la tua posizione per fornire funzionalità basate sulla posizione ai siti web che visiti, come mappe, risultati di ricerca locale e informazioni meteo quando concedi loro l’autorizzazione."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skipは、許可した場合に閲覧中のウェブサイトに地図、近隣の検索結果、天気情報などの位置情報機能を提供するために位置情報を使用します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip는 사용자가 권한을 허용하면 방문한 웹사이트에 지도, 지역 검색 결과, 날씨 정보 등 위치 기반 기능을 제공하기 위해 위치를 사용합니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O Net Skip usa sua localização para oferecer recursos baseados em localização aos sites visitados, como mapas, resultados de buscas locais e informações do tempo quando você conceder permissão."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip использует ваше местоположение для предоставления функций на основе местоположения сайтам, которые вы посещаете, например карт, результатов локального поиска и сведений о погоде с вашего разрешения."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip 使用您的位置为您访问的网站提供基于位置的功能，例如在您授权后提供地图、本地搜索结果和天气信息。"
+          }
+        }
+      }
+    },
+    "NSMicrophoneUsageDescription" : {
+      "comment" : "Privacy - Microphone Usage Description",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "يحتاج Net Skip إلى الوصول إلى الميكروفون حتى تتمكن المواقع التي تزورها من استخدامه للمكالمات الصوتية والمرئية والبحث الصوتي وتسجيل الصوت عند منحها الإذن."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip benötigt Zugriff auf dein Mikrofon, damit besuchte Websites es mit deiner Erlaubnis für Sprach- und Videoanrufe, Sprachsuche und Audioaufnahmen verwenden können."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Net Skip needs access to your microphone so that websites you visit can use it for voice and video calls, voice search, and recording audio when you grant them permission."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip necesita acceder a tu micrófono para que los sitios web que visitas puedan usarlo en llamadas de voz y vídeo, búsqueda por voz y grabación de audio cuando les concedes permiso."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip a besoin d’accéder à votre microphone afin que les sites web que vous consultez puissent l’utiliser, avec votre autorisation, pour les appels audio et vidéo, la recherche vocale et l’enregistrement audio."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip को आपके माइक्रोफ़ोन तक पहुँच की आवश्यकता है ताकि जिन वेबसाइटों पर आप जाते हैं वे आपकी अनुमति देने पर इसका उपयोग वॉइस और वीडियो कॉल, वॉइस सर्च और ऑडियो रिकॉर्डिंग के लिए कर सकें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip memerlukan akses ke mikrofon Anda agar situs web yang Anda kunjungi dapat menggunakannya untuk panggilan suara dan video, pencarian suara, serta merekam audio saat Anda memberinya izin."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip necessita dell’accesso al microfono affinché i siti web che visiti possano usarlo per chiamate vocali e video, ricerca vocale e registrazione audio quando concedi loro l’autorizzazione."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skipは、許可した場合に閲覧中のウェブサイトが音声・ビデオ通話、音声検索、音声録音に利用できるよう、マイクへのアクセスを必要とします。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip는 사용자가 권한을 허용하면 방문한 웹사이트가 음성·영상 통화, 음성 검색, 오디오 녹음에 사용할 수 있도록 마이크 접근 권한이 필요합니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O Net Skip precisa acessar seu microfone para que os sites visitados possam usá-lo em chamadas de voz e vídeo, busca por voz e gravação de áudio quando você conceder permissão."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip требуется доступ к микрофону, чтобы посещаемые сайты могли с вашего разрешения использовать его для голосовых и видеозвонков, голосового поиска и записи аудио."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip 需要访问您的麦克风，以便您访问的网站在您授权后可用于语音和视频通话、语音搜索和录制音频。"
+          }
+        }
+      }
+    },
+    "NSMotionUsageDescription" : {
+      "comment" : "Privacy - Motion Usage Description",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "يستخدم Net Skip بيانات الحركة والاتجاه حتى تتمكن المواقع التي تزورها من تقديم تجارب تفاعلية تستجيب لطريقة تحريك وإمالة جهازك عند منحها الإذن."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip nutzt Bewegungs- und Orientierungsdaten, damit besuchte Websites mit deiner Erlaubnis interaktive Erlebnisse bieten können, die auf das Bewegen und Neigen deines Geräts reagieren."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Net Skip uses motion and orientation data so that websites you visit can offer interactive experiences that respond to how you move and tilt your device when you grant them permission."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip utiliza datos de movimiento y orientación para que los sitios web que visitas puedan ofrecer experiencias interactivas que respondan a cómo mueves e inclinas el dispositivo cuando les concedes permiso."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip utilise les données de mouvement et d’orientation afin que les sites web que vous consultez puissent proposer des expériences interactives réagissant à la façon dont vous bougez et inclinez votre appareil, lorsque vous leur en accordez l’autorisation."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip गति और दिशा डेटा का उपयोग करता है ताकि जिन वेबसाइटों पर आप जाते हैं वे आपकी अनुमति देने पर आपके डिवाइस को हिलाने और झुकाने के तरीके पर प्रतिक्रिया देने वाले इंटरैक्टिव अनुभव प्रदान कर सकें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip menggunakan data gerak dan orientasi agar situs web yang Anda kunjungi dapat menyajikan pengalaman interaktif yang merespons cara Anda menggerakkan dan memiringkan perangkat saat Anda memberinya izin."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip utilizza i dati di movimento e orientamento affinché i siti web che visiti possano offrire esperienze interattive che rispondono al modo in cui muovi e inclini il tuo dispositivo quando concedi loro l’autorizzazione."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skipは、許可した場合に閲覧中のウェブサイトがデバイスの動きや傾きに反応するインタラクティブな体験を提供できるよう、モーションおよび方向データを使用します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip는 사용자가 권한을 허용하면 방문한 웹사이트가 기기의 움직임과 기울임에 반응하는 인터랙티브 경험을 제공할 수 있도록 모션 및 방향 데이터를 사용합니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O Net Skip usa dados de movimento e orientação para que os sites visitados possam oferecer experiências interativas que respondem à forma como você move e inclina o dispositivo quando você conceder permissão."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip использует данные движения и ориентации, чтобы посещаемые сайты могли с вашего разрешения предлагать интерактивные функции, реагирующие на то, как вы двигаете и наклоняете устройство."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip 使用动作和方向数据，以便您访问的网站在您授权后可提供能响应设备移动和倾斜的互动体验。"
+          }
+        }
+      }
+    },
+    "NSNearbyInteractionUsageDescription" : {
+      "comment" : "Privacy - Nearby Interaction Usage Description",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "يستخدم Net Skip ميزة التفاعل القريب حتى تتمكن من مشاركة علامات التبويب المفتوحة والروابط بأمان مع أجهزة Apple الأخرى القريبة منك جسدياً."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip nutzt die Nahinteraktion, damit du geöffnete Tabs und Links sicher mit anderen Apple-Geräten in deiner unmittelbaren Nähe teilen kannst."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Net Skip uses nearby interaction so that you can securely share open tabs and links with other Apple devices that are physically close to yours."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip usa la interacción cercana para que puedas compartir de forma segura pestañas abiertas y enlaces con otros dispositivos Apple que estén cerca físicamente."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip utilise l’interaction à proximité pour vous permettre de partager en toute sécurité des onglets ouverts et des liens avec d’autres appareils Apple physiquement proches."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip निकट इंटरैक्शन का उपयोग करता है ताकि आप खुले टैब और लिंक को अपने पास भौतिक रूप से मौजूद अन्य Apple डिवाइसों के साथ सुरक्षित रूप से साझा कर सकें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip menggunakan Interaksi Dekat agar Anda dapat membagikan tab dan tautan terbuka dengan aman ke perangkat Apple lain yang berada di dekat Anda secara fisik."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip utilizza l’interazione ravvicinata per consentirti di condividere in modo sicuro schede e link aperti con altri dispositivi Apple fisicamente vicini."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skipは、開いているタブやリンクを物理的に近くにある他のAppleデバイスと安全に共有できるよう、近接インタラクションを使用します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip는 물리적으로 가까이 있는 다른 Apple 기기와 열린 탭과 링크를 안전하게 공유할 수 있도록 근접 상호 작용을 사용합니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O Net Skip usa a interação por proximidade para que você possa compartilhar com segurança abas abertas e links com outros dispositivos Apple fisicamente próximos."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip использует ближнее взаимодействие, чтобы вы могли безопасно делиться открытыми вкладками и ссылками с другими устройствами Apple, расположенными физически рядом."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip 使用近距离互动，以便您可以与附近的其他 Apple 设备安全地共享打开的标签页和链接。"
+          }
+        }
+      }
+    },
+    "NSPhotoLibraryUsageDescription" : {
+      "comment" : "Privacy - Photo Library Usage Description",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "يحتاج Net Skip إلى الوصول إلى مكتبة الصور حتى تتمكن من تحميل الصور إلى المواقع وحفظ الصور والوسائط الأخرى من صفحات الويب التي تزورها."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip benötigt Zugriff auf deine Fotomediathek, damit du Bilder auf Websites hochladen und Fotos sowie andere Medien von besuchten Webseiten speichern kannst."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Net Skip needs access to your photo library so that you can upload images to websites and save pictures and other media from web pages you visit."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip necesita acceder a tu fototeca para que puedas subir imágenes a sitios web y guardar fotos y otros archivos multimedia de las páginas web que visitas."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip a besoin d’accéder à votre photothèque pour vous permettre de téléverser des images vers des sites web et d’enregistrer photos et autres médias depuis les pages web que vous consultez."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip को आपकी फ़ोटो लाइब्रेरी तक पहुँच की आवश्यकता है ताकि आप वेबसाइटों पर छवियाँ अपलोड कर सकें और देखी गई वेब पृष्ठों से चित्र और अन्य मीडिया सहेज सकें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip memerlukan akses ke pustaka foto Anda agar Anda dapat mengunggah gambar ke situs web dan menyimpan foto serta media lain dari halaman web yang Anda kunjungi."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip necessita dell’accesso alla libreria foto per consentirti di caricare immagini sui siti web e salvare foto e altri contenuti multimediali dalle pagine web che visiti."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skipは、ウェブサイトに画像をアップロードしたり、閲覧中のウェブページから写真などのメディアを保存できるよう、写真ライブラリへのアクセスを必要とします。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip는 웹사이트에 이미지를 업로드하고 방문한 웹페이지에서 사진 및 기타 미디어를 저장할 수 있도록 사진 보관함 접근 권한이 필요합니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O Net Skip precisa acessar sua biblioteca de fotos para que você possa enviar imagens para sites e salvar fotos e outras mídias das páginas que visita."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip требуется доступ к медиатеке, чтобы вы могли загружать изображения на сайты и сохранять фотографии и другие медиафайлы со страниц, которые вы посещаете."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip 需要访问您的照片图库，以便您可以将图片上传到网站，并从访问的网页中保存图片和其他媒体。"
+          }
+        }
+      }
+    },
+    "NSRemindersUsageDescription" : {
+      "comment" : "Privacy - Reminders Usage Description",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "يحتاج Net Skip إلى الوصول إلى التذكيرات حتى تتمكن من إنشاء مهام من صفحات الويب وحتى يمكن للمواقع إضافة تذكيرات عند منحها الإذن."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip benötigt Zugriff auf deine Erinnerungen, damit du Aufgaben aus Webseiten erstellen kannst und besuchte Websites mit deiner Erlaubnis Erinnerungen hinzufügen können."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Net Skip needs access to your reminders so that you can create tasks from web pages and so that websites can add reminders when you grant them permission."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip necesita acceder a tus recordatorios para que puedas crear tareas desde páginas web y para que los sitios web puedan añadir recordatorios cuando les concedes permiso."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip a besoin d’accéder à vos rappels pour vous permettre de créer des tâches depuis des pages web et permettre aux sites web d’ajouter des rappels lorsque vous leur en accordez l’autorisation."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip को आपके अनुस्मारकों तक पहुँच की आवश्यकता है ताकि आप वेब पृष्ठों से कार्य बना सकें और वेबसाइटें आपकी अनुमति देने पर अनुस्मारक जोड़ सकें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip memerlukan akses ke pengingat Anda agar Anda dapat membuat tugas dari halaman web dan agar situs web dapat menambahkan pengingat saat Anda memberinya izin."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip necessita dell’accesso ai promemoria per consentirti di creare attività dalle pagine web e ai siti web di aggiungere promemoria quando concedi loro l’autorizzazione."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skipは、ウェブページからタスクを作成したり、許可した場合にウェブサイトがリマインダーを追加できるよう、リマインダーへのアクセスを必要とします。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip는 웹페이지에서 할 일을 만들 수 있도록, 그리고 사용자가 권한을 허용한 웹사이트가 미리 알림을 추가할 수 있도록 미리 알림 접근 권한이 필요합니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O Net Skip precisa acessar seus lembretes para que você possa criar tarefas a partir de páginas da web e para que os sites possam adicionar lembretes quando você conceder permissão."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip требуется доступ к напоминаниям, чтобы вы могли создавать задачи из веб-страниц, а сайты могли с вашего разрешения добавлять напоминания."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip 需要访问您的提醒事项，以便您可以从网页创建任务，并允许已授权的网站添加提醒事项。"
+          }
+        }
+      }
+    },
+    "NSSiriUsageDescription" : {
+      "comment" : "Privacy - Siri Usage Description",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "يتكامل Net Skip مع Siri حتى تتمكن من فتح صفحات الويب وإجراء عمليات البحث ومتابعة التصفح باستخدام اختصارات الصوت واقتراحات Siri."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip ist in Siri integriert, damit du Webseiten öffnen, Suchen durchführen und das Surfen über Sprachkurzbefehle und Siri-Vorschläge fortsetzen kannst."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Net Skip integrates with Siri so that you can open web pages, perform searches, and resume browsing using voice shortcuts and Siri Suggestions."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip se integra con Siri para que puedas abrir páginas web, realizar búsquedas y retomar la navegación mediante atajos de voz y sugerencias de Siri."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip s’intègre à Siri pour vous permettre d’ouvrir des pages web, d’effectuer des recherches et de reprendre la navigation à l’aide des raccourcis vocaux et des suggestions Siri."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip Siri के साथ एकीकृत होता है ताकि आप वॉइस शॉर्टकट और Siri सुझावों का उपयोग करके वेब पृष्ठ खोल सकें, खोज कर सकें और ब्राउज़िंग जारी रख सकें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip terintegrasi dengan Siri agar Anda dapat membuka halaman web, melakukan pencarian, dan melanjutkan penjelajahan menggunakan pintasan suara dan Saran Siri."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip si integra con Siri per consentirti di aprire pagine web, eseguire ricerche e riprendere la navigazione tramite scorciatoie vocali e suggerimenti di Siri."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skipは、音声ショートカットやSiriからの提案を使ってウェブページを開いたり、検索を実行したり、ブラウズを再開できるようSiriと連携します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip는 음성 단축어와 Siri 제안을 통해 웹페이지를 열고, 검색하고, 탐색을 이어갈 수 있도록 Siri와 연동됩니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O Net Skip se integra à Siri para que você possa abrir páginas da web, realizar buscas e retomar a navegação usando atalhos de voz e Sugestões da Siri."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip интегрируется с Siri, чтобы вы могли открывать веб-страницы, выполнять поиск и продолжать просмотр с помощью голосовых команд и предложений Siri."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip 与 Siri 集成，以便您可以使用语音快捷指令和 Siri 建议打开网页、执行搜索并继续浏览。"
+          }
+        }
+      }
+    },
+    "NSSpeechRecognitionUsageDescription" : {
+      "comment" : "Privacy - Speech Recognition Usage Description",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "يستخدم Net Skip التعرف على الكلام حتى تتمكن من إملاء عناوين URL واستفسارات البحث ومدخلات النماذج صوتياً بدلاً من الكتابة."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip verwendet Spracherkennung, damit du URLs, Suchanfragen und Formulareingaben per Sprache diktieren kannst, statt sie einzutippen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Net Skip uses speech recognition so that you can dictate URLs, search queries, and form input by voice instead of typing."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip usa el reconocimiento de voz para que puedas dictar URLs, consultas de búsqueda y entradas de formularios con la voz en lugar de escribir."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip utilise la reconnaissance vocale afin que vous puissiez dicter des URL, des requêtes de recherche et des saisies de formulaires plutôt que de les taper."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip स्पीच रिकग्निशन का उपयोग करता है ताकि आप टाइप करने के बजाय आवाज़ से URL, खोज प्रश्न और फ़ॉर्म इनपुट बोलकर दर्ज कर सकें।"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip menggunakan pengenalan suara agar Anda dapat mendiktekan URL, kueri pencarian, dan masukan formulir lewat suara tanpa perlu mengetik."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip utilizza il riconoscimento vocale per consentirti di dettare URL, query di ricerca e dati nei moduli con la voce invece di digitarli."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skipは、URLや検索クエリ、フォームへの入力をタイピングの代わりに音声で行えるよう、音声認識を使用します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip는 키보드로 입력하는 대신 음성으로 URL, 검색어, 양식 내용을 받아쓸 수 있도록 음성 인식을 사용합니다."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "O Net Skip usa o reconhecimento de fala para que você possa ditar URLs, buscas e entradas de formulário por voz em vez de digitar."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip использует распознавание речи, чтобы вы могли диктовать URL-адреса, поисковые запросы и данные форм голосом вместо ввода текста."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Net Skip 使用语音识别，以便您无需键入即可通过语音输入网址、搜索词和表单内容。"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.2"
+}

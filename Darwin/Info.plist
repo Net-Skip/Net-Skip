@@ -95,6 +95,36 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Net Skip uses Bluetooth so that websites you visit can communicate with nearby devices such as fitness trackers, game controllers, and IoT hardware via the Web Bluetooth API when you grant them permission.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Net Skip needs access to your calendar so that websites you visit can add events such as bookings, reservations, and meeting invitations when you grant them permission.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Net Skip needs access to your camera so that websites you visit can use it for video calls, scanning QR codes, and capturing photos when you grant them permission.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Net Skip needs access to your contacts so that you can quickly autofill names, email addresses, and phone numbers into web forms.</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Net Skip uses Face ID to unlock private browsing sessions and to securely autofill saved passwords when signing in to websites.</string>
+	<key>NSHomeKitUsageDescription</key>
+	<string>Net Skip needs access to HomeKit so that websites you visit can interact with compatible smart home accessories when you grant them permission.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Net Skip uses your location to provide location-aware features to websites you visit, including continuous updates for navigation and mapping pages when you grant them permission.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Net Skip uses your location to provide location-aware features to websites you visit, such as maps, local search results, and weather information when you grant them permission.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Net Skip needs access to your microphone so that websites you visit can use it for voice and video calls, voice search, and recording audio when you grant them permission.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Net Skip uses motion and orientation data so that websites you visit can offer interactive experiences that respond to how you move and tilt your device when you grant them permission.</string>
+	<key>NSNearbyInteractionUsageDescription</key>
+	<string>Net Skip uses nearby interaction so that you can securely share open tabs and links with other Apple devices that are physically close to yours.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Net Skip needs access to your photo library so that you can upload images to websites and save pictures and other media from web pages you visit.</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>Net Skip needs access to your reminders so that you can create tasks from web pages and so that websites can add reminders when you grant them permission.</string>
+	<key>NSSiriUsageDescription</key>
+	<string>Net Skip integrates with Siri so that you can open web pages, perform searches, and resume browsing using voice shortcuts and Siri Suggestions.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Net Skip uses speech recognition so that you can dictate URLs, search queries, and form input by voice instead of typing.</string>
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>QuickActionIntent</string>
