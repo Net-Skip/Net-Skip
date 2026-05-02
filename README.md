@@ -2,19 +2,10 @@
 
 Net Skip is a web browser app for iOS and Android.
 
-
-<p style="vertical-align: middle; margin-left: auto; margin-right: auto; text-align: center;">
-<a href="https://apps.apple.com/us/app/net-skip/id1640618584?itscg=30200&amp;itsct=apps_box_appicon" style="width: 170px; height: 170px; border-radius: 22%; overflow: hidden; display: inline-block; vertical-align: middle; margin-left: auto; margin-right: auto; text-align: center;">
-  <img src="https://appfair.org/img/net-skip-icon.jpg" alt="Net Skip" style="width: 170px; height: 170px; border-radius: 22%; overflow: hidden; display: inline-block; vertical-align: middle;" />
-</a>
-</p>
-
-<p style="vertical-align: middle; margin-left: auto; margin-right: auto; text-align: center;">
-<a href="https://apps.apple.com/us/app/net-skip/id1640618584?itscg=30200&amp;itsct=apps_box_appicon" stylex="width: 170px; height: 170px; border-radius: 22%; overflow: hidden; display: inline-block; vertical-align: middle; margin-left: auto; margin-right: auto; text-align: center;">
-  <img alt="Download on App Store Button" src="https://appfair.org/img/download-app-store.png" style="width: 170px; display: inline-block; vertical-align: middle;" />
-</a>
-</p>
-
+<div align="center">
+  <a href="https://play.google.com/store/apps/details?id=org.appfair.app.Net_Skip" style="display: inline-block;"><img src="https://appfair.org/assets/badges/google-play-store.svg" alt="Download on the Google Play Store" style="height: 60px; vertical-align: middle; object-fit: contain;" /></a>
+  <a href="https://apps.apple.com/app/id1640618584" style="display: inline-block;"><img src="https://appfair.org/assets/badges/apple-app-store.svg" alt="Download on the Apple App Store" style="height: 60px; vertical-align: middle; object-fit: contain;" /></a>
+</div>
 
 ## Building
 
