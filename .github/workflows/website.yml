@@ -2,7 +2,7 @@ name: Net-Skip Website
 
 on:
   push:
-    #branches: [main]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -42,10 +42,9 @@ jobs:
 
       - name: Generate app index
         run: |
-          # Update Skip.env version from git tags
-          sed -i '' "s;MARKETING_VERSION = .*;MARKETING_VERSION = $(git describe --tags --abbrev=0 --match '[0-9]*\.[0-9]*\.[0-9]*' --first-parent);g" Skip.env
-          sed -i '' "s;CURRENT_PROJECT_VERSION = .*;CURRENT_PROJECT_VERSION = $(git rev-list --count HEAD);g" Skip.env
-          skip meta index --sbom -O site/appindex.json
+          skip meta index -O site/appindex.json
+          # sbom requires building the project, which does not work on Ubuntu yet
+          #skip meta index --sbom -O site/appindex.json
 
       - name: Build with Astro
         id: build
