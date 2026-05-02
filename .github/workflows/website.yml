@@ -2,7 +2,6 @@ name: Net-Skip Website
 
 on:
   push:
-    branches: *
     #branches: [main]
   workflow_dispatch:
 
