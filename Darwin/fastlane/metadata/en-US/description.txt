@@ -3,13 +3,12 @@ Net Skip is the App Fair's free and open-source web browser. It presents a minim
 In contrast with most other browsers on the market, Net Skip is best characterized by what it does *not* feature:
 
   • No embedded advertising or tracking
-  • No cryptocurrency features
-  • No rewards programs
+  • No cryptocurrency features or rewards programs
   • No in-app purchases or subscriptions
   • No telemetry, analytics, or user data collection
   • No monetization whatsoever of the user of the app
 
-The source code for Net Skip – along with all App Fair projects – is free and open-source, and is distributed under the GNU General Public License (GPL) 3.0. You can access the source for review and modification at https://github.com/Net-Skip/Net-Skip/. It uses the WebKit rendering engine, which is distributed under the GNU Lesser General Public License (LGPL) and whose source code is available at https://webkit.org/.
+The source code for Net Skip – along with all App Fair projects – is free and open-source, and is distributed under a free and open-source license. You can access the source for review and modification at https://github.com/Net-Skip/Net-Skip/.
 
 Net Skip is part of the App Fair Project, a non-profit charity based in the Commonwealth of Massachusetts founded to create and maintain digital public goods in the form of mobile applications. Find out more about the App Fair Project at https://appfair.org and help us build our app marketplace by spreading the word about Net Skip and our other project apps.
 

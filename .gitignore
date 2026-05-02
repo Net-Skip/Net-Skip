@@ -4,6 +4,9 @@
 .*.swp
 .*.swo
 
+site/appland
+skip-export
+
 # macOS
 .DS_Store
 

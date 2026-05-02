@@ -1,0 +1,59 @@
+name: Net-Skip Website
+
+on:
+  push:
+    #branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-tags: true
+          fetch-depth: 0
+
+      - name: Checkout appland template
+        uses: actions/checkout@v6
+        with:
+          repository: appfair/appland
+          path: site/appland
+
+      - name: Setup Skip
+        #uses: skiptools/actions/setup-skip@v1
+        uses: skiptools/actions/setup-skip@skip-source
+        with:
+          verify-project: '.'
+          skip-source: 'appindex'
+
+      - name: Generate app index
+        run: |
+          # Update Skip.env version from git tags
+          sed -i '' "s;MARKETING_VERSION = .*;MARKETING_VERSION = $(git describe --tags --abbrev=0 --match '[0-9]*\.[0-9]*\.[0-9]*' --first-parent);g" Skip.env
+          sed -i '' "s;CURRENT_PROJECT_VERSION = .*;CURRENT_PROJECT_VERSION = $(git rev-list --count HEAD);g" Skip.env
+          skip meta index --sbom -O site/appindex.json
+
+      - name: Build with Astro
+        id: build
+        uses: withastro/action@v6
+        with:
+          path: site/appland
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
+
