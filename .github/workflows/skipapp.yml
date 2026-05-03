@@ -15,13 +15,11 @@ permissions:
 
 jobs:
   call-workflow:
-    #uses: skiptools/actions/.github/workflows/skip-app.yml@v1
-    uses: skiptools/actions/.github/workflows/skip-app.yml@skip-source
+    uses: skiptools/actions/.github/workflows/skip-app.yml@v1
     with:
-      skip-source: 'appindex'
+      skip-source: 'cask'
       run-local-tests: false
     secrets:
-      # TODO: enable once Android build is ready
       # These optional secrets enable the Android app to be signed
       KEYSTORE_JKS: ${{ secrets.KEYSTORE_JKS }}
       KEYSTORE_PROPERTIES: ${{ secrets.KEYSTORE_PROPERTIES }}

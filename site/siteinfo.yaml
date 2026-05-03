@@ -10,6 +10,7 @@ title: 'Net Skip'
 host: 'https://netskip.app'
 
 # Path to the appindex.json publication document, relative to this file.
+# generate it with: skip meta index -O site/appindex.json
 appindex: 'appindex.json'
 
 # Optional ────────────────────────────────────────────────────────────────────

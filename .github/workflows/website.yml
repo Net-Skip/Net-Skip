@@ -16,6 +16,7 @@ concurrency:
 
 jobs:
   build-and-deploy:
+    if: github.event.repository.fork == false
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -34,11 +35,10 @@ jobs:
           path: site/appland
 
       - name: Setup Skip
-        #uses: skiptools/actions/setup-skip@v1
-        uses: skiptools/actions/setup-skip@skip-source
+        uses: skiptools/actions/setup-skip@v1
         with:
-          verify-project: '.'
-          skip-source: 'appindex'
+          skip-source: 'cask'
+          verify-project: .
 
       - name: Generate app index
         run: |
