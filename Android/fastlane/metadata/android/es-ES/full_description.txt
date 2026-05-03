@@ -1,13 +1,37 @@
-Net Skip es el navegador web gratuito y de código abierto de App Fair. Ofrece una experiencia de navegación minimalista y elegante, lo que se traduce en la navegación web más rápida disponible en cualquier dispositivo móvil, en cualquier lugar.
+Net Skip es un navegador web cuidadosamente diseñado que aporta claridad y velocidad a la navegación cotidiana. Es gratuito, de código abierto y está hecho para sentirse rápido y sin esfuerzo en tu dispositivo.
 
-A diferencia de la mayoría de los navegadores del mercado, Net Skip se caracteriza mejor por lo que *no* incluye:
+Impulsado por el motor web nativo de Android, Net Skip se inicia rápidamente y representa las páginas con fluidez, con una interfaz que se aparta discretamente mientras lees. Las pestañas se deslizan entre sí con un solo gesto, la barra de herramientas desaparece al desplazarte y el foco permanece donde corresponde: en la página que tienes delante.
 
-  • Sin publicidad ni seguimiento integrado
-  • Sin funciones de criptomonedas ni programas de recompensas
-  • Sin compras integradas ni suscripciones
-  • Sin telemetría, análisis ni recopilación de datos del usuario
-  • Sin ningún tipo de monetización del usuario de la aplicación
+CARACTERÍSTICAS
 
-El código fuente de Net Skip, junto con el de todos los proyectos de App Fair, es gratuito y de código abierto, y se distribuye bajo una licencia libre y de código abierto. Puede acceder al código fuente para revisarlo y modificarlo en https://github.com/Net-Skip/Net-Skip/.
+• Carga rápida de páginas y desplazamiento fluido, impulsados por el motor web nativo
+• Una interfaz limpia y sin desorden que se aparta mientras lees
+• Cambio entre pestañas con un solo gesto
+• Vista general visual de pestañas con vistas previas en vivo de cada página abierta
+• Restauración automática de sesión: tus pestañas están justo donde las dejaste
+• Bloqueo de anuncios y rastreadores integrado, activado de forma predeterminada
+• Variedad de motores de búsqueda, con sugerencias mientras escribes
+• Buscar en la página, zoom de texto ajustable y opción de solicitar sitio de escritorio
+• Favoritos e historial de navegación completo, con controles sencillos para borrar lo que desees
+• Modos de apariencia claro, oscuro y según el sistema
+• Respuesta háptica opcional para una experiencia más táctil
+• Configuración de JavaScript y user-agent personalizado para usuarios avanzados
 
-Net Skip forma parte del Proyecto App Fair, una organización benéfica sin ánimo de lucro con sede en la Mancomunidad de Massachusetts, fundada para crear y mantener bienes públicos digitales en forma de aplicaciones móviles. Conozca más sobre el Proyecto App Fair en https://appfair.org y ayúdenos a construir nuestro mercado de aplicaciones difundiendo el conocimiento sobre Net Skip y nuestras otras aplicaciones del proyecto.
+PRIVACIDAD POR DISEÑO
+
+Net Skip se basa en una idea simple: tu navegación te pertenece.
+
+• Sin publicidad de ningún tipo
+• Sin rastreo, análisis ni telemetría
+• Sin compras dentro de la aplicación ni suscripciones
+• Sin cuentas, sin inicio de sesión, sin perfil
+
+Lo que sucede en Net Skip se queda en tu dispositivo.
+
+GRATIS Y DE CÓDIGO ABIERTO
+
+Net Skip es gratuito para descargar y gratuito para usar, sin un nivel premium y sin nada que desbloquear. El código fuente completo se publica de forma abierta para que cualquiera pueda leerlo, auditarlo o contribuir. Puedes encontrar el proyecto en https://github.com/Net-Skip.
+
+SOBRE APP FAIR
+
+Net Skip te lo trae el Proyecto App Fair, una organización benéfica sin ánimo de lucro dedicada a crear y mantener bienes públicos digitales en forma de aplicaciones móviles. Más información en https://appfair.org.

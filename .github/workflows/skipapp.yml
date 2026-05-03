@@ -17,7 +17,7 @@ jobs:
   call-workflow:
     uses: skiptools/actions/.github/workflows/skip-app.yml@v1
     with:
-      skip-source: 'cask'
+      #skip-source: 'cask'
       run-local-tests: false
     secrets:
       # These optional secrets enable the Android app to be signed

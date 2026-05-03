@@ -37,7 +37,7 @@ jobs:
       - name: Setup Skip
         uses: skiptools/actions/setup-skip@v1
         with:
-          skip-source: 'cask'
+          #skip-source: 'cask'
           verify-project: .
 
       - name: Generate app index
