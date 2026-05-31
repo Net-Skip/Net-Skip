@@ -4,6 +4,7 @@
 .*.swp
 .*.swo
 
+.maestro
 site/appland
 skip-export
 

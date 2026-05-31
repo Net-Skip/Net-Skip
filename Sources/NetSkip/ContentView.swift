@@ -21,6 +21,8 @@ public struct ContentView: View {
     #endif
     let store = try! NetSkipWebBrowserStore(url: URL.documentsDirectory.appendingPathComponent("netskip.sqlite"))
 
+    @State private var settings = NetSkipSettings()
+
     public init() {
     }
 
@@ -35,5 +37,6 @@ public struct ContentView: View {
             Text("Net Skip requires iOS")
             #endif
         }
+        .environment(settings)
     }
 }

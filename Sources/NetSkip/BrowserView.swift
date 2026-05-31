@@ -11,21 +11,18 @@ import NetSkipModel
     let submitURL: (String) -> ()
     @Binding var viewModel: BrowserViewModel
 
-    @Binding var searchEngine: SearchEngine.ID
-    @Binding var searchSuggestions: Bool
     @Binding var showSettings: Bool
     @Binding var showBottomBar: Bool
-    @Binding var userAgent: String
-    @Binding var enableJavaScript: Bool
-    @Binding var pageLoadHaptics: Bool
-    @Binding var requestDesktopSite: Bool
-    @Binding var textZoom: Double
 
     @State var currentSuggestions: SearchSuggestions?
     @State var triggerPageLoadHaptic: Bool = false
+    @State var pendingDownload: WebDownloadRequest? = nil
+    @State var showDownloadPrompt: Bool = false
     #if SKIP
     @State var urlSelection: TextSelection? = nil
     #endif
+
+    @Environment(NetSkipSettings.self) var settings
 
     @FocusState var isURLBarFocused: Bool
 
@@ -43,6 +40,16 @@ import NetSkipModel
             ZStack {
                 WebView(configuration: configuration, navigator: viewModel.navigator, state: $viewModel.state, onNavigationCommitted: {
                     logger.log("onNavigationCommitted")
+                }, onDownloadRequested: { request in
+                    logger.log("download requested: \(String(describing: request.url))")
+                    Task { @MainActor in
+                        if settings.promptForDownloads {
+                            self.pendingDownload = request
+                            self.showDownloadPrompt = true
+                        } else {
+                            NetSkipDownloadManager.shared.enqueue(request)
+                        }
+                    }
                 })
                 let showSuggestions = state.pageURL == nil || isURLBarFocused
                 if showSuggestions {
@@ -53,15 +60,38 @@ import NetSkipModel
             urlBarView()
         }
         .frame(maxHeight: .infinity)
+        .confirmationDialog(
+            Text("Download \(pendingDownload.map(NetSkipDownloadManager.resolvedFilename(for:)) ?? "file")?",
+                 bundle: .module,
+                 comment: "title for the file-download confirmation dialog; argument is the filename"),
+            isPresented: $showDownloadPrompt,
+            titleVisibility: .visible
+        ) {
+            Button {
+                if let request = pendingDownload {
+                    NetSkipDownloadManager.shared.enqueue(request)
+                }
+                pendingDownload = nil
+            } label: {
+                Text("Download", bundle: .module, comment: "confirm-download button on the download confirmation dialog")
+            }
+            .accessibilityIdentifier("button.download.confirm")
+            Button(role: .cancel) {
+                pendingDownload = nil
+            } label: {
+                Text("Cancel", bundle: .module, comment: "cancel button on the download confirmation dialog")
+            }
+            .accessibilityIdentifier("button.download.cancel")
+        }
         #if !SKIP
         .sensoryFeedback(.impact, trigger: triggerPageLoadHaptic)
         #endif
         .onAppear {
             updateWebView()
         }
-        .onChange(of: enableJavaScript, initial: false, { _, _ in self.updateWebView() })
-        .onChange(of: requestDesktopSite, initial: false, { _, _ in self.updateWebView() })
-        .onChange(of: textZoom, initial: false, { _, _ in self.applyTextZoom() })
+        .onChange(of: settings.enableJavaScript, initial: false, { _, _ in self.updateWebView() })
+        .onChange(of: settings.requestDesktopSite, initial: false, { _, _ in self.updateWebView() })
+        .onChange(of: settings.textZoom, initial: false, { _, _ in self.applyTextZoom() })
     }
 
     struct SearchSuggestions : Identifiable {
@@ -84,13 +114,13 @@ import NetSkipModel
             updatePageURL(nil, url.absoluteString)
         }
 
-        webView.configuration.defaultWebpagePreferences.allowsContentJavaScript = enableJavaScript
+        webView.configuration.defaultWebpagePreferences.allowsContentJavaScript = settings.enableJavaScript
 
         // Apply user agent
-        if requestDesktopSite {
+        if settings.requestDesktopSite {
             webView.customUserAgent = Self.desktopUserAgent
-        } else if !userAgent.isEmpty {
-            webView.customUserAgent = userAgent
+        } else if !settings.userAgent.isEmpty {
+            webView.customUserAgent = settings.userAgent
         } else {
             webView.customUserAgent = nil // use default
         }
@@ -120,7 +150,7 @@ import NetSkipModel
                 }
             }
             // Fire page load haptic
-            if pageLoadHaptics {
+            if settings.pageLoadHaptics {
                 triggerPageLoadHaptic.toggle()
             }
         }
@@ -132,12 +162,12 @@ import NetSkipModel
         // so values > 1.0 make content appear smaller. Use the reciprocal to get
         // the expected behavior where textZoom > 1.0 means "zoom in" (larger text).
         if let webView = self.webView {
-            webView.pageZoom = 1.0 / textZoom
+            webView.pageZoom = 1.0 / settings.textZoom
         }
         #else
         // Android: use the native WebView settings.textZoom (integer percentage)
         if let webView = self.webView {
-            let pct = Int(textZoom * 100.0)
+            let pct = Int(settings.textZoom * 100.0)
             webView.getSettings().setTextZoom(pct)
         }
         #endif
@@ -252,7 +282,7 @@ import NetSkipModel
                     self.isURLBarFocused = false
                 }
                 .task(id: viewModel.urlTextField) {
-                    if searchSuggestions && isURLBarFocused && !viewModel.urlTextField.isEmpty {
+                    if settings.searchSuggestions && isURLBarFocused && !viewModel.urlTextField.isEmpty {
                         Task {
                             do {
                                 try await fetchSearchSuggestions(string: viewModel.urlTextField)
@@ -408,7 +438,7 @@ import NetSkipModel
     }
 
     func fetchSearchSuggestions(string: String) async throws {
-        guard let engine = SearchEngine.lookup(id: self.searchEngine) else { return }
+        guard let engine = SearchEngine.lookup(id: settings.searchEngine) else { return }
         // SKIP NOWARN
         let suggestions: [String]? = try await engine.suggestions(string)
         logger.log("fetched search suggestion: \(String(describing: suggestions))")

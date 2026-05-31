@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    FileProvider path config for shared content URIs.
+
+    `external-path` with `Download/` covers the public Downloads folder
+    used by NetSkipDownloadManager (Environment.DIRECTORY_DOWNLOADS).
+    That is what gets exposed when the user taps "Open" on a downloaded
+    file — content://org.appfair.app.Net_Skip.fileprovider/downloads/<file>.
+
+    `external-files-path` and `files-path` are included for any future
+    app-private files (caches, generated PDFs, etc.) so they can also
+    be shared without further manifest changes.
+-->
+<paths>
+    <external-path name="downloads" path="Download/" />
+    <external-files-path name="external_files" path="." />
+    <files-path name="files" path="." />
+    <cache-path name="cache" path="." />
+</paths>

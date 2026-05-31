@@ -110,5 +110,22 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <!--
+            FileProvider that exposes downloaded files in the public
+            Downloads directory as content:// URIs so other apps can
+            open them (NetSkipDownloadManager → "Open" button).
+            Authority must match netSkipOpenDownloadedFile in
+            NetSkipDownloads.swift: `<packageName>.fileprovider`.
+        -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 </manifest>

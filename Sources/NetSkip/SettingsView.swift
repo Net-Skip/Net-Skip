@@ -12,19 +12,7 @@ struct SettingsView : View {
     #endif
     var store: WebBrowserStore?
 
-    @Binding var appearance: String
-    @Binding var buttonHaptics: Bool
-    @Binding var pageLoadHaptics: Bool
-    @Binding var searchEngine: SearchEngine.ID
-    @Binding var searchSuggestions: Bool
-    @Binding var userAgent: String
-    @Binding var enableJavaScript: Bool
-    @Binding var enableMiniApps: Bool
-    @Binding var blockAds: Bool
-    @Binding var blockTrackers: Bool
-    @Binding var blockCookieBanners: Bool
-    @Binding var contentBlockingWhitelistedDomains: String
-    @Binding var contentBlockingCustomBlockedPatterns: String
+    @Environment(NetSkipSettings.self) var settings
 
     @State var confirmClearHistory: Bool = false
     @State var confirmClearFavorites: Bool = false
@@ -33,9 +21,15 @@ struct SettingsView : View {
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
-        AppFairSettings(bundle: .module) {
+        // `@Bindable` projects two-way bindings off the @Observable settings
+        // instance so individual Toggle/Picker/TextField controls can write
+        // back through `$settings.x`. Must be declared and used inline in
+        // `body`; passing a plain `NetSkipSettings` parameter to a helper
+        // would lose the projected-value subscript.
+        @Bindable var settings = settings
+        return AppFairSettings(bundle: .module) {
             Section {
-                Picker(selection: $appearance) {
+                Picker(selection: $settings.appearance) {
                     Text("System", bundle: .module, comment: "settings appearance system label").tag("")
                     Text("Light", bundle: .module, comment: "settings appearance system label").tag("light")
                     Text("Dark", bundle: .module, comment: "settings appearance system label").tag("dark")
@@ -44,18 +38,18 @@ struct SettingsView : View {
                 }
                 .accessibilityIdentifier("picker.appearance")
 
-                Toggle(isOn: $buttonHaptics, label: {
+                Toggle(isOn: $settings.buttonHaptics, label: {
                     Text("Haptic Feedback", bundle: .module, comment: "settings toggle label for button haptic feedback")
                 })
                 .accessibilityIdentifier("toggle.haptics")
-                Toggle(isOn: $pageLoadHaptics, label: {
+                Toggle(isOn: $settings.pageLoadHaptics, label: {
                     Text("Page Load Haptics", bundle: .module, comment: "settings toggle label for page load haptic feedback")
                 })
                 .accessibilityIdentifier("toggle.pageLoadHaptics")
             }
 
             Section {
-                Picker(selection: $searchEngine) {
+                Picker(selection: $settings.searchEngine) {
                     ForEach(SearchEngine.defaultSearchEngines, id: \.id) { engine in
                         Text(verbatim: engine.name())
                             .tag(engine.id)
@@ -65,21 +59,28 @@ struct SettingsView : View {
                 }
                 .accessibilityIdentifier("picker.searchEngine")
 
-                Toggle(isOn: $searchSuggestions, label: {
+                Toggle(isOn: $settings.searchSuggestions, label: {
                     Text("Search Suggestions", bundle: .module, comment: "settings toggle label for previewing search suggestions")
                 })
                 .accessibilityIdentifier("toggle.searchSuggestions")
             }
 
             Section("Privacy") {
-                Toggle(isOn: $enableJavaScript, label: {
+                Toggle(isOn: $settings.enableJavaScript, label: {
                     Text("Enable JavaScript", bundle: .module, comment: "settings toggle label for enabling JavaScript")
                 })
                 .accessibilityIdentifier("toggle.javascript")
             }
 
+            Section("Downloads") {
+                Toggle(isOn: $settings.promptForDownloads, label: {
+                    Text("Prompt for File Downloads", bundle: .module, comment: "settings toggle label for confirming each download before it starts")
+                })
+                .accessibilityIdentifier("toggle.promptForDownloads")
+            }
+
             Section {
-                Toggle(isOn: $blockAds, label: {
+                Toggle(isOn: $settings.blockAds, label: {
                     Label {
                         Text("Block Ads", bundle: .module, comment: "settings toggle label for blocking ads")
                     } icon: {
@@ -87,7 +88,7 @@ struct SettingsView : View {
                     }
                 })
                 .accessibilityIdentifier("toggle.blockAds")
-                Toggle(isOn: $blockTrackers, label: {
+                Toggle(isOn: $settings.blockTrackers, label: {
                     Label {
                         Text("Block Trackers", bundle: .module, comment: "settings toggle label for blocking trackers")
                     } icon: {
@@ -95,7 +96,7 @@ struct SettingsView : View {
                     }
                 })
                 .accessibilityIdentifier("toggle.blockTrackers")
-                Toggle(isOn: $blockCookieBanners, label: {
+                Toggle(isOn: $settings.blockCookieBanners, label: {
                     Label {
                         Text("Block Cookie Banners", bundle: .module, comment: "settings toggle label for blocking cookie consent banners")
                     } icon: {
@@ -110,7 +111,7 @@ struct SettingsView : View {
                         descriptionText: Text("Sites listed here bypass content blocking. Use bare domains like example.com or wildcards like *.example.com.", bundle: .module, comment: "description for whitelisted sites editor"),
                         prompt: Text("example.com", bundle: .module, comment: "placeholder for entering a whitelisted domain"),
                         emptyMessage: Text("No allowed sites yet.", bundle: .module, comment: "empty state for the whitelisted sites editor"),
-                        rawText: $contentBlockingWhitelistedDomains
+                        rawText: $settings.contentBlockingWhitelistedDomains
                     )
                 } label: {
                     Label {
@@ -127,7 +128,7 @@ struct SettingsView : View {
                         descriptionText: Text("Block any request whose URL contains one of these substrings. Example: tracker.example.com or /analytics/.", bundle: .module, comment: "description for custom blocked patterns editor"),
                         prompt: Text("tracker.example.com", bundle: .module, comment: "placeholder for entering a custom blocked pattern"),
                         emptyMessage: Text("No custom rules yet.", bundle: .module, comment: "empty state for the custom blocked patterns editor"),
-                        rawText: $contentBlockingCustomBlockedPatterns
+                        rawText: $settings.contentBlockingCustomBlockedPatterns
                     )
                 } label: {
                     Label {
@@ -144,7 +145,7 @@ struct SettingsView : View {
             }
 
             Section("Experimental") {
-                Toggle(isOn: $enableMiniApps, label: {
+                Toggle(isOn: $settings.enableMiniApps, label: {
                     Text("MiniApps", bundle: .module, comment: "settings toggle label for enabling miniapps experimental feature")
                 })
                 .accessibilityIdentifier("toggle.miniApps")

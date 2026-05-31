@@ -31,6 +31,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
     @State var showHistory = false
     @State var showFavorites = false
     @State var showHistoryFavorites = false
+    @State var showDownloads = false
     @State var historyFavoriesSelection = 1
     @State var showFindBar = false
     @State var showPageZoom = false
@@ -42,21 +43,9 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
     @State var triggerStart = false
     @State var triggerStop = false
 
-    @AppStorage("appearance") var appearance: String = "" // system
-    @AppStorage("buttonHaptics") var buttonHaptics: Bool = true
-    @AppStorage("pageLoadHaptics") var pageLoadHaptics: Bool = false
-    @AppStorage("searchEngine") var searchEngine: SearchEngine.ID = ""
-    @AppStorage("searchSuggestions") var searchSuggestions: Bool = true
-    @AppStorage("userAgent") var userAgent: String = ""
-    @AppStorage("blockAds") var blockAds: Bool = true
-    @AppStorage("blockTrackers") var blockTrackers: Bool = true
-    @AppStorage("blockCookieBanners") var blockCookieBanners: Bool = true
-    @AppStorage("contentBlockingWhitelistedDomains") var contentBlockingWhitelistedDomains: String = ""
-    @AppStorage("contentBlockingCustomBlockedPatterns") var contentBlockingCustomBlockedPatterns: String = ""
-    @AppStorage("enableJavaScript") var enableJavaScript: Bool = true
-    @AppStorage("requestDesktopSite") var requestDesktopSite: Bool = false
-    @AppStorage("textZoom") var textZoom: Double = 1.0
-    @AppStorage("enableMiniApps") var enableMiniApps: Bool = false
+    @Environment(NetSkipSettings.self) var settings
+
+    /// In-flight per-tab UI state (not a user preference) — keep on AppStorage.
     @AppStorage("selectedTabState") var selectedTabState: String = ""
 
     @State var tabsSegment: Int = 1 // 1 = Pages, 2 = Apps
@@ -108,12 +97,18 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
         .sheet(isPresented: $showHistory) { historyPageInfoView() }
         .sheet(isPresented: $showFavorites) { favoritesPageInfoView() }
         .sheet(isPresented: $showActiveTabs) { activeTabsView() }
-        .preferredColorScheme(appearance == "dark" ? .dark : appearance == "light" ? .light : nil)
-        .onChange(of: blockAds, initial: false) { _, _ in applyContentBlockingSettings() }
-        .onChange(of: blockTrackers, initial: false) { _, _ in applyContentBlockingSettings() }
-        .onChange(of: blockCookieBanners, initial: false) { _, _ in applyContentBlockingSettings() }
-        .onChange(of: contentBlockingWhitelistedDomains, initial: false) { _, _ in applyContentBlockingSettings() }
-        .onChange(of: contentBlockingCustomBlockedPatterns, initial: false) { _, _ in applyContentBlockingSettings() }
+        .sheet(isPresented: $showDownloads) { NetSkipDownloadsListView() }
+        .onReceive(NotificationCenter.default.publisher(for: .netSkipDownloadEnqueued)) { _ in
+            if !showDownloads {
+                showDownloads = true
+            }
+        }
+        .preferredColorScheme(settings.appearance == "dark" ? .dark : settings.appearance == "light" ? .light : nil)
+        .onChange(of: settings.blockAds, initial: false) { _, _ in applyContentBlockingSettings() }
+        .onChange(of: settings.blockTrackers, initial: false) { _, _ in applyContentBlockingSettings() }
+        .onChange(of: settings.blockCookieBanners, initial: false) { _, _ in applyContentBlockingSettings() }
+        .onChange(of: settings.contentBlockingWhitelistedDomains, initial: false) { _, _ in applyContentBlockingSettings() }
+        .onChange(of: settings.contentBlockingCustomBlockedPatterns, initial: false) { _, _ in applyContentBlockingSettings() }
     }
 
     /// Apply content-blocker settings to the shared `WebEngineConfiguration` and
@@ -146,7 +141,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
         /// We need to wrap a separate BrowserView because @AppStorage does not trigger `onChange` events, which we need to synchronize between the browser state and the preferences
         TabView(selection: $selectedTab) {
             ForEach($tabs) { tab in
-                BrowserView(configuration: configuration, store: store, submitURL: { self.submitURL(text: $0) }, viewModel: tab, searchEngine: $searchEngine, searchSuggestions: $searchSuggestions, showSettings: $showSettings, showBottomBar: $showBottomBar, userAgent: $userAgent, enableJavaScript: $enableJavaScript, pageLoadHaptics: $pageLoadHaptics, requestDesktopSite: $requestDesktopSite, textZoom: $textZoom)
+                BrowserView(configuration: configuration, store: store, submitURL: { self.submitURL(text: $0) }, viewModel: tab, showSettings: $showSettings, showBottomBar: $showBottomBar)
             }
         }
         //.toolbarBackground(Color.clear, for: .bottomBar)
@@ -192,7 +187,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
     }
 
     func settingsView() -> some View {
-        SettingsView(configuration: configuration, store: store, appearance: $appearance, buttonHaptics: $buttonHaptics, pageLoadHaptics: $pageLoadHaptics, searchEngine: $searchEngine, searchSuggestions: $searchSuggestions, userAgent: $userAgent, enableJavaScript: $enableJavaScript, enableMiniApps: $enableMiniApps, blockAds: $blockAds, blockTrackers: $blockTrackers, blockCookieBanners: $blockCookieBanners, contentBlockingWhitelistedDomains: $contentBlockingWhitelistedDomains, contentBlockingCustomBlockedPatterns: $contentBlockingCustomBlockedPatterns)
+        SettingsView(configuration: configuration, store: store)
             #if !SKIP
             .environment(\.openURL, openURLAction(newTab: true))
             #endif
@@ -301,7 +296,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
     func activeTabsView() -> some View {
         NavigationStack {
             VStack(spacing: 0) {
-                if enableMiniApps {
+                if settings.enableMiniApps {
                     Picker(selection: $tabsSegment) {
                         Text("Pages", bundle: .module, comment: "tab segment for pages")
                             .tag(1)
@@ -316,21 +311,21 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
                     .padding(.vertical, 8)
                 }
 
-                if tabsSegment == 1 || !enableMiniApps {
+                if tabsSegment == 1 || !settings.enableMiniApps {
                     pagesTabContent
                 } else {
                     miniAppsTabContent
                 }
             }
             .background(Color(white: 0.12))
-            .navigationTitle(Text(tabsSegment == 1 || !enableMiniApps ? "\(tabs.count) Tabs" : "Mini Apps", bundle: .module, comment: "tabs title"))
+            .navigationTitle(Text(tabsSegment == 1 || !settings.enableMiniApps ? "\(tabs.count) Tabs" : "Mini Apps", bundle: .module, comment: "tabs title"))
             #if !SKIP
             .navigationBarTitleDisplayMode(.inline)
             .toolbarColorScheme(.dark, for: .navigationBar)
             #endif
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    if tabsSegment == 1 || !enableMiniApps {
+                    if tabsSegment == 1 || !settings.enableMiniApps {
                         Button(action: {
                             newTabAction()
                             showActiveTabs = false
@@ -862,23 +857,23 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
                 // Decrease zoom button (small A)
                 Button(action: {
                     hapticFeedback()
-                    textZoom = max(textZoom - 0.15, 0.5)
+                    settings.textZoom = max(settings.textZoom - 0.15, 0.5)
                 }) {
                     Text(verbatim: "A")
                         .font(.system(size: 13, weight: .medium))
                         .frame(width: 40, height: 36)
                 }
                 .buttonStyle(.plain)
-                .disabled(textZoom <= 0.5)
+                .disabled(settings.textZoom <= 0.5)
                 .accessibilityIdentifier("button.zoom.decrease")
                 .accessibilityLabel(Text("Decrease text size", bundle: .module, comment: "accessibility label for the page-zoom decrease button"))
 
                 // Current zoom percentage (tap to reset to 100%)
                 Button(action: {
                     hapticFeedback()
-                    textZoom = 1.0
+                    settings.textZoom = 1.0
                 }) {
-                    let pct = Int((textZoom * 100).rounded())
+                    let pct = Int((settings.textZoom * 100).rounded())
                     Text(verbatim: "\(pct)%")
                         .font(.system(size: 14, weight: .semibold))
                         .frame(width: 56, height: 36)
@@ -890,14 +885,14 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
                 // Increase zoom button (large A)
                 Button(action: {
                     hapticFeedback()
-                    textZoom = min(textZoom + 0.15, 3.0)
+                    settings.textZoom = min(settings.textZoom + 0.15, 3.0)
                 }) {
                     Text(verbatim: "A")
                         .font(.system(size: 19, weight: .medium))
                         .frame(width: 40, height: 36)
                 }
                 .buttonStyle(.plain)
-                .disabled(textZoom >= 3.0)
+                .disabled(settings.textZoom >= 3.0)
                 .accessibilityIdentifier("button.zoom.increase")
                 .accessibilityLabel(Text("Increase text size", bundle: .module, comment: "accessibility label for the page-zoom increase button"))
             }
@@ -1038,6 +1033,15 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
             }
             .accessibilityIdentifier("menu.history")
 
+            Button(action: downloadsAction) {
+                Label {
+                    Text("Downloads", bundle: .module, comment: "downloads menu label")
+                } icon: {
+                    Image("download", bundle: .module)
+                }
+            }
+            .accessibilityIdentifier("menu.downloads")
+
             Divider()
 
             Button(action: pageZoomAction) {
@@ -1051,9 +1055,9 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
 
             Button(action: toggleDesktopSiteAction) {
                 Label {
-                    Text(requestDesktopSite ? "Mobile Site" : "Desktop Site", bundle: .module, comment: "desktop/mobile site toggle")
+                    Text(settings.requestDesktopSite ? "Mobile Site" : "Desktop Site", bundle: .module, comment: "desktop/mobile site toggle")
                 } icon: {
-                    Image(requestDesktopSite ? "smartphone" : "computer", bundle: .module)
+                    Image(settings.requestDesktopSite ? "smartphone" : "computer", bundle: .module)
                 }
             }
             .accessibilityIdentifier("menu.desktopSite")
@@ -1105,7 +1109,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
             self.currentNavigator?.load(url: url)
         } else {
             logger.log("URL search bar entry: \(text)")
-            if let searchEngine = SearchEngine.lookup(id: self.searchEngine),
+            if let searchEngine = SearchEngine.lookup(id: settings.searchEngine),
                let queryURL = searchEngine.queryURL(text, Locale.current.identifier) {
                 logger.log("search engine query URL: \(queryURL)")
                 if let url = URL(string: queryURL) {
@@ -1117,7 +1121,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
 
     /// The home page URL, which default to the current search engine's home page
     var homeURL: URL? {
-        if let homePage = SearchEngine.lookup(id: self.searchEngine)?.homeURL,
+        if let homePage = SearchEngine.lookup(id: settings.searchEngine)?.homeURL,
            let homePageURL = URL(string: homePage) {
             return homePageURL
         } else {
@@ -1151,7 +1155,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
 
     func hapticFeedback() {
         #if !SKIP
-        if buttonHaptics {
+        if settings.buttonHaptics {
             triggerImpact.toggle()
         }
         #endif
@@ -1313,6 +1317,12 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
         showSettings = true
     }
 
+    func downloadsAction() {
+        logger.info("downloadsAction")
+        hapticFeedback()
+        showDownloads = true
+    }
+
     func pageZoomAction() {
         logger.info("pageZoomAction")
         hapticFeedback()
@@ -1321,9 +1331,9 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
     }
 
     func toggleDesktopSiteAction() {
-        logger.info("toggleDesktopSiteAction: \(!requestDesktopSite)")
+        logger.info("toggleDesktopSiteAction: \(!settings.requestDesktopSite)")
         hapticFeedback()
-        requestDesktopSite.toggle()
+        settings.requestDesktopSite.toggle()
         currentNavigator?.reload()
     }
 
