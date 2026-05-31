@@ -1,3 +1,5 @@
 # Configuration file for Skip (https://skip.dev) project
 build:
   contents:
+skip:
+  package: 'org.appfair.app.netskip.ui'

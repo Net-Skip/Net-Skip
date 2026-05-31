@@ -35,6 +35,17 @@ import NetSkipModel
         self.viewModel.navigator.webEngine?.webView
     }
 
+    /// The display name shown in the download confirmation dialog — runs
+    /// the same `resolvedFilename(for:)` correction the manager will use
+    /// so the prompt matches the actual saved filename (e.g. Android's
+    /// `appindex.bin` → `appindex.json`).
+    var pendingDownloadDisplayName: String {
+        if let request = pendingDownload {
+            return NetSkipDownloadManager.resolvedFilename(for: request)
+        }
+        return "file"
+    }
+
     var body: some View {
         VStack(spacing: 0.0) {
             ZStack {
@@ -61,7 +72,7 @@ import NetSkipModel
         }
         .frame(maxHeight: .infinity)
         .confirmationDialog(
-            Text("Download \(pendingDownload.map(NetSkipDownloadManager.resolvedFilename(for:)) ?? "file")?",
+            Text("Download \(pendingDownloadDisplayName)?",
                  bundle: .module,
                  comment: "title for the file-download confirmation dialog; argument is the filename"),
             isPresented: $showDownloadPrompt,

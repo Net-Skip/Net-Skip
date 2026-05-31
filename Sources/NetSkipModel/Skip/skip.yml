@@ -6,3 +6,5 @@
 #    - block: 'dependencies'
 #      contents:
 #        - 'implementation("androidx.compose.runtime:runtime")'
+skip:
+  package: 'org.appfair.app.netskip.model'

@@ -1,5 +1,6 @@
 # Skip configuration for NetSkipMiniApp module
 skip:
+  package: 'org.appfair.app.netskip.miniapp'
   resources:
     - path: 'Resources'
       mode: 'process'

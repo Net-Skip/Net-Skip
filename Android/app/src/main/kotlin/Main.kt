@@ -1,4 +1,4 @@
-package net.skip
+package org.appfair.app.netskip.ui
 
 import skip.lib.*
 import skip.model.*
