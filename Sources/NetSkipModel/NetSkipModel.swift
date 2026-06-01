@@ -6,7 +6,7 @@ import SkipSQL
 import SkipSQLCore
 import SkipWeb
 
-let logger: Logger = Logger(subsystem: "net.skip", category: "NetSkipModel")
+let logger: Logger = Logger(subsystem: "org.appfair.app.netskip", category: "NetSkipModel")
 
 /// Notification posted by the model when the content rules are loaded
 extension Notification.Name {
