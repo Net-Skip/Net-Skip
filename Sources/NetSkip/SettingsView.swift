@@ -11,11 +11,13 @@ struct SettingsView : View {
     var configuration: WebEngineConfiguration
     #endif
     var store: WebBrowserStore?
+    var onClearCache: (() -> Void)? = nil
 
     @Environment(NetSkipSettings.self) var settings
 
     @State var confirmClearHistory: Bool = false
     @State var confirmClearFavorites: Bool = false
+    @State var confirmClearCache: Bool = false
     @State var confirmClearAll: Bool = false
 
     @Environment(\.dismiss) var dismiss
@@ -63,6 +65,16 @@ struct SettingsView : View {
                     Text("Search Suggestions", bundle: .module, comment: "settings toggle label for previewing search suggestions")
                 })
                 .accessibilityIdentifier("toggle.searchSuggestions")
+
+                TextField(text: $settings.customHomeURL, prompt: Text("Home Page URL", bundle: .module, comment: "placeholder text for the custom home-page-URL field")) {
+                    Text("Home Page URL", bundle: .module, comment: "accessibility label for the custom home-page-URL field")
+                }
+                #if !SKIP
+                .autocorrectionDisabled(true)
+                .textInputAutocapitalization(.never)
+                .keyboardType(.URL)
+                #endif
+                .accessibilityIdentifier("field.customHomeURL")
             }
 
             Section("Privacy") {
@@ -70,6 +82,10 @@ struct SettingsView : View {
                     Text("Enable JavaScript", bundle: .module, comment: "settings toggle label for enabling JavaScript")
                 })
                 .accessibilityIdentifier("toggle.javascript")
+                Toggle(isOn: $settings.upgradeToHTTPS, label: {
+                    Text("Upgrade to HTTPS", bundle: .module, comment: "settings toggle label for auto-upgrading plain HTTP requests to HTTPS")
+                })
+                .accessibilityIdentifier("toggle.upgradeToHTTPS")
             }
 
             Section("Downloads") {
@@ -77,6 +93,13 @@ struct SettingsView : View {
                     Text("Prompt for File Downloads", bundle: .module, comment: "settings toggle label for confirming each download before it starts")
                 })
                 .accessibilityIdentifier("toggle.promptForDownloads")
+            }
+
+            Section("Tabs") {
+                Toggle(isOn: $settings.openLinksInBackground, label: {
+                    Text("Open Links in Background", bundle: .module, comment: "settings toggle label that keeps the current tab focused when opening links in new tabs")
+                })
+                .accessibilityIdentifier("toggle.openLinksInBackground")
             }
 
             Section {
@@ -174,6 +197,25 @@ struct SettingsView : View {
                     Button("Clear Favorites", role: .destructive) {
                         trying { try store?.removeItems(type: .favorite, ids: []) }
                     }
+                }
+
+                Button(role: .destructive) {
+                    confirmClearCache = true
+                } label: {
+                    Text("Clear Cache", bundle: .module, comment: "settings button to clear the web cache without touching cookies or saved bookmarks")
+                }
+                .accessibilityIdentifier("button.clearCache")
+                .confirmationDialog(
+                    Text("Clear web cache?", bundle: .module, comment: "title of the clear-cache confirmation dialog"),
+                    isPresented: $confirmClearCache,
+                    titleVisibility: .visible
+                ) {
+                    Button(role: .destructive) {
+                        onClearCache?()
+                    } label: {
+                        Text("Clear Cache", bundle: .module, comment: "destructive confirm button in the Clear Cache dialog")
+                    }
+                    .accessibilityIdentifier("button.clearCache.confirm")
                 }
 
                 Button(role: .destructive) {

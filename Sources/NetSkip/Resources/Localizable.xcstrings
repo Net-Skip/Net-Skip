@@ -2,8 +2,10 @@
   "sourceLanguage" : "en",
   "strings" : {
     "" : {
+
     },
     "%lld" : {
+
     },
     "%lld Tabs" : {
       "comment" : "tabs title showing number of open tabs",
@@ -936,6 +938,83 @@
         }
       }
     },
+    "Block any request whose URL contains one of these substrings. Example: tracker.example.com or /analytics/." : {
+      "comment" : "description for custom blocked patterns editor",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "حظر أي طلب يحتوي عنوانه على إحدى هذه السلاسل. مثال: tracker.example.com أو ‎/analytics/‎."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Blockiert jede Anfrage, deren URL einen dieser Teilstrings enthält. Beispiel: tracker.example.com oder /analytics/."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bloquea cualquier solicitud cuya URL contenga una de estas subcadenas. Ejemplo: tracker.example.com o /analytics/."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bloque toute requête dont l’URL contient l’une de ces sous-chaînes. Exemple : tracker.example.com ou /analytics/."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "किसी भी अनुरोध को ब्लॉक करें जिसके URL में इनमें से कोई सब-स्ट्रिंग हो। उदाहरण: tracker.example.com या /analytics/."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Blokir permintaan apa pun yang URL-nya memuat salah satu substring berikut. Contoh: tracker.example.com atau /analytics/."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Blocca qualsiasi richiesta il cui URL contenga una di queste sottostringhe. Esempio: tracker.example.com o /analytics/."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "URLに次のいずれかの文字列を含むリクエストをブロックします。例: tracker.example.com または /analytics/。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "URL에 다음 부분 문자열 중 하나가 포함된 모든 요청을 차단합니다. 예: tracker.example.com 또는 /analytics/."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bloqueia qualquer solicitação cuja URL contenha uma destas substrings. Exemplo: tracker.example.com ou /analytics/."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Блокировать любые запросы, URL которых содержит одну из этих подстрок. Пример: tracker.example.com или /analytics/."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "拦截 URL 包含以下任一子串的请求。示例：tracker.example.com 或 /analytics/。"
+          }
+        }
+      }
+    },
     "Block Cookie Banners" : {
       "comment" : "settings toggle label for blocking cookie consent banners",
       "localizations" : {
@@ -1090,83 +1169,6 @@
         }
       }
     },
-    "Block any request whose URL contains one of these substrings. Example: tracker.example.com or /analytics/." : {
-      "comment" : "description for custom blocked patterns editor",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "حظر أي طلب يحتوي عنوانه على إحدى هذه السلاسل. مثال: tracker.example.com أو ‎/analytics/‎."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Blockiert jede Anfrage, deren URL einen dieser Teilstrings enthält. Beispiel: tracker.example.com oder /analytics/."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bloquea cualquier solicitud cuya URL contenga una de estas subcadenas. Ejemplo: tracker.example.com o /analytics/."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bloque toute requête dont l’URL contient l’une de ces sous-chaînes. Exemple : tracker.example.com ou /analytics/."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "किसी भी अनुरोध को ब्लॉक करें जिसके URL में इनमें से कोई सब-स्ट्रिंग हो। उदाहरण: tracker.example.com या /analytics/."
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Blokir permintaan apa pun yang URL-nya memuat salah satu substring berikut. Contoh: tracker.example.com atau /analytics/."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Blocca qualsiasi richiesta il cui URL contenga una di queste sottostringhe. Esempio: tracker.example.com o /analytics/."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "URLに次のいずれかの文字列を含むリクエストをブロックします。例: tracker.example.com または /analytics/。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "URL에 다음 부분 문자열 중 하나가 포함된 모든 요청을 차단합니다. 예: tracker.example.com 또는 /analytics/."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bloqueia qualquer solicitação cuja URL contenha uma destas substrings. Exemplo: tracker.example.com ou /analytics/."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Блокировать любые запросы, URL которых содержит одну из этих подстрок. Пример: tracker.example.com или /analytics/."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "拦截 URL 包含以下任一子串的请求。示例：tracker.example.com 或 /analytics/。"
-          }
-        }
-      }
-    },
     "Bookmarks" : {
       "comment" : "bookmarks button label\nbookmarks menu label",
       "localizations" : {
@@ -1245,7 +1247,7 @@
       }
     },
     "Cancel" : {
-      "comment" : "cancel button for dismissing suggestions",
+      "comment" : "cancel button for dismissing suggestions\ncancel button on the close-all-tabs dialog\ncancel button on the download confirmation dialog",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1475,6 +1477,9 @@
         }
       }
     },
+    "Clear" : {
+      "comment" : "button on the Downloads sheet that removes every completed/cancelled/failed download from the list"
+    },
     "Clear All Browsing Data" : {
       "comment" : "settings button to clear all data",
       "localizations" : {
@@ -1548,314 +1553,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "清除所有浏览数据"
-          }
-        }
-      }
-    },
-    "Clear All Data" : {
-      "comment" : "destructive button label to confirm clearing all browsing data",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "مسح جميع البيانات"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Alle Daten löschen"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Borrar todos los datos"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tout effacer"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "सभी डेटा साफ़ करें"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Hapus Semua Data"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Cancella tutti i dati"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "すべてのデータを消去"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "모든 데이터 지우기"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Limpar todos os dados"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Удалить все данные"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "清除所有数据"
-          }
-        }
-      }
-    },
-    "Clear Favorites" : {
-      "comment" : "settings button to clear favorites",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "مسح المفضلة"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Favoriten löschen"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Borrar favoritos"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Effacer les favoris"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "पसंदीदा साफ़ करें"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Hapus Favorit"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Cancella preferiti"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "お気に入りを消去"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "즐겨찾기 지우기"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Limpar favoritos"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Удалить избранное"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "清除收藏夹"
-          }
-        }
-      }
-    },
-    "Clear History" : {
-      "comment" : "history page remove all sheet title\nsettings button to clear browsing history",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "مسح السجل"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Verlauf löschen"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Borrar historial"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Effacer l’historique"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "इतिहास साफ़ करें"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Hapus Riwayat"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Cancella cronologia"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "履歴を消去"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "기록 지우기"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Limpar histórico"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Очистить историю"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "清除历史记录"
-          }
-        }
-      }
-    },
-    "Clear URL" : {
-      "comment" : "accessibility label for the URL bar clear button",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "مسح العنوان"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "URL löschen"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Borrar URL"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Effacer l’URL"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "URL साफ़ करें"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Hapus URL"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Cancella URL"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "URLを消去"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "URL 지우기"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Limpar URL"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Очистить URL"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "清除网址"
           }
         }
       }
@@ -2014,6 +1711,83 @@
         }
       }
     },
+    "Clear All Data" : {
+      "comment" : "destructive button label to confirm clearing all browsing data",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "مسح جميع البيانات"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Alle Daten löschen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Borrar todos los datos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tout effacer"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "सभी डेटा साफ़ करें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hapus Semua Data"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cancella tutti i dati"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "すべてのデータを消去"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "모든 데이터 지우기"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Limpar todos os dados"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Удалить все данные"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "清除所有数据"
+          }
+        }
+      }
+    },
     "Clear all favorites?" : {
       "comment" : "confirmation dialog message for clearing favorites",
       "localizations" : {
@@ -2090,6 +1864,246 @@
           }
         }
       }
+    },
+    "Clear Cache" : {
+      "comment" : "destructive confirm button in the Clear Cache dialog\nsettings button to clear the web cache without touching cookies or saved bookmarks"
+    },
+    "Clear Favorites" : {
+      "comment" : "settings button to clear favorites",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "مسح المفضلة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Favoriten löschen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Borrar favoritos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Effacer les favoris"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "पसंदीदा साफ़ करें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hapus Favorit"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cancella preferiti"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "お気に入りを消去"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "즐겨찾기 지우기"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Limpar favoritos"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Удалить избранное"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "清除收藏夹"
+          }
+        }
+      }
+    },
+    "Clear History" : {
+      "comment" : "history page remove all sheet title\nsettings button to clear browsing history",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "مسح السجل"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Verlauf löschen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Borrar historial"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Effacer l’historique"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "इतिहास साफ़ करें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hapus Riwayat"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cancella cronologia"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "履歴を消去"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "기록 지우기"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Limpar histórico"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Очистить историю"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "清除历史记录"
+          }
+        }
+      }
+    },
+    "Clear search" : {
+      "comment" : "accessibility label for the clear-search button in the History/Favorites list"
+    },
+    "Clear URL" : {
+      "comment" : "accessibility label for the URL bar clear button",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "مسح العنوان"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "URL löschen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Borrar URL"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Effacer l’URL"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "URL साफ़ करें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Hapus URL"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cancella URL"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "URLを消去"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "URL 지우기"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Limpar URL"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Очистить URL"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "清除网址"
+          }
+        }
+      }
+    },
+    "Clear web cache?" : {
+      "comment" : "title of the clear-cache confirmation dialog"
     },
     "Close All" : {
       "comment" : "active tabs remove all title",
@@ -2168,82 +2182,11 @@
         }
       }
     },
-    "Close Tab" : {
-      "comment" : "close tab button label",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "إغلاق علامة التبويب"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tab schließen"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Cerrar pestaña"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Fermer l’onglet"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "टैब बंद करें"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tutup Tab"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Chiudi scheda"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "タブを閉じる"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "탭 닫기"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Fechar aba"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Закрыть вкладку"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "关闭标签页"
-          }
-        }
-      }
+    "Close all %lld tabs?" : {
+      "comment" : "title for the confirmation dialog when the user has chosen to close every open tab; argument is the tab count"
+    },
+    "Close All Tabs" : {
+      "comment" : "destructive confirm button on the close-all-tabs dialog\nmenu label to close every open tab"
     },
     "Close find on page" : {
       "comment" : "accessibility label for the find-on-page close button",
@@ -2476,6 +2419,83 @@
         }
       }
     },
+    "Close Tab" : {
+      "comment" : "close tab button label",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "إغلاق علامة التبويب"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tab schließen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Cerrar pestaña"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fermer l’onglet"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "टैब बंद करें"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tutup Tab"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Chiudi scheda"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "タブを閉じる"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "탭 닫기"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Fechar aba"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Закрыть вкладку"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "关闭标签页"
+          }
+        }
+      }
+    },
     "Content Blocking" : {
       "comment" : "settings header for content blocking customization",
       "localizations" : {
@@ -2552,6 +2572,9 @@
           }
         }
       }
+    },
+    "Copy URL" : {
+      "comment" : "menu label for copying the current page URL to the clipboard"
     },
     "Custom Block Rules" : {
       "comment" : "settings row label for the custom blocked patterns editor\ntitle for the custom blocked patterns editor",
@@ -3016,7 +3039,7 @@
       }
     },
     "Done" : {
-      "comment" : "done button title",
+      "comment" : "done button title\ndownloads done button",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3247,7 +3270,7 @@
       }
     },
     "Downloads" : {
-      "comment" : "downloads list nav title, menu label, and settings section header",
+      "comment" : "downloads list nav title\ndownloads menu label",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3399,6 +3422,9 @@
           }
         }
       }
+    },
+    "Duplicate Tab" : {
+      "comment" : "menu label that opens a new tab pointing at the same URL as the current tab"
     },
     "Ecosia" : {
       "comment" : "search engine name for Ecosia",
@@ -3708,6 +3734,83 @@
         }
       }
     },
+    "example.com" : {
+      "comment" : "placeholder for entering a whitelisted domain",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "example.com"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "example.com"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "example.com"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "example.com"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "example.com"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "example.com"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "example.com"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "example.com"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "example.com"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "example.com"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "example.com"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "example.com"
+          }
+        }
+      }
+    },
     "Experimental" : {
       "comment" : "settings section header for experimental features",
       "localizations" : {
@@ -3941,6 +4044,7 @@
     },
     "Find" : {
       "comment" : "accessibility label for the find-on-page search button",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4016,8 +4120,8 @@
         }
       }
     },
-    "Find on Page" : {
-      "comment" : "find on page button label",
+    "Find on page" : {
+      "comment" : "find on page text field placeholder",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4052,7 +4156,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cari di Halaman"
+            "value" : "Cari di halaman"
           }
         },
         "it" : {
@@ -4093,8 +4197,8 @@
         }
       }
     },
-    "Find on page" : {
-      "comment" : "find on page text field placeholder",
+    "Find on Page" : {
+      "comment" : "find on page button label",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4129,7 +4233,7 @@
         "id" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cari di halaman"
+            "value" : "Cari di Halaman"
           }
         },
         "it" : {
@@ -4631,6 +4735,9 @@
           }
         }
       }
+    },
+    "Home Page URL" : {
+      "comment" : "accessibility label for the custom home-page-URL field\nplaceholder text for the custom home-page-URL field"
     },
     "Increase text size" : {
       "comment" : "accessibility label for the page-zoom increase button",
@@ -5479,82 +5586,8 @@
         }
       }
     },
-    "No Items" : {
-      "comment" : "sheet placeholder text when there are no items available",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "لا توجد عناصر"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Keine Einträge"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Sin elementos"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Aucun élément"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "कोई आइटम नहीं"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tidak Ada Item"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nessun elemento"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "項目なし"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "항목 없음"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Sem itens"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Нет элементов"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "无项目"
-          }
-        }
-      }
+    "Next match" : {
+      "comment" : "accessibility label for the find-on-page Next-match button"
     },
     "No allowed sites yet." : {
       "comment" : "empty state for the whitelisted sites editor",
@@ -5787,6 +5820,86 @@
         }
       }
     },
+    "No Items" : {
+      "comment" : "sheet placeholder text when there are no items available",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "لا توجد عناصر"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Keine Einträge"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sin elementos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Aucun élément"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "कोई आइटम नहीं"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tidak Ada Item"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Nessun elemento"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "項目なし"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "항목 없음"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sem itens"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Нет элементов"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "无项目"
+          }
+        }
+      }
+    },
+    "No matches" : {
+      "comment" : "shown in the History/Favorites list when the active search filter has zero results"
+    },
     "On" : {
       "comment" : "content blocking enabled label",
       "extractionState" : "stale",
@@ -5866,7 +5979,7 @@
       }
     },
     "Open" : {
-      "comment" : "button label to open a completed downloaded file",
+      "comment" : "open downloaded file button",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5941,6 +6054,15 @@
           }
         }
       }
+    },
+    "Open All in Tabs" : {
+      "comment" : "button label that opens every filtered Favorites row in a separate tab"
+    },
+    "Open in New Tab" : {
+      "comment" : "context menu label on a History/Favorites row that opens the URL in a fresh background tab"
+    },
+    "Open Links in Background" : {
+      "comment" : "settings toggle label that keeps the current tab focused when opening links in new tabs"
     },
     "Page Load Haptics" : {
       "comment" : "settings toggle label for page load haptic feedback",
@@ -6172,6 +6294,12 @@
           }
         }
       }
+    },
+    "Paste and Go" : {
+      "comment" : "menu label for pasting the clipboard contents into the URL bar and navigating to that page"
+    },
+    "Previous match" : {
+      "comment" : "accessibility label for the find-on-page Previous-match button"
     },
     "Privacy" : {
       "comment" : "settings section header for privacy options",
@@ -6481,6 +6609,9 @@
         }
       }
     },
+    "Reload All Tabs" : {
+      "comment" : "menu label that triggers a reload on every open tab at once"
+    },
     "Reload page" : {
       "comment" : "accessibility label for the URL bar reload button",
       "localizations" : {
@@ -6635,6 +6766,9 @@
         }
       }
     },
+    "Remove from Favorites" : {
+      "comment" : "menu label when the current page is already saved as a favorite — tapping removes it"
+    },
     "Remove from list" : {
       "comment" : "accessibility label for removing a completed download from the list",
       "localizations" : {
@@ -6711,6 +6845,9 @@
           }
         }
       }
+    },
+    "Reopen Closed Tab" : {
+      "comment" : "menu label to restore the most recently closed tab"
     },
     "Reset text size" : {
       "comment" : "accessibility label for the page-zoom reset button (tap to return to 100%)",
@@ -6789,6 +6926,9 @@
         }
       }
     },
+    "Search" : {
+      "comment" : "accessibility label for the History / Favorites filter field\nplaceholder text for the History / Favorites filter field"
+    },
     "Search Engine" : {
       "comment" : "settings picker label for the default search engine",
       "localizations" : {
@@ -6862,83 +7002,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "搜索引擎"
-          }
-        }
-      }
-    },
-    "Search Suggestions" : {
-      "comment" : "settings toggle label for previewing search suggestions",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "اقتراحات البحث"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Suchvorschläge"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Sugerencias de búsqueda"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Suggestions de recherche"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "खोज सुझाव"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Saran Pencarian"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Suggerimenti di ricerca"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "検索候補"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "검색 제안"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Sugestões de pesquisa"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Подсказки поиска"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "搜索建议"
           }
         }
       }
@@ -7093,6 +7156,83 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "搜索或输入网站名称"
+          }
+        }
+      }
+    },
+    "Search Suggestions" : {
+      "comment" : "settings toggle label for previewing search suggestions",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "اقتراحات البحث"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Suchvorschläge"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sugerencias de búsqueda"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Suggestions de recherche"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "खोज सुझाव"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Saran Pencarian"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Suggerimenti di ricerca"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "検索候補"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "검색 제안"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sugestões de pesquisa"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Подсказки поиска"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "搜索建议"
           }
         }
       }
@@ -7790,6 +7930,86 @@
         }
       }
     },
+    "tracker.example.com" : {
+      "comment" : "placeholder for entering a custom blocked pattern",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "tracker.example.com"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "tracker.example.com"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "tracker.example.com"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "tracker.example.com"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "tracker.example.com"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "tracker.example.com"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "tracker.example.com"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "tracker.example.com"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "tracker.example.com"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "tracker.example.com"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "tracker.example.com"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "tracker.example.com"
+          }
+        }
+      }
+    },
+    "Upgrade to HTTPS" : {
+      "comment" : "settings toggle label for auto-upgrading plain HTTP requests to HTTPS"
+    },
     "Yahoo!" : {
       "comment" : "search engine name for Yahoo",
       "localizations" : {
@@ -7940,160 +8160,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Yandex"
-          }
-        }
-      }
-    },
-    "example.com" : {
-      "comment" : "placeholder for entering a whitelisted domain",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "example.com"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "example.com"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "example.com"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "example.com"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "example.com"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "example.com"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "example.com"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "example.com"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "example.com"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "example.com"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "example.com"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "example.com"
-          }
-        }
-      }
-    },
-    "tracker.example.com" : {
-      "comment" : "placeholder for entering a custom blocked pattern",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "tracker.example.com"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "tracker.example.com"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "tracker.example.com"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "tracker.example.com"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "tracker.example.com"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "tracker.example.com"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "tracker.example.com"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "tracker.example.com"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "tracker.example.com"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "tracker.example.com"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "tracker.example.com"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "tracker.example.com"
           }
         }
       }

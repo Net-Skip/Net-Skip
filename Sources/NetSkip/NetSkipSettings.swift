@@ -41,6 +41,13 @@ public final class NetSkipSettings {
     public var userAgent: String {
         didSet { defaults.set(userAgent, forKey: "userAgent") }
     }
+    /// Optional explicit home-page URL. When empty the home button falls
+    /// back to the active search engine's default home page (the
+    /// historical behaviour). Stored as a plain string so the user can
+    /// type partials and we forgive missing schemes via `submitURL`.
+    public var customHomeURL: String {
+        didSet { defaults.set(customHomeURL, forKey: "customHomeURL") }
+    }
     public var requestDesktopSite: Bool {
         didSet { defaults.set(requestDesktopSite, forKey: "requestDesktopSite") }
     }
@@ -75,6 +82,16 @@ public final class NetSkipSettings {
         didSet { defaults.set(promptForDownloads, forKey: "promptForDownloads") }
     }
 
+    // MARK: - Tabs
+
+    public var openLinksInBackground: Bool {
+        didSet { defaults.set(openLinksInBackground, forKey: "openLinksInBackground") }
+    }
+
+    public var upgradeToHTTPS: Bool {
+        didSet { defaults.set(upgradeToHTTPS, forKey: "upgradeToHTTPS") }
+    }
+
     // MARK: - Experimental
 
     public var enableMiniApps: Bool {
@@ -89,6 +106,7 @@ public final class NetSkipSettings {
         self.searchEngine = defaults.string(forKey: "searchEngine") ?? ""
         self.searchSuggestions = Self.boolValue(defaults, key: "searchSuggestions", defaultValue: true)
         self.userAgent = defaults.string(forKey: "userAgent") ?? ""
+        self.customHomeURL = defaults.string(forKey: "customHomeURL") ?? ""
         self.requestDesktopSite = Self.boolValue(defaults, key: "requestDesktopSite", defaultValue: false)
         let storedZoom = defaults.double(forKey: "textZoom")
         self.textZoom = storedZoom == 0.0 ? 1.0 : storedZoom
@@ -99,6 +117,8 @@ public final class NetSkipSettings {
         self.contentBlockingWhitelistedDomains = defaults.string(forKey: "contentBlockingWhitelistedDomains") ?? ""
         self.contentBlockingCustomBlockedPatterns = defaults.string(forKey: "contentBlockingCustomBlockedPatterns") ?? ""
         self.promptForDownloads = Self.boolValue(defaults, key: "promptForDownloads", defaultValue: true)
+        self.openLinksInBackground = Self.boolValue(defaults, key: "openLinksInBackground", defaultValue: false)
+        self.upgradeToHTTPS = Self.boolValue(defaults, key: "upgradeToHTTPS", defaultValue: true)
         self.enableMiniApps = Self.boolValue(defaults, key: "enableMiniApps", defaultValue: false)
     }
 

@@ -612,6 +612,12 @@ public struct NetSkipDownloadsListView: View {
         self.manager = manager
     }
 
+    /// Whether any row is currently in a "finished" terminal state
+    /// (completed, cancelled, or failed) — those are what `Clear` removes.
+    private var hasFinishedDownloads: Bool {
+        manager.downloads.contains(where: { !$0.isRunning })
+    }
+
     public var body: some View {
         NavigationStack {
             content
@@ -620,6 +626,16 @@ public struct NetSkipDownloadsListView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 #endif
                 .toolbar {
+                    if hasFinishedDownloads {
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button {
+                                manager.clearFinished()
+                            } label: {
+                                Text("Clear", bundle: .module, comment: "button on the Downloads sheet that removes every completed/cancelled/failed download from the list")
+                            }
+                            .accessibilityIdentifier("button.downloads.clearFinished")
+                        }
+                    }
                     ToolbarItem(placement: .automatic) {
                         Button {
                             dismiss()
