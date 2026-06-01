@@ -664,6 +664,47 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
             .shadow(color: .black.opacity(0.3), radius: 3, y: 2)
         }
         .buttonStyle(.plain)
+        .contextMenu {
+            Button(action: { copyURLForTab(tab) }) {
+                Label {
+                    Text("Copy URL", bundle: .module, comment: "context-menu item that copies a single tab's URL to the clipboard from the tab overview")
+                } icon: {
+                    Image("content_copy", bundle: .module)
+                }
+            }
+            .accessibilityIdentifier("menu.tabCard.copyURL")
+            .disabled((tab.state.pageURL ?? tab.savedURL).isEmpty)
+
+            Button(role: .destructive, action: {
+                removeTabSnapshot(tabId: tab.id)
+                closeTabs([tab.id])
+            }) {
+                Label {
+                    Text("Close Tab", bundle: .module, comment: "context-menu item that closes a single tab from the tab overview")
+                } icon: {
+                    Image("xmark", bundle: .module)
+                }
+            }
+            .accessibilityIdentifier("menu.tabCard.close")
+        }
+    }
+
+    /// Copies the URL of a specific tab to the system clipboard. Mirrors
+    /// `copyURLAction` but acts on the passed-in tab rather than the
+    /// currently selected one — needed for the tab-card context menu,
+    /// where the user might right-click a background tab.
+    func copyURLForTab(_ tab: BrowserViewModel) {
+        let url = tab.state.pageURL ?? tab.savedURL
+        guard !url.isEmpty else { return }
+        logger.info("copyURLForTab id=\(tab.id) url=\(url)")
+        hapticFeedback()
+        #if SKIP
+        let ctx = ProcessInfo.processInfo.androidContext
+        let cm = ctx.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+        cm.setPrimaryClip(android.content.ClipData.newPlainText("URL", url))
+        #else
+        UIPasteboard.general.string = url
+        #endif
     }
 
     func tabDomainFromURL(_ urlString: String) -> String {
