@@ -27,16 +27,12 @@ public struct ContentView: View {
     }
 
     public var body: some View {
-        NavigationStack {
-            #if SKIP || os(iOS)
-            BrowserTabView(configuration: config, store: store)
-                #if SKIP
-                .toolbar(.hidden, for: .navigationBar)
-                #endif
-            #else
-            Text("Net Skip requires iOS")
-            #endif
-        }
-        .environment(settings)
+        #if SKIP || os(iOS)
+        BrowserTabView(configuration: config, store: store)
+            .environment(settings)
+        #else
+        Text("Net Skip requires iOS")
+            .environment(settings)
+        #endif
     }
 }

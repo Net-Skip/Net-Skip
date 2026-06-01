@@ -1,8 +1,12 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "" : {},
-    "%lld" : {},
+    "" : {
+
+    },
+    "%lld" : {
+
+    },
     "%lld Tabs" : {
       "comment" : "tabs title showing number of open tabs",
       "localizations" : {
@@ -2937,7 +2941,7 @@
       }
     },
     "Close Tab" : {
-      "comment" : "close tab button label",
+      "comment" : "close tab button label\ncontext-menu item that closes a single tab from the tab overview",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3091,7 +3095,7 @@
       }
     },
     "Copy URL" : {
-      "comment" : "menu label for copying the current page URL to the clipboard",
+      "comment" : "context-menu item that copies a single tab's URL to the clipboard from the tab overview\nmenu label for copying the current page URL to the clipboard",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3551,6 +3555,9 @@
           }
         }
       }
+    },
+    "Display" : {
+
     },
     "Dogpile" : {
       "comment" : "search engine name for Dogpile",
@@ -5323,6 +5330,9 @@
           }
         }
       }
+    },
+    "Hide Status Bar" : {
+      "comment" : "settings toggle label for hiding the system status bar so web pages render edge-to-edge"
     },
     "History" : {
       "comment" : "history menu label\nhistory page list sheet title\ntab selection for viewing the history list",

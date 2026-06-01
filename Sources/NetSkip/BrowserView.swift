@@ -47,7 +47,16 @@ import NetSkipModel
     }
 
     var body: some View {
-        VStack(spacing: 0.0) {
+        // Total height of the bottom chrome (URL bar + toolbar) — the
+        // WebView is padded by this amount so its scroll content stops
+        // exactly where the chrome begins. On scroll-down the chrome
+        // collapses to zero, the padding follows, and the WebView
+        // takes over the full screen.
+        let chromeHeight = showBottomBar
+            ? (BrowserTabView.urlBarHeight + BrowserTabView.bottomToolbarHeight)
+            : 0.0
+
+        ZStack(alignment: .bottom) {
             ZStack {
                 WebView(configuration: configuration, navigator: viewModel.navigator, state: $viewModel.state, onNavigationCommitted: {
                     logger.log("onNavigationCommitted")
@@ -68,7 +77,21 @@ import NetSkipModel
                         .frame(maxHeight: .infinity)
                 }
             }
+            // Reserve space at the bottom for the chrome (URL bar +
+            // toolbar). The WebView's scroll area ends here, so page
+            // content (including the very last line on long pages) is
+            // never hidden behind the chrome. Animated transition makes
+            // it slide smoothly when scrolling toggles the chrome.
+            .padding(.bottom, chromeHeight)
+
+            // URL bar overlay sitting flush against the toolbar. The
+            // bottom-padding lifts it by `bottomToolbarHeight` so its
+            // bottom edge touches the toolbar's top edge.
             urlBarView()
+                .frame(height: showBottomBar ? BrowserTabView.urlBarHeight : 0.0)
+                .opacity(showBottomBar ? 1.0 : 0.0)
+                .clipped()
+                .padding(.bottom, showBottomBar ? BrowserTabView.bottomToolbarHeight : 0.0)
         }
         .frame(maxHeight: .infinity)
         .confirmationDialog(

@@ -92,6 +92,15 @@ public final class NetSkipSettings {
         didSet { defaults.set(upgradeToHTTPS, forKey: "upgradeToHTTPS") }
     }
 
+    // MARK: - Display
+
+    /// Hides the system status bar so the WebView renders full-bleed to
+    /// the top edge of the screen. Edge-to-edge mode that some users
+    /// prefer for an immersive browse.
+    public var hideStatusBar: Bool {
+        didSet { defaults.set(hideStatusBar, forKey: "hideStatusBar") }
+    }
+
     // MARK: - Experimental
 
     public var enableMiniApps: Bool {
@@ -119,6 +128,7 @@ public final class NetSkipSettings {
         self.promptForDownloads = Self.boolValue(defaults, key: "promptForDownloads", defaultValue: true)
         self.openLinksInBackground = Self.boolValue(defaults, key: "openLinksInBackground", defaultValue: false)
         self.upgradeToHTTPS = Self.boolValue(defaults, key: "upgradeToHTTPS", defaultValue: true)
+        self.hideStatusBar = Self.boolValue(defaults, key: "hideStatusBar", defaultValue: false)
         self.enableMiniApps = Self.boolValue(defaults, key: "enableMiniApps", defaultValue: false)
     }
 

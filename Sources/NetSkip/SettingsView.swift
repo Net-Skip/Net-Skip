@@ -101,6 +101,17 @@ struct SettingsView : View {
                 }
             }
 
+            Section("Display") {
+                Toggle(isOn: $settings.hideStatusBar, label: {
+                    Label {
+                        Text("Hide Status Bar", bundle: .module, comment: "settings toggle label for hiding the system status bar so web pages render edge-to-edge")
+                    } icon: {
+                        Image("fullscreen", bundle: .module)
+                    }
+                })
+                .accessibilityIdentifier("toggle.hideStatusBar")
+            }
+
             Section("Privacy") {
                 Toggle(isOn: $settings.enableJavaScript, label: {
                     Label {

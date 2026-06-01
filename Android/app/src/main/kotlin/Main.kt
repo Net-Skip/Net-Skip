@@ -12,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.SideEffect
 
 import android.Manifest
 import android.app.Application
@@ -64,6 +65,7 @@ open class MainActivity: AppCompatActivity {
             val saveableStateHolder = rememberSaveableStateHolder()
             saveableStateHolder.SaveableStateProvider(true) {
                 PresentationRootView(ComposeContext())
+                SideEffect { saveableStateHolder.removeState(true) }
             }
         }
 

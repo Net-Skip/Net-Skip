@@ -11,9 +11,12 @@ import NetSkipMiniApp
 
 let fallbackURL = "about:blank"
 
-///// the background for the
+/// Opaque chrome background — used by both the URL bar capsule and the
+/// bottom toolbar so the WebView's content never bleeds through.
+/// `secondarySystemBackground` adapts to dark mode on iOS; Skip's
+/// translation of the same Color picks up Material's secondary surface.
 #if SKIP
-let urlBarBackground = Color.clear
+let urlBarBackground = Color(white: 0.92)
 #else
 let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
 #endif
@@ -63,6 +66,17 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
     @State var recentlyClosedTabURLs: [String] = []
     private static let recentlyClosedTabsLimit: Int = 10
 
+    /// Height of the bottom chrome bar (back/tabs/menu/bookmarks/forward
+    /// HStack). Shared with `BrowserView` so the URL bar can pad itself
+    /// up by exactly this many points and sit flush against the toolbar.
+    static let bottomToolbarHeight: CGFloat = 48.0
+
+    /// Natural height of the URL bar capsule when shown — matches the
+    /// 44pt capsule + 4pt top padding inside `urlBarComponentView` so
+    /// there's no centered-frame gap on Compose. Collapses to zero on
+    /// scroll-down so the WebView occupies the full screen.
+    static let urlBarHeight: CGFloat = 48.0
+
     @State var confirmCloseAllTabs: Bool = false
     @State var isCurrentPageFavorited: Bool = false
 
@@ -80,32 +94,34 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
     @ViewBuilder
     private var bodyContent: some View {
         ZStack(alignment: .bottom) {
+            // browserTabView fills the entire ZStack; the URL bar lives
+            // inside each tab's `BrowserView` as a `.bottom`-aligned
+            // overlay so the WebView extends behind it. We lift it by
+            // `bottomToolbarHeight` so the URL bar sits flush against
+            // the toolbar that we overlay separately below.
             VStack(spacing: 0) {
                 browserTabView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                 if showFindBar {
                     findBar()
                 }
             }
+            // Bottom toolbar overlaid at the bottom — translucent so the
+            // WebView's content shows through, and collapsed to zero
+            // when `showBottomBar` is off so it disappears entirely on
+            // scroll-down.
+            bottomToolbar()
             if showPageZoom {
                 pageZoomBar()
             }
         }
-            .toolbar {
-                ToolbarItemGroup(placement: toolbarPlacement) {
-                    backButton()
-                    Spacer()
-                    tabsButton()
-                    Spacer()
-                    ellipsisMenu()
-                    Spacer()
-                    showHistoryFavoritesButton()
-                    Spacer()
-                    forwardButton()
-                }
-            }
         .background(Color.clear)
-        .toolbarBackground(Color.white.opacity(0.5), for: .bottomBar)
-        .toolbar(showBottomBar ? .visible : .hidden, for: .bottomBar)
+        .statusBarHidden(settings.hideStatusBar)
+        // Edge-to-edge full-bleed only when the user opts in via
+        // Hide Status Bar. `.all` here gives the WebView every edge of
+        // the screen; the URL bar / toolbar overlays stay anchored
+        // inside the (now ignored) safe area at the bottom.
+        .ignoresSafeArea(edges: settings.hideStatusBar ? Edge.Set.all : Edge.Set(rawValue: 0))
         .sheet(isPresented: $showSettings) { settingsView() }
         .sheet(isPresented: $showHistoryFavorites) { historyFavoritesPageInfoTabView() }
         .sheet(isPresented: $showHistory) { historyPageInfoView() }
@@ -170,6 +186,39 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
         let toolbarPlacement = ToolbarItemPlacement.bottomBar
         #endif
         return toolbarPlacement
+    }
+
+    /// Bottom toolbar rendered as a manual HStack so the chrome can sit
+    /// directly under the URL bar (which lives inside `BrowserView`'s own
+    /// VStack) and disappear in tandem with it. Replaces the previous
+    /// `.toolbar(.bottomBar)` placement that required a `NavigationStack`
+    /// wrapper. Collapses to zero height when `showBottomBar` is off so
+    /// the URL bar's compact slim mode is the only thing left visible.
+    @ViewBuilder func bottomToolbar() -> some View {
+        HStack(spacing: 0) {
+            backButton()
+            Spacer()
+            tabsButton()
+            Spacer()
+            ellipsisMenu()
+            Spacer()
+            showHistoryFavoritesButton()
+            Spacer()
+            forwardButton()
+        }
+        .labelStyle(.iconOnly)
+        .padding(.horizontal, 16)
+        .padding(.vertical, 8)
+        .frame(maxWidth: .infinity)
+        .background(urlBarBackground)
+        // Fixed height when shown; collapses to 0 when the user scrolls
+        // down. SwiftUI's natural-sized `nil` height doesn't transpile
+        // cleanly to Compose, and `.infinity` greedily eats the
+        // WebView's space on iOS — so we just pick a height that
+        // matches the standard system bottom bar.
+        .frame(height: showBottomBar ? 48.0 : 0.0)
+        .opacity(showBottomBar ? 1.0 : 0.0)
+        .clipped()
     }
 
     func browserTabView() -> some View {
@@ -804,6 +853,11 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
     }
 
     func favoritesPageInfoView() -> some View {
+        NavigationStack { favoritesPageInfoListView() }
+    }
+
+    @ViewBuilder
+    func favoritesPageInfoListView() -> some View {
         PageInfoListView(type: PageInfo.PageType.favorite, store: store, onSelect: { pageInfo in
             logger.info("select favorite: \(pageInfo.url ?? "NONE")")
             if let url = pageInfo.url {
@@ -840,6 +894,11 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
     }
 
     func historyPageInfoView() -> some View {
+        NavigationStack { historyPageInfoListView() }
+    }
+
+    @ViewBuilder
+    func historyPageInfoListView() -> some View {
         PageInfoListView(type: PageInfo.PageType.history, store: store, onSelect: { pageInfo in
             logger.info("select history: \(pageInfo.url ?? "NONE")")
             if let url = pageInfo.url {
