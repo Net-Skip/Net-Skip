@@ -142,6 +142,11 @@ import NetSkipModel
         if let newURL = newURL {
             logger.log("changed pageURL to: \(newURL)")
             viewModel.urlTextField = newURL
+            // Mirror onto the view-model's saved field so the tab card
+            // in the overview still shows the right domain after the
+            // user leaves this tab (the WebView's live `state.url` is
+            // not always populated for background tabs).
+            viewModel.savedURL = newURL
             showBottomBar = true // when the URL changes, always show the bottom bar again
             if var pageInfo = trying(operation: { try store.loadItems(type: .active, ids: [viewModel.id]) })?.first {
                 pageInfo.url = newURL
@@ -153,6 +158,10 @@ import NetSkipModel
     func updatePageTitle(_ oldTitle: String?, _ newTitle: String?) {
         if let newTitle = newTitle {
             logger.log("loaded page title: \(newTitle)")
+            // Same mirror as `updatePageURL` — keeps the tab card
+            // showing the page title in the overview after the user
+            // navigates away to another tab.
+            viewModel.savedTitle = newTitle
             addPageToHistory()
             if var pageInfo = trying(operation: { try store.loadItems(type: .active, ids: [viewModel.id]) })?.first {
                 pageInfo.title = newTitle
@@ -265,12 +274,19 @@ import NetSkipModel
                 .autocorrectionDisabled(true)
                 .textInputAutocapitalization(.never)
                 .multilineTextAlignment(isURLBarFocused ? .leading : .center)
-                // Select-all on focus, mirroring UITextField.selectAll behavior.
-                // Listen only while the bar is focused so we don't selectAll on every
-                // UITextField in the app (e.g. the Find-on-page bar) — that broad
-                // notification trigger was causing focus-state glitches.
+                // Select-all on focus so a tap lets the user immediately
+                // type a replacement URL (mirrors the Android branch's
+                // `TextSelection` behavior below). We filter by the
+                // SwiftUI accessibility identifier rather than the
+                // @FocusState — at the moment `textDidBeginEditing` fires
+                // the UIKit first-responder change hasn't yet flushed
+                // into @FocusState, so the previous `guard isURLBarFocused`
+                // dropped the very first tap and the user saw the cursor
+                // placed mid-text instead of a full selection.
                 .onReceive(NotificationCenter.default.publisher(for: UITextField.textDidBeginEditingNotification)) { obj in
-                    guard isURLBarFocused, let textField = obj.object as? UITextField else { return }
+                    guard let textField = obj.object as? UITextField,
+                          textField.accessibilityIdentifier == "field.url",
+                          !(textField.text ?? "").isEmpty else { return }
                     textField.selectAll(nil)
                 }
                 #endif
@@ -326,13 +342,26 @@ import NetSkipModel
                     .accessibilityIdentifier("button.url.stop")
                     .accessibilityLabel(Text("Stop loading", bundle: .module, comment: "accessibility label for the URL bar stop-loading button"))
                 } else if state.pageURL != nil {
-                    // Reload button
-                    Button(action: { self.viewModel.navigator.reload() }, label: {
+                    // Reload button — tap reloads normally, long-press
+                    // reveals a "Hard Reload" item that clears the cache
+                    // before reloading. Mirrors the long-press menus on
+                    // the Tabs / back / forward toolbar buttons.
+                    Menu {
+                        Button(action: { hardReloadAction() }) {
+                            Label {
+                                Text("Hard Reload", bundle: .module, comment: "menu label that clears the cache for the current page and reloads it")
+                            } icon: {
+                                Image("arrow.clockwise", bundle: .module)
+                            }
+                        }
+                        .accessibilityIdentifier("menu.hardReload")
+                    } label: {
                         Image("arrow.clockwise", bundle: .module)
                             .font(.system(size: 14))
                             .foregroundStyle(.secondary)
-                    })
-                    .buttonStyle(.plain)
+                    } primaryAction: {
+                        self.viewModel.navigator.reload()
+                    }
                     .accessibilityIdentifier("button.url.reload")
                     .accessibilityLabel(Text("Reload page", bundle: .module, comment: "accessibility label for the URL bar reload button"))
                 }
@@ -454,6 +483,29 @@ import NetSkipModel
         let suggestions: [String]? = try await engine.suggestions(string)
         logger.log("fetched search suggestion: \(String(describing: suggestions))")
         self.currentSuggestions = SearchSuggestions(engine: engine, suggestions: suggestions ?? [])
+    }
+
+    /// Clears the current tab's cache (disk + memory + offline application
+    /// cache, but not cookies or local storage) and reloads the page. Same
+    /// data-type set as the Settings "Clear Web Cache" action, so the user
+    /// stays signed in everywhere; this just forces fresh asset fetches for
+    /// the page in front of them, the way a desktop "hard reload" does.
+    func hardReloadAction() {
+        logger.info("hardReloadAction")
+        if let engine = self.viewModel.navigator.webEngine {
+            let cacheTypes: Set<WebSiteDataType> = [.diskCache, .memoryCache, .offlineWebApplicationCache]
+            let navigator = self.viewModel.navigator
+            Task {
+                do {
+                    try await engine.removeData(ofTypes: cacheTypes, modifiedSince: .distantPast)
+                } catch {
+                    logger.warning("hardReloadAction: failed to clear cache: \(error)")
+                }
+                navigator.reload()
+            }
+        } else {
+            self.viewModel.navigator.reload()
+        }
     }
 
     func addPageToHistory() {

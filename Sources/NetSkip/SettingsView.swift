@@ -36,16 +36,28 @@ struct SettingsView : View {
                     Text("Light", bundle: .module, comment: "settings appearance system label").tag("light")
                     Text("Dark", bundle: .module, comment: "settings appearance system label").tag("dark")
                 } label: {
-                    Text("Appearance", bundle: .module, comment: "settings appearance picker label")
+                    Label {
+                        Text("Appearance", bundle: .module, comment: "settings appearance picker label")
+                    } icon: {
+                        Image("palette", bundle: .module)
+                    }
                 }
                 .accessibilityIdentifier("picker.appearance")
 
                 Toggle(isOn: $settings.buttonHaptics, label: {
-                    Text("Haptic Feedback", bundle: .module, comment: "settings toggle label for button haptic feedback")
+                    Label {
+                        Text("Haptic Feedback", bundle: .module, comment: "settings toggle label for button haptic feedback")
+                    } icon: {
+                        Image("vibration", bundle: .module)
+                    }
                 })
                 .accessibilityIdentifier("toggle.haptics")
                 Toggle(isOn: $settings.pageLoadHaptics, label: {
-                    Text("Page Load Haptics", bundle: .module, comment: "settings toggle label for page load haptic feedback")
+                    Label {
+                        Text("Page Load Haptics", bundle: .module, comment: "settings toggle label for page load haptic feedback")
+                    } icon: {
+                        Image("notifications_active", bundle: .module)
+                    }
                 })
                 .accessibilityIdentifier("toggle.pageLoadHaptics")
             }
@@ -57,47 +69,75 @@ struct SettingsView : View {
                             .tag(engine.id)
                     }
                 } label: {
-                    Text("Search Engine", bundle: .module, comment: "settings picker label for the default search engine")
+                    Label {
+                        Text("Search Engine", bundle: .module, comment: "settings picker label for the default search engine")
+                    } icon: {
+                        Image("travel_explore", bundle: .module)
+                    }
                 }
                 .accessibilityIdentifier("picker.searchEngine")
 
                 Toggle(isOn: $settings.searchSuggestions, label: {
-                    Text("Search Suggestions", bundle: .module, comment: "settings toggle label for previewing search suggestions")
+                    Label {
+                        Text("Search Suggestions", bundle: .module, comment: "settings toggle label for previewing search suggestions")
+                    } icon: {
+                        Image("lightbulb", bundle: .module)
+                    }
                 })
                 .accessibilityIdentifier("toggle.searchSuggestions")
 
-                TextField(text: $settings.customHomeURL, prompt: Text("Home Page URL", bundle: .module, comment: "placeholder text for the custom home-page-URL field")) {
-                    Text("Home Page URL", bundle: .module, comment: "accessibility label for the custom home-page-URL field")
+                HStack {
+                    Image("house", bundle: .module)
+                        .foregroundStyle(.secondary)
+                    TextField(text: $settings.customHomeURL, prompt: Text("Home Page URL", bundle: .module, comment: "placeholder text for the custom home-page-URL field")) {
+                        Text("Home Page URL", bundle: .module, comment: "accessibility label for the custom home-page-URL field")
+                    }
+                    #if !SKIP
+                    .autocorrectionDisabled(true)
+                    .textInputAutocapitalization(.never)
+                    .keyboardType(.URL)
+                    #endif
+                    .accessibilityIdentifier("field.customHomeURL")
                 }
-                #if !SKIP
-                .autocorrectionDisabled(true)
-                .textInputAutocapitalization(.never)
-                .keyboardType(.URL)
-                #endif
-                .accessibilityIdentifier("field.customHomeURL")
             }
 
             Section("Privacy") {
                 Toggle(isOn: $settings.enableJavaScript, label: {
-                    Text("Enable JavaScript", bundle: .module, comment: "settings toggle label for enabling JavaScript")
+                    Label {
+                        Text("Enable JavaScript", bundle: .module, comment: "settings toggle label for enabling JavaScript")
+                    } icon: {
+                        Image("code", bundle: .module)
+                    }
                 })
                 .accessibilityIdentifier("toggle.javascript")
                 Toggle(isOn: $settings.upgradeToHTTPS, label: {
-                    Text("Upgrade to HTTPS", bundle: .module, comment: "settings toggle label for auto-upgrading plain HTTP requests to HTTPS")
+                    Label {
+                        Text("Upgrade to HTTPS", bundle: .module, comment: "settings toggle label for auto-upgrading plain HTTP requests to HTTPS")
+                    } icon: {
+                        Image("https", bundle: .module)
+                    }
                 })
                 .accessibilityIdentifier("toggle.upgradeToHTTPS")
             }
 
             Section("Downloads") {
                 Toggle(isOn: $settings.promptForDownloads, label: {
-                    Text("Prompt for File Downloads", bundle: .module, comment: "settings toggle label for confirming each download before it starts")
+                    Label {
+                        Text("Prompt for File Downloads", bundle: .module, comment: "settings toggle label for confirming each download before it starts")
+                    } icon: {
+                        Image("download", bundle: .module)
+                    }
                 })
                 .accessibilityIdentifier("toggle.promptForDownloads")
             }
 
             Section("Tabs") {
                 Toggle(isOn: $settings.openLinksInBackground, label: {
-                    Text("Open Links in Background", bundle: .module, comment: "settings toggle label that keeps the current tab focused when opening links in new tabs")
+                    Label {
+                        Text("Open Links in Background", bundle: .module, comment: "settings toggle label that keeps the current tab focused when opening links in new tabs")
+                    } icon: {
+                        Image("tab", bundle: .module)
+                    }
                 })
                 .accessibilityIdentifier("toggle.openLinksInBackground")
             }
@@ -123,7 +163,7 @@ struct SettingsView : View {
                     Label {
                         Text("Block Cookie Banners", bundle: .module, comment: "settings toggle label for blocking cookie consent banners")
                     } icon: {
-                        Image("rule", bundle: .module)
+                        Image("cookie", bundle: .module)
                     }
                 })
                 .accessibilityIdentifier("toggle.blockCookieBanners")
@@ -169,7 +209,11 @@ struct SettingsView : View {
 
             Section("Experimental") {
                 Toggle(isOn: $settings.enableMiniApps, label: {
-                    Text("MiniApps", bundle: .module, comment: "settings toggle label for enabling miniapps experimental feature")
+                    Label {
+                        Text("MiniApps", bundle: .module, comment: "settings toggle label for enabling miniapps experimental feature")
+                    } icon: {
+                        Image("widgets", bundle: .module)
+                    }
                 })
                 .accessibilityIdentifier("toggle.miniApps")
             }
@@ -178,7 +222,11 @@ struct SettingsView : View {
                 Button(role: .destructive) {
                     confirmClearHistory = true
                 } label: {
-                    Text("Clear History", bundle: .module, comment: "settings button to clear browsing history")
+                    Label {
+                        Text("Clear History", bundle: .module, comment: "settings button to clear browsing history")
+                    } icon: {
+                        Image("history", bundle: .module)
+                    }
                 }
                 .accessibilityIdentifier("button.clearHistory")
                 .confirmationDialog("Clear all browsing history?", isPresented: $confirmClearHistory) {
@@ -190,7 +238,11 @@ struct SettingsView : View {
                 Button(role: .destructive) {
                     confirmClearFavorites = true
                 } label: {
-                    Text("Clear Favorites", bundle: .module, comment: "settings button to clear favorites")
+                    Label {
+                        Text("Clear Favorites", bundle: .module, comment: "settings button to clear favorites")
+                    } icon: {
+                        Image("star", bundle: .module)
+                    }
                 }
                 .accessibilityIdentifier("button.clearFavorites")
                 .confirmationDialog("Clear all favorites?", isPresented: $confirmClearFavorites) {
@@ -202,7 +254,11 @@ struct SettingsView : View {
                 Button(role: .destructive) {
                     confirmClearCache = true
                 } label: {
-                    Text("Clear Cache", bundle: .module, comment: "settings button to clear the web cache without touching cookies or saved bookmarks")
+                    Label {
+                        Text("Clear Cache", bundle: .module, comment: "settings button to clear the web cache without touching cookies or saved bookmarks")
+                    } icon: {
+                        Image("cached", bundle: .module)
+                    }
                 }
                 .accessibilityIdentifier("button.clearCache")
                 .confirmationDialog(
@@ -221,7 +277,11 @@ struct SettingsView : View {
                 Button(role: .destructive) {
                     confirmClearAll = true
                 } label: {
-                    Text("Clear All Browsing Data", bundle: .module, comment: "settings button to clear all data")
+                    Label {
+                        Text("Clear All Browsing Data", bundle: .module, comment: "settings button to clear all data")
+                    } icon: {
+                        Image("delete_forever", bundle: .module)
+                    }
                 }
                 .accessibilityIdentifier("button.clearAllData")
                 .confirmationDialog("Clear all browsing data including history, favorites, and open tabs?", isPresented: $confirmClearAll) {
@@ -260,7 +320,11 @@ struct SettingsView : View {
                         }
                         #endif
                     } label: {
-                        Text("About \(appName) \(appVersion)", bundle: .module, comment: "settings title menu for about app in the form ”About APP_NAME APP_VERSION”")
+                        Label {
+                            Text("About \(appName) \(appVersion)", bundle: .module, comment: "settings title menu for about app in the form ”About APP_NAME APP_VERSION”")
+                        } icon: {
+                            Image("info", bundle: .module)
+                        }
                     }
                     .accessibilityIdentifier("link.about")
                 }

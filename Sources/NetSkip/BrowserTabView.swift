@@ -39,6 +39,7 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
     @State var showFindBar = false
     @State var showPageZoom = false
     @State var findText = ""
+    @State var tabSearchText = ""
 
     @State var triggerImpact = false
     @State var triggerWarning = false
@@ -387,14 +388,85 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
     }
 
     var pagesTabContent: some View {
-        ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 160), spacing: 12)], spacing: 12) {
-                ForEach(tabs) { tab in
-                    tabCardView(tab: tab)
+        VStack(spacing: 0) {
+            tabSearchField
+
+            let visibleTabs = filteredTabs
+            if visibleTabs.isEmpty && !tabSearchText.isEmpty {
+                VStack(spacing: 8) {
+                    Spacer()
+                    Image("magnifyingglass", bundle: .module)
+                        .font(.system(size: 36))
+                        .foregroundStyle(Color.white.opacity(0.4))
+                    Text("No matching tabs", bundle: .module, comment: "empty-state message when the tab-overview search has no matches")
+                        .font(.system(size: 14))
+                        .foregroundStyle(Color.white.opacity(0.6))
+                    Spacer()
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .accessibilityIdentifier("label.tabSearch.empty")
+            } else {
+                ScrollView {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 160), spacing: 12)], spacing: 12) {
+                        ForEach(visibleTabs) { tab in
+                            tabCardView(tab: tab)
+                        }
+                    }
+                    .padding(12)
                 }
             }
-            .padding(12)
         }
+    }
+
+    /// Subset of `tabs` matching the current `tabSearchText`. Empty search
+    /// passes everything through unchanged. The match is case-insensitive
+    /// and falls back to the view-model's saved fields when the live
+    /// WebView state hasn't been populated for a background tab — the
+    /// same fallback chain the tab card uses for its display text.
+    var filteredTabs: [BrowserViewModel] {
+        let query = tabSearchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        if query.isEmpty { return tabs }
+        return tabs.filter { tab in
+            let titleSource = tab.state.pageTitle ?? tab.savedTitle
+            let urlSource = tab.state.pageURL ?? tab.state.url?.absoluteString ?? tab.savedURL
+            return titleSource.lowercased().contains(query) || urlSource.lowercased().contains(query)
+        }
+    }
+
+    @ViewBuilder var tabSearchField: some View {
+        HStack(spacing: 8) {
+            Image("magnifyingglass", bundle: .module)
+                .foregroundStyle(Color.white.opacity(0.6))
+            TextField(text: $tabSearchText) {
+                Text("Search Tabs", bundle: .module, comment: "placeholder text for the search field in the tab overview")
+            }
+            .textFieldStyle(.plain)
+            .foregroundStyle(Color.white)
+            #if !SKIP
+            .autocorrectionDisabled(true)
+            .textInputAutocapitalization(.never)
+            #endif
+            .accessibilityIdentifier("field.tabSearch")
+
+            if !tabSearchText.isEmpty {
+                Button {
+                    tabSearchText = ""
+                } label: {
+                    Image("xmark.circle.fill", bundle: .module)
+                        .foregroundStyle(Color.white.opacity(0.6))
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("button.tabSearch.clear")
+                .accessibilityLabel(Text("Clear search", bundle: .module, comment: "accessibility label for clearing the tab-overview search field"))
+            }
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .background(Color(white: 0.22))
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .padding(.horizontal, 12)
+        .padding(.top, 8)
+        .padding(.bottom, 4)
     }
 
     var miniAppsTabContent: some View {
@@ -878,6 +950,16 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
             }
             .accessibilityIdentifier("menu.reloadAllTabs")
             .disabled(tabs.isEmpty)
+
+            Button(role: .destructive, action: closeOtherTabsAction) {
+                Label {
+                    Text("Close Other Tabs", bundle: .module, comment: "menu label to close every open tab except the currently selected one")
+                } icon: {
+                    Image("delete_sweep", bundle: .module)
+                }
+            }
+            .accessibilityIdentifier("menu.closeOtherTabs")
+            .disabled(tabs.count <= 1)
 
             Button(role: .destructive, action: closeAllTabsAction) {
                 Label {
@@ -1443,6 +1525,19 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
         }
     }
 
+    /// Closes every tab except the currently selected one — the classic
+    /// "tidy up" shortcut after research sessions leave a dozen background
+    /// tabs behind. Closed URLs flow through `closeTabs`, so each one is
+    /// pushed onto the recently-closed stack and can be reopened via the
+    /// Tabs menu's "Reopen Closed Tab" item.
+    func closeOtherTabsAction() {
+        logger.info("closeOtherTabsAction count=\(self.tabs.count) selected=\(self.selectedTab)")
+        hapticFeedback()
+        let otherIDs = Set(self.tabs.compactMap { $0.id == self.selectedTab ? nil : $0.id })
+        guard !otherIDs.isEmpty else { return }
+        closeTabs(otherIDs)
+    }
+
     func performCloseAllTabs() {
         logger.info("performCloseAllTabs count=\(self.tabs.count)")
         let allIDs = Set(self.tabs.map(\.id))
@@ -1533,6 +1628,10 @@ let urlBarBackground = Color(uiColor: UIColor.secondarySystemBackground)
         logger.info("tabListAction")
         hapticFeedback()
         captureAllTabSnapshots()
+        // Each opening of the tab overview starts with no filter applied.
+        // Leaving stale search text would hide most tabs when the user
+        // re-enters the sheet expecting to see everything.
+        self.tabSearchText = ""
         self.showActiveTabs = true
     }
 
