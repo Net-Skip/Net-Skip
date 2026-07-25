@@ -79,9 +79,9 @@ import NetSkipModel
     public func captureSnapshot() async {
         guard let webEngine = navigator.webEngine else { return }
         do {
-            let config = SkipWebSnapshotConfiguration(snapshotWidth: 300)
+            let config = SkipWebSnapshotConfiguration(snapshotWidth: 300, imageFormat: .png)
             let snapshot = try await webEngine.takeSnapshot(configuration: config)
-            try snapshot.pngData.write(to: Self.snapshotPath(for: id))
+            try snapshot.imageData.write(to: Self.snapshotPath(for: id))
         } catch {
             // Best-effort — a missing snapshot just falls back to the
             // domain-letter avatar in the tab grid.
