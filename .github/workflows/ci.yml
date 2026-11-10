@@ -59,7 +59,7 @@ jobs:
       targets: all
       target-packages: |
         windows-winui: webview2-runtime
-      day-source: ${{ inputs.day-main && 'main' || 'auto' }}
+      day-deps: ${{ inputs.day-main && 'main' || 'auto' }}
       # Formatting and the unit tests of both crates (the model's rules and the app's store,
       # fixtures, favicons and scripts) before any target builds.
       preflight-checks: fmt test

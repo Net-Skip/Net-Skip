@@ -44,9 +44,9 @@ flow:
   - wait_for: { id: private_explainer }
   - screenshot: private-tab
   # Closing every card in the grid, the selected one last, keeps the grid open on a fresh tab.
-  # (A new tab starts editing its address; Cancel brings the toolbar back.)
-  - wait_for: { id: address_cancel, only_on: [ios, android, harmony] }
-  - tap: { id: address_cancel, only_on: [ios, android, harmony] }
+  # (A new tab starts editing its address; on a phone Cancel brings the toolbar back. A wide
+  # layout keeps its toolbar while editing and has no Cancel.)
+  - tap: { id: address_cancel, if_present: true, only_on: [ios, android, harmony] }
   - tap: { id: tabs_button, only_on: [ios, android, harmony] }
   - wait_for: { id: "tab_card:4", only_on: [ios, android, harmony] }
   - tap: { id: "card_close:2", only_on: [ios, android, harmony] }

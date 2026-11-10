@@ -19,8 +19,8 @@ flow:
   # Go somewhere from the address bar, then back and forward. (Chromium engines skip a history
   # entry a page left without a user gesture, and a scripted click carries none, so Back is
   # exercised across a navigation the browser itself started.) Android and HarmonyOS lay the
-  # toolbar out as Chrome does: no Back button, the system back goes back in the page, and
-  # Forward is in the ⋮ menu.
+  # toolbar out as Chrome does on a phone: no Back button, and the system back goes back in the
+  # page.
   - focus: { id: address }
   - input: { id: address, text: "example.com/about.html" }
   - submit: { id: address }
@@ -29,7 +29,9 @@ flow:
   - nav_back: { native: true, only_on: [android-material, harmony-arkui] }
   - web_eval: { id: "page:1", script: "document.title", text: "Example News", timeout_secs: 30 }
   - tap: { id: forward, skip_on: [android-material, harmony-arkui] }
-  - context_menu: { id: more, item_id: more_forward, only_on: [android-material, harmony-arkui] }
+  # Forward through the app's command: a phone keeps it in the ⋮ menu, a wide tablet shows the
+  # desktop toolbar, and the command works in both.
+  - menu: { id: menu_forward, only_on: [android-material, harmony-arkui] }
   - web_eval: { id: "page:1", script: "document.title", text: "About Example", timeout_secs: 30 }
   - tap: { id: back, skip_on: [android-material, harmony-arkui] }
   - nav_back: { native: true, only_on: [android-material, harmony-arkui] }
@@ -57,7 +59,9 @@ flow:
   # Bookmark the page; it shows in Bookmarks and on a new tab's Favorites.
   - menu: { id: menu_add_bookmark }
   - tap: { id: library, skip_on: [android-material, harmony-arkui] }
-  - context_menu: { id: more, key: bookmarks, only_on: [android-material, harmony-arkui] }
+  # Android's phone layout keeps Bookmarks in the ⋮ menu and a wide tablet shows the desktop
+  # toolbar's library button; the app's command works in both.
+  - menu: { id: menu_bookmarks, only_on: [android-material, harmony-arkui] }
   - wait_for: { id: bookmarks_list }
   - assert_visible: { id: "bookmark_row:1" }
   - screenshot: bookmarks
