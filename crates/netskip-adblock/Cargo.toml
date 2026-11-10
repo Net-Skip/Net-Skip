@@ -1,0 +1,44 @@
+# Copyright © The Daybrite Project
+# SPDX-License-Identifier: MPL-2.0
+
+[package]
+name = "netskip-adblock"
+version = "0.1.0"
+edition = "2024"
+license = "MPL-2.0"
+description = "Net Skip's ad and tracker blocking: filter list catalog, blocking levels, list updates, and a request and cosmetic matcher"
+publish = false
+
+# Headless: no UI and no web view code. It keeps the filter list catalog and the blocking
+# levels, downloads the lists into the app's cache directory, compiles them off the UI thread,
+# and answers per-request and cosmetic queries from any thread. The app connects it to each
+# web view (src/adblock.rs): a request filter, WebKit content rule lists, and a document-start
+# script. Dependency budget: README.md, "Dependencies".
+
+[dependencies]
+# List downloads through each platform's HTTP stack, with conditional requests.
+day-part-http = "0.*"
+# `spawn_blocking` for compiling off the UI thread and `schedule` for the update timer.
+day-async = "0.*"
+# `storage::cache_dir()`, the app's cache directory.
+day-spec = "0.*"
+# The matcher. `single-thread` stays off so one engine serves request callbacks on background
+# threads (Android's shouldInterceptRequest, ArkWeb's IO thread); `content-blocking` adds the
+# WebKit rule export. README.md "Dependencies" has the measurements.
+adblock = { version = "0.13", default-features = false, features = [
+    "embedded-domain-resolver",
+    "full-regex-handling",
+    "content-blocking",
+] }
+# state.json, the persisted settings, WebKit rule JSON. Both are already in every Day app.
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[target.'cfg(target_os = "macos")'.dev-dependencies]
+# tests/webkit_compile.rs hands the exported JSON to WKContentRuleListStore.
+objc2 = "0.6"
+block2 = "0.6"
+
+[[test]]
+name = "webkit_compile"
+harness = false

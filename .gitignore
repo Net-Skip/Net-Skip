@@ -1,0 +1,84 @@
+/target
+/build
+
+# Scaffolded project guidance belongs to the app, even with a global AGENTS.md ignore.
+!/AGENTS.md
+
+# Not Cargo.lock. This is an application, and Cargo's guidance for an end product is to commit
+# the lock: it is what makes a build reproducible for everyone who checks the repo out, and what
+# lets CI pass `--locked` (the shared `build-day-app` workflow's clippy/check/test legs do, and
+# `--locked` REFUSES to create a missing lock rather than resolving fresh). Run a build once and
+# commit the file it writes.
+
+# Machine-local: `day patch --local <day-checkout>` writes this to build against a checkout
+# instead of the git dependency. CI has no such file and resolves git.
+/.cargo/config.toml
+
+# What the desktop leaves behind in any directory it shows.
+.DS_Store
+Thumbs.db
+
+# Signing material and store credentials never belong in the repository. CI reads them from
+# repository secrets (https://daybrite.dev/docs/how-to/app-store-submissions), and a local release
+# pack reads them from the environment through `Day.toml`'s `[signing]` tables: an Apple
+# certificate, an App Store Connect or notary key, an Android or HarmonyOS keystore, a
+# provisioning profile, and a `.env` holding the variables those tables and the store lanes
+# expect. Keep each outside the checkout; these patterns are the safety net for the one that
+# lands inside it.
+*.p12
+*.p8
+*.keystore
+*.jks
+*.mobileprovision
+*.p7b
+.env
+.env.*
+
+# Xcode local state. The .xcodeproj itself is source; what Xcode writes inside it is not:
+# project.xcworkspace holds the SwiftPM resolution for the pieces package day generates under
+# build/, and cannot be relocated out of the project.
+xcuserdata/
+DerivedData/
+**/*.xcodeproj/project.xcworkspace/
+
+# Per-checkout Xcode settings: each platform/<p>/DayApp.xcconfig ends with an optional
+# `#include? "DayApp.local.xcconfig"`, so a developer can set their signing team (and anything
+# else this machine needs) without committing it. Absent on a fresh clone and in CI, which is
+# why the include is optional.
+platform/*/DayApp.local.xcconfig
+
+# Gradle local state, the android counterpart of the above: platform/android/ is source, but
+# what Gradle generates inside it is not. Gradle writes its caches and per-module build/ trees
+# into the project it builds, so they cannot move under build/ with the rest of day's outputs;
+# `/build` at the top of this file is anchored to the repo root and never matches them. Left
+# untracked they fail the pristine check CI runs before packing an artifact.
+platform/android/.gradle/
+platform/android/**/build/
+platform/android/local.properties
+# Gradle's `updateDaemonJvm` task writes this when an IDE syncs the project: a daemon JVM vendor
+# and version chosen on one machine, with download URLs. A project that means to pin its daemon
+# JVM commits it by hand (`git add -f`).
+platform/android/gradle/gradle-daemon-jvm.properties
+# Android Studio writes its project model into the Gradle root it opens. The Xcode counterpart
+# (xcuserdata/) is above; this is the same thing for the other IDE, and without it the first
+# person to open platform/android in Studio leaves a dozen untracked files behind.
+platform/android/.idea/
+
+# The website is generated from repo data: the daysite template clone (local preview) and the
+# synthesized data files. Keep site.toml, theme.css, optional customization modules, Astro
+# source/content, and theme dependency lockfiles tracked.
+website/.daysite/
+website/node_modules/
+website/.astro/
+website/dist/
+website/appindex.json
+website/channels.json
+website/gallery-manifest.json
+# The same pair again under each extra build channel's own directory (website/main/).
+website/*/appindex.json
+website/*/gallery-manifest.json
+
+# HarmonyOS reads its icon media from a fixed place under each module, so `day prepare` links
+# these two directories to the generated set under build/day/host/harmony/media.
+/platform/harmony/entry/src/main/resources/base/media
+/platform/harmony/AppScope/resources/base/media

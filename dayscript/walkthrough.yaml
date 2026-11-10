@@ -1,0 +1,94 @@
+# Copyright © The Daybrite Project
+# SPDX-License-Identifier: MPL-2.0
+#
+# The tour behind the store listings and the website gallery (store/storefront.toml names the
+# captures). It runs in every language and both appearances, against the fixture pages
+# (NETSKIP_FIXTURES=1), so the captures never depend on what a live site shows that day.
+name: walkthrough
+description: Browse a page, complete an address, see the tabs, bookmarks, history and settings.
+flow:
+  - wait_for: { id: address }
+  # A few visits and bookmarks across the fixture sites, so the start page and history have
+  # something to show.
+  - focus: { id: address }
+  - input: { id: address, text: "https://kitchen.example/" }
+  - submit: { id: address }
+  - web_eval: { id: "page:1", script: "document.title.startsWith('Larder') ? 'ok' : document.title", text: "ok", timeout_secs: 30 }
+  - menu: { id: menu_add_bookmark }
+  - focus: { id: address }
+  - input: { id: address, text: "https://skies.example/" }
+  - submit: { id: address }
+  - web_eval: { id: "page:1", script: "document.title.includes('Cirrus') ? 'ok' : document.title", text: "ok", timeout_secs: 30 }
+  - menu: { id: menu_add_bookmark }
+  - focus: { id: address }
+  - input: { id: address, text: "https://field.example/" }
+  - submit: { id: address }
+  - web_eval: { id: "page:1", script: "document.readyState === 'complete' ? 'ok' : 'loading'", text: "ok", timeout_secs: 30 }
+  - menu: { id: menu_add_bookmark }
+  - focus: { id: address }
+  - input: { id: address, text: "https://harbor.example/stories/lighthouse-coast.html" }
+  - submit: { id: address }
+  - web_eval: { id: "page:1", script: "document.title.startsWith('The Lighthouse Coast') ? 'ok' : document.title", text: "ok", timeout_secs: 30 }
+  - menu: { id: menu_add_bookmark }
+  - wait_idle: {}
+  - screenshot:
+      name: page
+      title: { en: "Your device's own web engine", ar: "محرك الويب المدمج في جهازك", de: "Die Web-Engine deines Geräts", es: "El motor web de tu propio dispositivo", fr: "Le moteur web de votre appareil", hi: "आपके डिवाइस का अपना वेब इंजन", id: "Mesin web bawaan perangkat Anda", it: "Il motore web del tuo dispositivo", ja: "デバイスに組み込まれたウェブエンジン", ko: "기기에 내장된 웹 엔진", pt-BR: "O motor web do seu próprio aparelho", ru: "Веб-движок вашего устройства", zh-CN: "使用设备自带的网页引擎" }
+  # An ad-heavy front page, with the ads and trackers blocked (CI runs at Aggressive).
+  - focus: { id: address }
+  - input: { id: address, text: "https://news.example/" }
+  - submit: { id: address }
+  - web_eval: { id: "page:1", script: "document.readyState !== 'complete' ? 'loading' : (window.__loaded||[]).includes('ads-banner') ? (location.reload(), 'loading') : (document.documentElement.dataset.app === 'ready' ? 'blocked' : 'loading')", text: "blocked", timeout_secs: 90 }
+  - web_eval: { id: "page:1", script: "JSON.stringify(window.__visibleAds())", text: "[]", timeout_secs: 15 }
+  - wait_idle: {}
+  - screenshot:
+      name: ads-blocked
+      title: { en: "Ads and trackers blocked", ar: "حظر الإعلانات وأدوات التتبع", de: "Werbung und Tracker blockiert", es: "Anuncios y rastreadores bloqueados", fr: "Publicités et traqueurs bloqués", hi: "विज्ञापन और ट्रैकर अवरुद्ध", id: "Iklan dan pelacak diblokir", it: "Pubblicità e tracker bloccati", ja: "広告とトラッカーをブロック", ko: "광고와 추적기 차단", pt-BR: "Anúncios e rastreadores bloqueados", ru: "Реклама и трекеры заблокированы", zh-CN: "拦截广告和跟踪器" }
+  - nav_back: { native: true, only_on: [android-material, harmony-arkui] }
+  - tap: { id: back, skip_on: [android-material, harmony-arkui] }
+  - web_eval: { id: "page:1", script: "document.title.startsWith('The Lighthouse Coast') ? 'ok' : document.title", text: "ok", timeout_secs: 30 }
+  # Favorites on a new tab's start page.
+  - menu: { id: menu_new_tab }
+  - wait_for: { id: "start_page:2" }
+  - screenshot:
+      name: favorites
+      title: { en: "Favorites and frequently visited sites", ar: "المفضلة والمواقع الأكثر زيارة", de: "Favoriten und häufig besuchte Websites", es: "Favoritos y sitios visitados con frecuencia", fr: "Favoris et sites fréquents", hi: "पसंदीदा और अक्सर देखी गई साइटें", id: "Favorit dan situs yang sering dikunjungi", it: "Preferiti e siti visitati spesso", ja: "お気に入りとよく閲覧するサイト", ko: "즐겨찾기와 자주 방문한 사이트", pt-BR: "Favoritos e sites visitados com frequência", ru: "Избранное и часто посещаемые сайты", zh-CN: "收藏夹和常去网站" }
+  # Completion from history, with the suggestion list.
+  - focus: { id: address }
+  - input: { id: address, text: "kit" }
+  - assert_value: { id: address, value: "kitchen.example" }
+  - wait_for: { id: "suggestion:1" }
+  - screenshot:
+      name: inline-completion
+      title: { en: "Sites completed from your history", ar: "إكمال المواقع من سجلك", de: "Websites aus deinem Verlauf ergänzt", es: "Sitios completados a partir de tu historial", fr: "Sites complétés à partir de votre historique", hi: "आपके इतिहास से पूरी होती साइटें", id: "Situs dilengkapi dari riwayat Anda", it: "Siti completati dalla tua cronologia", ja: "履歴からサイトを補完", ko: "방문 기록에서 완성되는 사이트", pt-BR: "Sites completados a partir do seu histórico", ru: "Адреса сайтов дополняются из истории", zh-CN: "根据历史记录补全网站" }
+  - submit: { id: address }
+  - web_eval: { id: "page:2", script: "document.title.startsWith('Larder') ? 'ok' : document.title", text: "ok", timeout_secs: 30 }
+  # A recipe in a third tab, so the grid shows three sites.
+  - menu: { id: menu_new_tab }
+  - wait_for: { id: "start_page:3" }
+  - focus: { id: address }
+  - input: { id: address, text: "https://kitchen.example/recipes/lemon-orzo.html" }
+  - submit: { id: address }
+  - web_eval: { id: "page:3", script: "document.title.startsWith('Lemon Orzo') ? 'ok' : document.title", text: "ok", timeout_secs: 30 }
+  # The tabs: a strip on a wide window, the grid on a phone.
+  - menu: { id: menu_show_tabs }
+  - wait_for: { id: "tab_card:3" }
+  - screenshot:
+      name: tab-grid
+      title: { en: "All your tabs at a glance", ar: "كل علامات التبويب في لمحة", de: "Alle Tabs auf einen Blick", es: "Todas tus pestañas de un vistazo", fr: "Tous vos onglets d’un coup d’œil", hi: "आपके सभी टैब एक नज़र में", id: "Semua tab Anda sekilas pandang", it: "Tutte le tue schede a colpo d’occhio", ja: "すべてのタブをひと目で", ko: "모든 탭을 한눈에", pt-BR: "Todas as suas abas de relance", ru: "Все вкладки перед глазами", zh-CN: "所有标签页一目了然" }
+  - tap: { id: overview_done }
+  # History, grouped by day.
+  - menu: { id: menu_history }
+  - wait_for: { id: "history_row:1" }
+  - screenshot:
+      name: history
+      title: { en: "History, searchable and grouped by day", ar: "سجل مجمّع حسب اليوم وقابل للبحث", de: "Verlauf, nach Tagen gruppiert und durchsuchbar", es: "Historial agrupado por días y con búsqueda", fr: "Historique classé par jour, avec recherche", hi: "दिन के हिसाब से समूहित, खोजने लायक इतिहास", id: "Riwayat per hari yang bisa dicari", it: "Cronologia per giorno, con ricerca", ja: "日ごとにまとまり、検索できる履歴", ko: "날짜별로 묶이고 검색할 수 있는 방문 기록", pt-BR: "Histórico agrupado por dia e pesquisável", ru: "История по дням, с поиском", zh-CN: "按天分组、可搜索的历史记录" }
+  - toolbar: { item: library_done, only_on: [ios-uikit, android-material, harmony-arkui] }
+  - tap: { id: library_done, skip_on: [ios-uikit, android-material, harmony-arkui] }
+  # The search engine choice.
+  - navigate: { route: "settings/search" }
+  - wait_for: { id: "pref:netskip.search.engine" }
+  - screenshot:
+      name: settings-search
+      title: { en: "Kagi, or the search engine you choose", ar: "‏Kagi، أو محرك البحث الذي تختاره", de: "Kagi oder die Suchmaschine deiner Wahl", es: "Kagi, o el buscador que elijas", fr: "Kagi, ou le moteur de recherche de votre choix", hi: "Kagi, या आपकी पसंद का खोज इंजन", id: "Kagi, atau mesin pencari pilihan Anda", it: "Kagi, o il motore di ricerca che preferisci", ja: "Kagi、またはお好みの検索エンジン", ko: "Kagi 또는 원하는 검색 엔진", pt-BR: "Kagi, ou o buscador que você preferir", ru: "Kagi или любая другая поисковая система", zh-CN: "Kagi，或你选择的搜索引擎" }
+  - toolbar: { item: settings_done, only_on: [ios, android, harmony] }

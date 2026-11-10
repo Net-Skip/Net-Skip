@@ -1,0 +1,10 @@
+[Adblock Plus 2.0]
+! Title: Day test privacy
+! Expires: 6 hours
+! Copyright © The Daybrite Project
+! SPDX-License-Identifier: MPL-2.0
+! A hand-written list for netskip-adblock's tests. Every host is under .example.
+||tracker.example^$third-party
+||pixel.example/collect
+@@||strict.example/promo/ok.js
+@@||ads.example/cross-allowed.png

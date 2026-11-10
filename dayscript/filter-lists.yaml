@@ -1,0 +1,51 @@
+# Copyright © The Daybrite Project
+# SPDX-License-Identifier: MPL-2.0
+#
+# Settings > Filter Lists (NETSKIP_FIXTURES=1 NETSKIP_BLOCKING=aggressive): the preset's lists
+# show switched on, switching one off makes blocking Custom and keeps the preset's policies, a
+# list that cannot be downloaded is refused and the previous lists stay in use, a list added by
+# address is checked (its rules counted, the unsupported ones too) and switched on, and Restore
+# Preset brings back the preset's own lists. The fixture tree serves the lists; EasyList Germany
+# has no fixture copy, so its download fails. The fixture copies of the ABP anti-circumvention and
+# Adblock Warning Removal lists hold no rules, so Aggressive runs on 5 lists here, not 7.
+name: filter-lists
+description: Switch filter lists on and off, add one by address, and restore the preset.
+flow:
+  - wait_for: { id: address }
+  - navigate: { route: "settings/privacy" }
+  - wait_for: { id: filter_lists }
+  - tap: { id: filter_lists }
+  - wait_for: { id: "filter_list:easylist" }
+  # Aggressive's lists are on, a regional list is off.
+  - assert_value: { id: "filter_list:easylist", value: true }
+  - assert_value: { id: "filter_list:easylist-cookie", value: true }
+  - assert_value: { id: "filter_list:easylist-germany", value: false }
+  - assert_value: { id: same_site_blocking, value: true }
+  - assert_value: { id: document_blocking, value: true }
+  - screenshot: filter-lists
+  # One list off: Custom, with the preset's other lists and both policies.
+  - toggle: { id: "filter_list:easylist-cookie", value: false }
+  - assert_value: { id: "filter_list:easylist-cookie", value: false }
+  - assert_value: { id: "filter_list:easylist", value: true }
+  - assert_value: { id: same_site_blocking, value: true }
+  - assert_text: { id: filter_lists_status, text: "Using 4 filter lists, kept up to date.", timeout_secs: 60 }
+  # A list that cannot be downloaded: refused, and the switch goes back.
+  - toggle: { id: "filter_list:easylist-germany", value: true }
+  - assert_text: { id: filter_lists_status, text: "Couldn't download EasyList Germany. The previous lists stay in use.", timeout_secs: 60 }
+  - assert_value: { id: "filter_list:easylist-germany", value: false }
+  # A list added by address is checked, then switched on.
+  - input: { id: add_list_url, text: "https://lists.example/harbor-extras.txt" }
+  - tap: { id: add_list }
+  - assert_text: { id: add_list_status, text: "Added “Harbor Extras”: 3 rules. 1 rule can't be applied.", timeout_secs: 60 }
+  - assert_value: { id: "filter_list:custom-51e14f92b2f479b0", value: true }
+  - assert_text: { id: filter_lists_status, text: "Using 5 filter lists, kept up to date.", timeout_secs: 60 }
+  - scroll_to: { id: add_list_status }
+  - screenshot: filter-lists-added
+  # Restore Preset: Aggressive's own lists again; the added list stays, switched off.
+  - context_menu: { id: filter_lists_restore, item_id: "restore_preset:aggressive" }
+  - assert_value: { id: "filter_list:easylist-cookie", value: true }
+  - assert_value: { id: "filter_list:custom-51e14f92b2f479b0", value: false }
+  - assert_text: { id: filter_lists_status, text: "Using 5 filter lists, kept up to date.", timeout_secs: 60 }
+  # Removing it leaves nothing behind for the next run.
+  - tap: { id: "remove_list:custom-51e14f92b2f479b0" }
+  - assert_missing: { id: "filter_list:custom-51e14f92b2f479b0" }

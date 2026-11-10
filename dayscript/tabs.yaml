@@ -1,0 +1,58 @@
+# Copyright © The Daybrite Project
+# SPDX-License-Identifier: MPL-2.0
+#
+# Tabs (NETSKIP_FIXTURES=1): a link opening a new tab, switching, closing and reopening, the tab
+# strip on a wide window and the tab grid on a phone, and a private tab.
+name: tabs
+description: Open, switch, close and reopen tabs, and open a private tab.
+flow:
+  - wait_for: { id: address }
+  - focus: { id: address }
+  - input: { id: address, text: "example.com" }
+  - submit: { id: address }
+  - web_eval: { id: "page:1", script: "document.title", text: "Example Domain", timeout_secs: 30 }
+  # A target=_blank link opens its page in a new tab, selected. Chromium engines and Qt open a
+  # new window only for a user gesture, which a scripted click is not; there the second tab
+  # comes from the menu and the address bar.
+  - web_eval: { id: "page:1", script: "document.getElementById('link-org').click(), true", text: "true", only_on: [macos-appkit, macos-gtk, linux-gtk, ios] }
+  - menu: { id: menu_new_tab, skip_on: [macos-appkit, macos-gtk, linux-gtk, ios] }
+  - focus: { id: address, skip_on: [macos-appkit, macos-gtk, linux-gtk, ios] }
+  - input: { id: address, text: "example.org", skip_on: [macos-appkit, macos-gtk, linux-gtk, ios] }
+  - submit: { id: address, skip_on: [macos-appkit, macos-gtk, linux-gtk, ios] }
+  - web_eval: { id: "page:2", script: "document.title", text: "Example Organization", timeout_secs: 30 }
+  - assert_value: { id: address, value: "example.org" }
+  # The tab strip on a wide window.
+  - assert_visible: { id: "tab:1", skip_on: [ios, android, harmony] }
+  - assert_visible: { id: "tab:2", skip_on: [ios, android, harmony] }
+  - tap: { id: "tab:1", skip_on: [ios, android, harmony] }
+  - assert_value: { id: address, value: "example.com", skip_on: [ios, android, harmony] }
+  - screenshot: { name: tab-strip, skip_on: [ios, android, harmony] }
+  # The tab grid on a phone.
+  - tap: { id: tabs_button, only_on: [ios, android, harmony] }
+  - wait_for: { id: "tab_card:1", only_on: [ios, android, harmony] }
+  - assert_text: { id: tab_count, text: "2 Tabs", only_on: [ios, android, harmony] }
+  - tap: { id: "tab_card:1", only_on: [ios, android, harmony] }
+  - assert_value: { id: address, value: "example.com", only_on: [ios, android, harmony] }
+  # Close the selected tab, then reopen it where it was.
+  - menu: { id: menu_close_tab }
+  - assert_value: { id: address, value: "example.org" }
+  - menu: { id: menu_reopen_tab }
+  - web_eval: { id: "page:3", script: "document.title", text: "Example Domain", timeout_secs: 30 }
+  - assert_value: { id: address, value: "example.com" }
+  # A private tab opens on the start page and says what private browsing keeps.
+  - menu: { id: menu_new_private_tab }
+  - wait_for: { id: private_explainer }
+  - screenshot: private-tab
+  # Closing every card in the grid, the selected one last, keeps the grid open on a fresh tab.
+  # (A new tab starts editing its address; Cancel brings the toolbar back.)
+  - wait_for: { id: address_cancel, only_on: [ios, android, harmony] }
+  - tap: { id: address_cancel, only_on: [ios, android, harmony] }
+  - tap: { id: tabs_button, only_on: [ios, android, harmony] }
+  - wait_for: { id: "tab_card:4", only_on: [ios, android, harmony] }
+  - tap: { id: "card_close:2", only_on: [ios, android, harmony] }
+  - tap: { id: "card_close:3", only_on: [ios, android, harmony] }
+  - assert_text: { id: tab_count, text: "1 Tab", only_on: [ios, android, harmony] }
+  - tap: { id: "card_close:4", only_on: [ios, android, harmony] }
+  - assert_visible: { id: overview, only_on: [ios, android, harmony] }
+  - assert_text: { id: tab_count, text: "1 Tab", only_on: [ios, android, harmony] }
+  - assert_missing: { id: "tab_card:4", only_on: [ios, android, harmony] }

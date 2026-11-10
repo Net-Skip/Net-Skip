@@ -1,0 +1,421 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "NSCameraUsageDescription": {
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يحتاج Net Skip إلى الوصول إلى الكاميرا حتى تتمكن المواقع التي تزورها من استخدامها لمكالمات الفيديو ومسح رموز QR والتقاط الصور عند منحها الإذن."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip benötigt Zugriff auf deine Kamera, damit besuchte Websites sie mit deiner Erlaubnis für Videoanrufe, das Scannen von QR-Codes und das Aufnehmen von Fotos verwenden können."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip needs access to your camera so that websites you visit can use it for video calls, scanning QR codes, and capturing photos when you grant them permission."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip necesita acceder a tu cámara para que los sitios web que visitas puedan usarla para videollamadas, escanear códigos QR y hacer fotos cuando les concedes permiso."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip a besoin d’accéder à votre caméra afin que les sites web que vous consultez puissent l’utiliser, avec votre autorisation, pour les appels vidéo, la lecture de codes QR et la prise de photos."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip को आपके कैमरे तक पहुँच की आवश्यकता है ताकि जिन वेबसाइटों पर आप जाते हैं वे आपकी अनुमति देने पर वीडियो कॉल, QR कोड स्कैन और फ़ोटो खींचने के लिए इसका उपयोग कर सकें।"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip memerlukan akses ke kamera Anda agar situs web yang Anda kunjungi dapat menggunakannya untuk panggilan video, memindai kode QR, dan mengambil foto saat Anda memberinya izin."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip necessita dell’accesso alla tua fotocamera affinché i siti web che visiti possano usarla per videochiamate, scansione di codici QR e scatto di foto quando concedi loro l’autorizzazione."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skipは、許可した場合に閲覧中のウェブサイトがビデオ通話、QRコードのスキャン、写真撮影に利用できるよう、カメラへのアクセスを必要とします。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip은 사용자가 권한을 허용하면 방문한 웹사이트가 영상 통화, QR 코드 스캔, 사진 촬영에 사용할 수 있도록 카메라 접근 권한이 필요합니다."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Net Skip precisa acessar sua câmera para que os sites visitados possam usá-la em chamadas de vídeo, leitura de códigos QR e captura de fotos quando você conceder permissão."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip требуется доступ к камере, чтобы посещаемые сайты могли с вашего разрешения использовать её для видеозвонков, сканирования QR-кодов и съёмки фотографий."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip 需要访问你的相机，以便你访问的网站在你授权后可用于视频通话、扫描二维码和拍摄照片。"
+          }
+        }
+      }
+    },
+    "NSLocationUsageDescription": {
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يستخدم Net Skip موقعك لتوفير ميزات تعتمد على الموقع للمواقع التي تزورها، مثل الخرائط ونتائج البحث المحلية ومعلومات الطقس عند منحها الإذن."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip verwendet deinen Standort, um besuchten Websites standortbezogene Funktionen wie Karten, lokale Suchergebnisse und Wetterinformationen bereitzustellen, sofern du dies erlaubst."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip uses your location to provide location-aware features to websites you visit, such as maps, local search results, and weather information when you grant them permission."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip usa tu ubicación para ofrecer funciones basadas en la ubicación a los sitios web que visitas, como mapas, resultados de búsqueda local e información meteorológica cuando les concedes permiso."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip utilise votre position pour fournir des fonctionnalités géolocalisées aux sites web que vous consultez, telles que cartes, résultats de recherche locale et informations météo, lorsque vous leur en accordez l’autorisation."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip आपके स्थान का उपयोग उन वेबसाइटों को स्थान-आधारित सुविधाएँ प्रदान करने के लिए करता है जिन पर आप जाते हैं, जैसे आपकी अनुमति देने पर मानचित्र, स्थानीय खोज परिणाम और मौसम की जानकारी।"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip menggunakan lokasi Anda untuk menyediakan fitur berbasis lokasi pada situs web yang Anda kunjungi, seperti peta, hasil pencarian lokal, dan informasi cuaca saat Anda memberinya izin."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip utilizza la tua posizione per fornire funzionalità basate sulla posizione ai siti web che visiti, come mappe, risultati di ricerca locale e informazioni meteo quando concedi loro l’autorizzazione."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skipは、許可した場合に閲覧中のウェブサイトに地図、近隣の検索結果、天気情報などの位置情報機能を提供するために位置情報を使用します。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip은 사용자가 권한을 허용하면 방문한 웹사이트에 지도, 지역 검색 결과, 날씨 정보 등 위치 기반 기능을 제공하기 위해 위치를 사용합니다."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Net Skip usa sua localização para oferecer recursos baseados em localização aos sites visitados, como mapas, resultados de buscas locais e informações do tempo quando você conceder permissão."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip использует ваше местоположение для предоставления функций на основе местоположения сайтам, которые вы посещаете, например карт, результатов локального поиска и сведений о погоде с вашего разрешения."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip 使用你的位置为你访问的网站提供基于位置的功能，例如在你授权后提供地图、本地搜索结果和天气信息。"
+          }
+        }
+      }
+    },
+    "NSLocationWhenInUseUsageDescription": {
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يستخدم Net Skip موقعك لتوفير ميزات تعتمد على الموقع للمواقع التي تزورها، مثل الخرائط ونتائج البحث المحلية ومعلومات الطقس عند منحها الإذن."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip verwendet deinen Standort, um besuchten Websites standortbezogene Funktionen wie Karten, lokale Suchergebnisse und Wetterinformationen bereitzustellen, sofern du dies erlaubst."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip uses your location to provide location-aware features to websites you visit, such as maps, local search results, and weather information when you grant them permission."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip usa tu ubicación para ofrecer funciones basadas en la ubicación a los sitios web que visitas, como mapas, resultados de búsqueda local e información meteorológica cuando les concedes permiso."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip utilise votre position pour fournir des fonctionnalités géolocalisées aux sites web que vous consultez, telles que cartes, résultats de recherche locale et informations météo, lorsque vous leur en accordez l’autorisation."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip आपके स्थान का उपयोग उन वेबसाइटों को स्थान-आधारित सुविधाएँ प्रदान करने के लिए करता है जिन पर आप जाते हैं, जैसे आपकी अनुमति देने पर मानचित्र, स्थानीय खोज परिणाम और मौसम की जानकारी।"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip menggunakan lokasi Anda untuk menyediakan fitur berbasis lokasi pada situs web yang Anda kunjungi, seperti peta, hasil pencarian lokal, dan informasi cuaca saat Anda memberinya izin."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip utilizza la tua posizione per fornire funzionalità basate sulla posizione ai siti web che visiti, come mappe, risultati di ricerca locale e informazioni meteo quando concedi loro l’autorizzazione."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skipは、許可した場合に閲覧中のウェブサイトに地図、近隣の検索結果、天気情報などの位置情報機能を提供するために位置情報を使用します。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip은 사용자가 권한을 허용하면 방문한 웹사이트에 지도, 지역 검색 결과, 날씨 정보 등 위치 기반 기능을 제공하기 위해 위치를 사용합니다."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Net Skip usa sua localização para oferecer recursos baseados em localização aos sites visitados, como mapas, resultados de buscas locais e informações do tempo quando você conceder permissão."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip использует ваше местоположение для предоставления функций на основе местоположения сайтам, которые вы посещаете, например карт, результатов локального поиска и сведений о погоде с вашего разрешения."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip 使用你的位置为你访问的网站提供基于位置的功能，例如在你授权后提供地图、本地搜索结果和天气信息。"
+          }
+        }
+      }
+    },
+    "NSMicrophoneUsageDescription": {
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يحتاج Net Skip إلى الوصول إلى الميكروفون حتى تتمكن المواقع التي تزورها من استخدامه للمكالمات الصوتية والمرئية والبحث الصوتي وتسجيل الصوت عند منحها الإذن."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip benötigt Zugriff auf dein Mikrofon, damit besuchte Websites es mit deiner Erlaubnis für Sprach- und Videoanrufe, Sprachsuche und Audioaufnahmen verwenden können."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip needs access to your microphone so that websites you visit can use it for voice and video calls, voice search, and recording audio when you grant them permission."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip necesita acceder a tu micrófono para que los sitios web que visitas puedan usarlo en llamadas de voz y vídeo, búsqueda por voz y grabación de audio cuando les concedes permiso."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip a besoin d’accéder à votre microphone afin que les sites web que vous consultez puissent l’utiliser, avec votre autorisation, pour les appels audio et vidéo, la recherche vocale et l’enregistrement audio."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip को आपके माइक्रोफ़ोन तक पहुँच की आवश्यकता है ताकि जिन वेबसाइटों पर आप जाते हैं वे आपकी अनुमति देने पर इसका उपयोग वॉइस और वीडियो कॉल, वॉइस सर्च और ऑडियो रिकॉर्डिंग के लिए कर सकें।"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip memerlukan akses ke mikrofon Anda agar situs web yang Anda kunjungi dapat menggunakannya untuk panggilan suara dan video, pencarian suara, serta merekam audio saat Anda memberinya izin."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip necessita dell’accesso al microfono affinché i siti web che visiti possano usarlo per chiamate vocali e video, ricerca vocale e registrazione audio quando concedi loro l’autorizzazione."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skipは、許可した場合に閲覧中のウェブサイトが音声・ビデオ通話、音声検索、音声録音に利用できるよう、マイクへのアクセスを必要とします。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip은 사용자가 권한을 허용하면 방문한 웹사이트가 음성·영상 통화, 음성 검색, 오디오 녹음에 사용할 수 있도록 마이크 접근 권한이 필요합니다."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Net Skip precisa acessar seu microfone para que os sites visitados possam usá-lo em chamadas de voz e vídeo, busca por voz e gravação de áudio quando você conceder permissão."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip требуется доступ к микрофону, чтобы посещаемые сайты могли с вашего разрешения использовать его для голосовых и видеозвонков, голосового поиска и записи аудио."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip 需要访问你的麦克风，以便你访问的网站在你授权后可用于语音和视频通话、语音搜索和录制音频。"
+          }
+        }
+      }
+    },
+    "NSSpeechRecognitionUsageDescription": {
+      "extractionState": "manual",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يستخدم Net Skip التعرف على الكلام حتى تتمكن من إملاء عناوين URL واستفسارات البحث ومدخلات النماذج صوتياً بدلاً من الكتابة."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip verwendet Spracherkennung, damit du URLs, Suchanfragen und Formulareingaben per Sprache diktieren kannst, statt sie einzutippen."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip uses speech recognition so that you can dictate URLs, search queries, and form input by voice instead of typing."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip usa el reconocimiento de voz para que puedas dictar URLs, consultas de búsqueda y entradas de formularios con la voz en lugar de escribir."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip utilise la reconnaissance vocale afin que vous puissiez dicter des URL, des requêtes de recherche et des saisies de formulaires plutôt que de les taper."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip स्पीच रिकग्निशन का उपयोग करता है ताकि आप टाइप करने के बजाय आवाज़ से URL, खोज प्रश्न और फ़ॉर्म इनपुट बोलकर दर्ज कर सकें।"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip menggunakan pengenalan suara agar Anda dapat mendiktekan URL, kueri pencarian, dan masukan formulir lewat suara tanpa perlu mengetik."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip utilizza il riconoscimento vocale per consentirti di dettare URL, query di ricerca e dati nei moduli con la voce invece di digitarli."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skipは、URLや検索クエリ、フォームへの入力をタイピングの代わりに音声で行えるよう、音声認識を使用します。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip은 키보드로 입력하는 대신 음성으로 URL, 검색어, 양식 내용을 받아쓸 수 있도록 음성 인식을 사용합니다."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Net Skip usa o reconhecimento de fala para que você possa ditar URLs, buscas e entradas de formulário por voz em vez de digitar."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip использует распознавание речи, чтобы вы могли диктовать URL-адреса, поисковые запросы и данные форм голосом вместо ввода текста."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Net Skip 使用语音识别，以便你无需键入即可通过语音输入网址、搜索词和表单内容。"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

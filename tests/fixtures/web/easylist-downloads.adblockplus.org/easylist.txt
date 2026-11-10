@@ -1,0 +1,15 @@
+[Adblock Plus 2.0]
+! Title: Net Skip fixture ad list
+! Net Skip's own test list, served in fixture mode in place of EasyList (MPL-2.0, The Daybrite Project).
+! Rules are unanchored so they match fixture mode's physical addresses as well as the real ones.
+! Expires: 4 days
+ads.example/adserver/
+ads.example/pixel.gif
+##.ad-banner
+##ins.adsbygoogle
+##div[id^="div-gpt-ad"]
+##[data-ad-slot]
+##iframe[id^="google_ads_iframe"]
+###taboola-below-article
+##.OUTBRAIN
+news.example##.sponsored

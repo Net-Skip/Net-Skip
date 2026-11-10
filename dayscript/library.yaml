@@ -1,0 +1,50 @@
+# Copyright © The Daybrite Project
+# SPDX-License-Identifier: MPL-2.0
+#
+# Bookmarks and history (NETSKIP_FIXTURES=1): bookmarking, the Favorites on the start page,
+# searching history, and clearing it.
+name: library
+description: Bookmark pages, search history, and clear it.
+flow:
+  - wait_for: { id: address }
+  - focus: { id: address }
+  - input: { id: address, text: "example.com" }
+  - submit: { id: address }
+  - web_eval: { id: "page:1", script: "document.title", text: "Example Domain", timeout_secs: 30 }
+  - web_eval: { id: "page:1", script: "document.getElementById('link-news').click(), true", text: "true" }
+  - web_eval: { id: "page:1", script: "document.title", text: "Example News", timeout_secs: 30 }
+  - menu: { id: menu_add_bookmark }
+  # History lists both pages, newest first, under Today.
+  - menu: { id: menu_history }
+  - wait_for: { id: history_list }
+  - assert_visible: { id: "history_row:1" }
+  - assert_visible: { id: "history_row:2" }
+  # The search is the platform's page search on phones and tablets, a field on the desktops.
+  - toolbar: { item: "day::search", text: "news", only_on: [ios-uikit, android-material, harmony-arkui] }
+  - input: { id: library_search, text: "news", skip_on: [ios-uikit, android-material, harmony-arkui] }
+  - assert_missing: { id: "history_row:1" }
+  - assert_visible: { id: "history_row:2" }
+  - toolbar: { item: "day::search", text: "", only_on: [ios-uikit, android-material, harmony-arkui] }
+  - input: { id: library_search, text: "", skip_on: [ios-uikit, android-material, harmony-arkui] }
+  - screenshot: history
+  # Bookmarks list the bookmarked page.
+  - select: { id: library_pane, index: 0 }
+  - wait_for: { id: "bookmark_row:1" }
+  # Swipe a page out of history (a destructive trailing action), then clear the rest from the
+  # action sheet: The Last Hour, Today, Today and Yesterday, All History.
+  - select: { id: library_pane, index: 1 }
+  - swipe_row: { id: history_list, row: 0, key: delete }
+  - assert_missing: { id: "history_row:2" }
+  - assert_visible: { id: "history_row:1" }
+  - toolbar: { item: clear_history, only_on: [ios-uikit, android-material, harmony-arkui] }
+  - tap: { id: clear_history, skip_on: [ios-uikit, android-material, harmony-arkui] }
+  - respond: { button: 3 }
+  - wait_for: { id: history_empty }
+  - toolbar: { item: library_done, only_on: [ios-uikit, android-material, harmony-arkui] }
+  - tap: { id: library_done, skip_on: [ios-uikit, android-material, harmony-arkui] }
+  # The bookmark is a Favorite on a new tab's start page; tapping it loads the page.
+  - menu: { id: menu_new_tab }
+  - wait_for: { id: "favorite:1" }
+  - screenshot: favorites
+  - tap: { id: "favorite:1" }
+  - web_eval: { id: "page:2", script: "document.title", text: "Example News", timeout_secs: 30 }

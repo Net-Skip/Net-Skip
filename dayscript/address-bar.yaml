@@ -1,0 +1,63 @@
+# Copyright © The Daybrite Project
+# SPDX-License-Identifier: MPL-2.0
+#
+# The address bar's details (NETSKIP_FIXTURES=1): inline completion and how deleting removes it,
+# the suggestion rows, the arrow keys and Escape on a keyboard, searches, and the text the bar
+# shows at rest.
+name: address-bar
+description: Completion, suggestions, keys, searches and the resting text of the address bar.
+flow:
+  - wait_for: { id: address }
+  # Visit two sites, so history has something to complete.
+  - focus: { id: address }
+  - input: { id: address, text: "example.org" }
+  - submit: { id: address }
+  - web_eval: { id: "page:1", script: "document.title", text: "Example Organization", timeout_secs: 30 }
+  - focus: { id: address }
+  - input: { id: address, text: "https://example.com/news/" }
+  - submit: { id: address }
+  - web_eval: { id: "page:1", script: "document.title", text: "Example News", timeout_secs: 30 }
+  # At rest the bar shows the site, not the whole address.
+  - assert_value: { id: address, value: "example.com" }
+  # Focusing shows the whole address to edit.
+  - focus: { id: address }
+  - assert_value: { id: address, value: "https://example.com/news/" }
+  # Typing completes the site inline; the top hit leads the suggestions.
+  - input: { id: address, text: "exa" }
+  - assert_value: { id: address, value: "example.com" }
+  - wait_for: { id: "suggestion:0" }
+  # Deleting the completed part leaves what was typed and does not complete again.
+  - input: { id: address, text: "exa" }
+  - assert_value: { id: address, value: "exa" }
+  # Typing on completes again, and a typed "www." is kept.
+  - input: { id: address, text: "exam" }
+  - assert_value: { id: address, value: "example.com" }
+  - input: { id: address, text: "example.o" }
+  - assert_value: { id: address, value: "example.org" }
+  # The arrow keys move through the rows on a keyboard; Escape closes the list, then gives up.
+  - key: { id: address, key: ArrowDown, only_on: [macos-appkit, linux, windows] }
+  - assert_value: { id: address, value: "https://example.org/", only_on: [macos-appkit, linux, windows] }
+  - key: { id: address, key: ArrowUp, only_on: [macos-appkit, linux, windows] }
+  - assert_value: { id: address, value: "example.org", only_on: [macos-appkit, linux, windows] }
+  - key: { id: address, key: Escape, only_on: [macos-appkit, linux, windows] }
+  - assert_missing: { id: suggestions, only_on: [macos-appkit, linux, windows] }
+  - key: { id: address, key: Escape, only_on: [macos-appkit, linux, windows] }
+  - assert_value: { id: address, value: "example.com", only_on: [macos-appkit, linux, windows] }
+  # A search: the engine's suggestions follow the typed text, and the bar shows the terms.
+  - focus: { id: address }
+  - input: { id: address, text: "harbor" }
+  - wait_for: { id: "suggestion:2" }
+  - screenshot: suggestions
+  - tap: { id: "suggestion:0" }
+  - web_eval: { id: "page:1", script: "document.title", text: "harbor – Kagi", timeout_secs: 30 }
+  - assert_value: { id: address, value: "harbor" }
+  # A leading "?" searches for an address instead of loading it.
+  - focus: { id: address }
+  - input: { id: address, text: "?example.com" }
+  - submit: { id: address }
+  - web_eval: { id: "page:1", script: "document.title", text: "example.com – Kagi", timeout_secs: 30 }
+  # A bare word searches; an address with a path loads.
+  - focus: { id: address }
+  - input: { id: address, text: "example.net/about" }
+  - submit: { id: address }
+  - web_eval: { id: "page:1", script: "document.title", text: "example.net", timeout_secs: 30 }

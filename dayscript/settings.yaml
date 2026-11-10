@@ -1,0 +1,27 @@
+# Copyright © The Daybrite Project
+# SPDX-License-Identifier: MPL-2.0
+#
+# Choosing the search engine (NETSKIP_FIXTURES=1): Kagi by default, DuckDuckGo once chosen, and
+# a custom engine from its search address.
+name: settings
+description: Change the search engine and search with it.
+flow:
+  - wait_for: { id: address }
+  - focus: { id: address }
+  - input: { id: address, text: "lighthouse" }
+  - submit: { id: address }
+  - web_eval: { id: "page:1", script: "document.title", text: "lighthouse – Kagi", timeout_secs: 30 }
+  - navigate: { route: "settings/search" }
+  - wait_for: { id: "pref:netskip.search.engine" }
+  - screenshot: settings-search
+  - select: { id: "pref:netskip.search.engine", index: 1 }
+  - toolbar: { item: settings_done, only_on: [ios, android, harmony] }
+  - focus: { id: address }
+  - input: { id: address, text: "ferry" }
+  - submit: { id: address }
+  - web_eval: { id: "page:1", script: "document.title", text: "ferry – DuckDuckGo", timeout_secs: 30 }
+  - assert_value: { id: address, value: "ferry" }
+  # Back to the default for the next run.
+  - navigate: { route: "settings/search" }
+  - select: { id: "pref:netskip.search.engine", index: 0 }
+  - toolbar: { item: settings_done, only_on: [ios, android, harmony] }

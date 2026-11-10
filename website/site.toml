@@ -1,0 +1,25 @@
+# Copyright © The Daybrite Project
+# SPDX-License-Identifier: MPL-2.0
+#
+# Net Skip's website, built by the daybrite/actions workflow from this file, the store listing,
+# and the dayscript screenshots: https://daybrite.dev/docs/how-to/websites
+
+# The site's address. For GitHub Pages: https://<owner>.github.io/<repository>, with the
+# repository's name spelled exactly as GitHub spells it.
+host = "https://net-skip.github.io/Net-Skip"
+locales = ["en", "ar", "de", "es", "fr", "hi", "id", "it", "ja", "ko", "pt-BR", "ru", "zh-CN"]
+
+# Optional settings, for example:
+# accent-color = "#3B82F6"
+# default-theme = "system"   # light | dark | system
+# footer = "© {year} Net Skip"
+
+# The compass's coral needle, deepened for contrast on white.
+accent-color = "#D9432F"
+default-platform = "ios"
+icon-effect = "raise"
+
+# The App Fair's site theme.
+[theme]
+repository = "appfair/appsite"
+ref = "main"

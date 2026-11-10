@@ -1,0 +1,9 @@
+[Adblock Plus 2.0]
+! Title: Harbor Extras
+! Copyright © The Daybrite Project
+! SPDX-License-Identifier: MPL-2.0
+! A small list for Net Skip's Filter Lists scripts: one network rule, one hiding rule, and
+! one scriptlet the blocker counts but cannot apply.
+||promo.example^
+harbor.example##.promo-strip
+harbor.example##+js(set-constant, promoEnabled, false)

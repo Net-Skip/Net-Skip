@@ -1,0 +1,27 @@
+<!doctype html>
+<!-- Copyright © The Daybrite Project · SPDX-License-Identifier: MPL-2.0 -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Advertisement</title>
+<style>
+  html, body { margin: 0; height: 100%; }
+  body { font: 14px/1.35 -apple-system, system-ui, "Segoe UI", Roboto, sans-serif; color: #fff; background: linear-gradient(150deg, #1f4e79, #2f7a8a 60%, #e0a14a); display: flex; flex-direction: column; justify-content: space-between; padding: 16px; box-sizing: border-box; overflow: hidden; }
+  .tag { font: 700 10px/1 sans-serif; letter-spacing: .14em; background: rgba(0,0,0,.35); align-self: flex-start; padding: 4px 6px; border-radius: 2px; }
+  h1 { font: 700 24px/1.1 Georgia, serif; margin: 0 0 6px; }
+  p { margin: 0; opacity: .9; }
+  a { align-self: flex-start; background: #fff; color: #1f4e79; font-weight: 700; text-decoration: none; padding: 8px 14px; border-radius: 999px; }
+</style>
+</head>
+<body>
+<span class="tag" id="frame-ad">AD</span>
+<div><h1>Coastline Mutual</h1><p>Boat cover that keeps you afloat. Quotes in two minutes.</p></div>
+<a href="https://ads.example/adserver/click?f=1" target="_top">Get a quote</a>
+<script>
+  // Record that the ad frame ran, here and in the page that embeds it.
+  (window.__loaded = window.__loaded || []).push('ads-frame');
+  try { parent.postMessage({ fixture: 'ads-frame' }, '*'); } catch (e) {}
+</script>
+</body>
+</html>

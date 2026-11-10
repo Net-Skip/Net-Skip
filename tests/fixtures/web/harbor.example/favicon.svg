@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright © The Daybrite Project · SPDX-License-Identifier: MPL-2.0 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1d4f8a"/><stop offset="1" stop-color="#0b2a4a"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#g)"/><path d="M8 46 q6 -4 12 0 t12 0 t12 0 t12 0" stroke="#8cc4ff" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M31 12 L31 40 L14 40 Z" fill="#ffffff"/><path d="M34 16 L34 40 L48 40 Z" fill="#f6d0a2"/><path d="M12 42 h40 l-5 5 h-30 z" fill="#ffffff"/></svg>

@@ -1,0 +1,33 @@
+# Copyright © The Daybrite Project
+# SPDX-License-Identifier: MPL-2.0
+#
+# The Italian listing text: the same table as store/storefront.toml's [storefront.metadata], in a
+# file of its own so a translator edits one file per language. What it leaves out (the URLs) is
+# the default locale's.
+[storefront.metadata]
+name = "Net Skip"
+subtitle = "Browser web veloce e privato"
+short = "Browser web con schede, segnalibri, cronologia e il motore di ricerca che vuoi."
+description = """
+Net Skip è un browser web per telefono, tablet e computer. Usa il motore web del tuo dispositivo, così le pagine si caricano in fretta e scorrono fluide, e i controlli intorno alla pagina restano piccoli e non ti intralciano.
+
+Digita qualche lettera nella barra degli indirizzi e Net Skip completa il sito dalla tua cronologia. Mentre scrivi compaiono suggerimenti dai segnalibri, dalla cronologia, dalle schede aperte e dal tuo motore di ricerca.
+
+• Blocco di pubblicità e tracker: Disattivato, Leggero, Forte o Aggressivo, per tutti i siti o per uno solo. Gli elenchi di filtri arrivano dai loro autori e si aggiornano da soli.
+• Schede: una barra delle schede su tablet e computer, una griglia delle schede aperte sul telefono.
+• I link si aprono in una nuova scheda accanto alla pagina da cui provengono. Riapri scheda chiusa recupera le ultime 25 che hai chiuso.
+• Cerca con Kagi, DuckDuckGo, Google, Bing, Ecosia, Qwant, Startpage e altri, o con qualsiasi motore di ricerca che aggiungi tramite il suo indirizzo.
+• I segnalibri compaiono come Preferiti nella pagina di avvio, accanto ai siti che visiti di più.
+• La cronologia è raggruppata per giorno e si può cercare. Cancella l’ultima ora, la giornata di oggi o tutto.
+• Le schede private tengono le loro pagine fuori dalla cronologia e dimenticano i cookie quando le chiudi.
+• Trova nella pagina, zoom della pagina e le tue schede ripristinate alla successiva apertura dell’app.
+
+Net Skip conserva cronologia e segnalibri sul tuo dispositivo e non contiene pubblicità né tracciamento. I suggerimenti di ricerca, che inviano al tuo motore di ricerca ciò che digiti nella barra degli indirizzi, si possono disattivare nelle Impostazioni.
+
+Net Skip è open source con licenza Mozilla Public License 2.0: github.com/Net-Skip/Net-Skip
+"""
+keywords = ["browser", "web", "internet", "schede", "privato", "ricerca", "kagi", "segnalibri", "cronologia"]
+release-notes = """
+Net Skip 2.0 è stato ricostruito da zero. La barra degli indirizzi completa i siti dalla cronologia mentre scrivi, le schede si aprono accanto alla pagina che le ha aperte e Kagi è il motore di ricerca predefinito, con altri 13 tra cui scegliere o qualsiasi motore tu aggiunga. Ora l’app funziona anche sui computer, oltre che su telefoni e tablet.
+"""
+promo = "Digita qualche lettera e Net Skip completa il sito dalla tua cronologia."

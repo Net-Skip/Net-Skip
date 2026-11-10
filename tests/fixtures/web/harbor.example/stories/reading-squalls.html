@@ -1,0 +1,90 @@
+<!doctype html>
+<!-- Copyright © The Daybrite Project · SPDX-License-Identifier: MPL-2.0 -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#0b2a4a" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#040b16" media="(prefers-color-scheme: dark)">
+<meta name="description" content="The sky tells you nearly everything twenty minutes ahead. Here is how to listen.">
+<title>How to Read a Squall Line — Leeward</title>
+<link rel="icon" type="image/svg+xml" href="https://harbor.example/favicon.svg">
+<link rel="icon" type="image/png" sizes="128x128" href="https://harbor.example/favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://harbor.example/apple-touch-icon.png">
+<link rel="stylesheet" href="https://harbor.example/assets/site.css">
+</head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<header class="mast">
+<div class="mast-in">
+  <a class="brand" id="brand" href="https://harbor.example/"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M31 10 L31 40 L12 40 Z" fill="currentColor"/><path d="M34 15 L34 40 L50 40 Z" fill="#f6d0a2"/><path d="M10 43 h44 l-6 6 h-32 z" fill="currentColor"/></svg><span>Leeward<small>Coasts &amp; harbors</small></span></a>
+  <nav class="sections" aria-label="Sections"><a href="https://harbor.example/#stories" aria-current="page">Stories</a><a href="https://harbor.example/#destinations">Destinations</a><a href="https://harbor.example/#seamanship">Seamanship</a><a href="https://harbor.example/#field-guides">Field guides</a><a href="https://harbor.example/#tides">Tides</a><a href="https://harbor.example/#archive">Archive</a></nav>
+  <a class="subscribe" href="https://harbor.example/#subscribe">Subscribe</a>
+</div>
+</header>
+<main>
+<article>
+<header class="article-head">
+  <p class="kicker">Weather · Issue 14</p>
+  <h1 id="article-title">How to Read a Squall Line</h1>
+  <p class="dek">The sky tells you nearly everything twenty minutes ahead. Here is how to listen.</p>
+  <div class="byline"><span class="avatar">DL</span><div><b>Dag Lindmark</b><span>10 November 2026 · 7 min read</span></div></div>
+</header>
+<figure class="lead">
+  <img class="art" src="https://harbor.example/art/squall.svg" alt="" width="1200" height="700">
+  <figcaption><b>A squall line over the outer sound.</b> The dark shelf of cloud arrives about twenty minutes before the wind does.</figcaption>
+</figure>
+<div class="prose">
+<p class="dropcap">A squall line announces itself long before it arrives, if you know what you are looking at. First the horizon to windward darkens and hardens into a shelf. Then the sea under that shelf changes color, from blue-grey to a darker, rougher grey, as the wind reaches the water. That dark band moving toward you is the squall itself.</p>
+<p>You usually have fifteen to twenty minutes from the first sight of the shelf. Use them. Reef early, close the hatches, put on the jacket you thought you would not need, and decide now which way you will bear away if the gusts are worse than expected.</p>
+<p>Most squalls are over in ten minutes. The rain stops, the wind drops, and the sky behind the line is often the cleanest blue of the day. The trick is to be ready for the ten minutes, and to enjoy the hour after. <span class="endmark">■</span></p>
+</div>
+</article>
+<section class="read-next" aria-labelledby="read-next-title">
+  <div class="section-head"><h2 id="read-next-title">Read next</h2><a href="https://harbor.example/">Leeward home →</a></div>
+  <div class="grid">
+<a class="card" href="https://harbor.example/stories/lighthouse-coast.html" id="card-lighthouse-coast">
+  <img class="art" src="https://harbor.example/art/lighthouse-coast.svg" alt="" width="900" height="600" loading="lazy">
+  <p class="kicker">Travel</p>
+  <h3>The Lighthouse Coast</h3>
+  <p>Nine lights, two hundred miles of granite, and the keepers’ cottages that still leave a lamp in the window.</p>
+  <span class="meta">Ines Halloran · 14 min read</span>
+</a>
+<a class="card" href="https://harbor.example/stories/winter-crossing.html" id="card-winter-crossing">
+  <img class="art" src="https://harbor.example/art/cove.svg" alt="" width="900" height="600" loading="lazy">
+  <p class="kicker">Voyages</p>
+  <h3>A Winter Crossing to Skerry Holm</h3>
+  <p>Forty miles of open water in January, a borrowed ketch, and one very patient weather window.</p>
+  <span class="meta">Callum Strand · 9 min read</span>
+</a>
+<a class="card" href="https://harbor.example/stories/salt-roads.html" id="card-salt-roads">
+  <img class="art" src="https://harbor.example/art/chart.svg" alt="" width="900" height="600" loading="lazy">
+  <p class="kicker">History</p>
+  <h3>The Salt Roads of the Outer Sound</h3>
+  <p>Before the railway, every barrel of herring left the islands by sail. The old routes are still on the chart.</p>
+  <span class="meta">Maren Okafor · 8 min read</span>
+</a>
+  </div>
+</section>
+</main>
+<footer class="foot">
+<div class="wrap foot-in">
+  <div><a class="brand" href="https://harbor.example/">Leeward</a><p>A quarterly of coasts, harbors and the people who keep them.<br>Published from Port Avelin since 2011.</p></div>
+  <nav aria-label="Footer"><a href="https://harbor.example/#stories">Stories</a><a href="https://harbor.example/#tides">Tide tables</a><a href="https://harbor.example/#field-guides">Field guides</a><a href="https://harbor.example/#subscribe">Newsletter</a><a href="https://harbor.example/#about">About Leeward</a></nav>
+</div>
+</footer>
+<script>
+// Reading progress bar along the top edge.
+(function () {
+  var bar = document.getElementById('progress');
+  function update() {
+    var h = document.documentElement.scrollHeight - innerHeight;
+    bar.style.width = (h > 0 ? Math.min(100, scrollY / h * 100) : 0) + '%';
+  }
+  addEventListener('scroll', update, { passive: true });
+  update();
+})();
+</script>
+</body>
+</html>

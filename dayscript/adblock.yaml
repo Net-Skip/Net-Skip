@@ -1,0 +1,25 @@
+# Copyright © The Daybrite Project
+# SPDX-License-Identifier: MPL-2.0
+#
+# Content blocking on an ad-heavy page (NETSKIP_FIXTURES=1 NETSKIP_BLOCKING=aggressive): the ad and
+# tracker scripts, pixels and frames on news.example never load, the ad slots are hidden, and the
+# page itself still works. The filter lists come from the fixture tree, so nothing reaches the
+# network. Aggressive blocks same-site requests too, which fixture mode needs: its pages all load
+# from one address.
+name: adblock
+description: Ads and trackers are blocked and ad slots hidden on an ad-heavy page.
+flow:
+  - wait_for: { id: address }
+  - focus: { id: address }
+  - input: { id: address, text: "https://news.example/" }
+  - submit: { id: address }
+  - web_eval: { id: "page:1", script: "document.getElementById('headline') ? 'ok' : 'missing'", text: "ok", timeout_secs: 30 }
+  # The first page can arrive before the lists are compiled; reload until the ad script stays out.
+  # Judge only a loaded page: the ad scripts are async and can run after the page's own one.
+  - web_eval: { id: "page:1", script: "document.readyState !== 'complete' ? 'loading' : (window.__loaded||[]).includes('ads-banner') ? (location.reload(), 'loading') : (document.documentElement.dataset.app === 'ready' ? 'blocked' : 'loading')", text: "blocked", timeout_secs: 90 }
+  # Only the page's own script ran: no ad server, tracker, analytics or ad frame.
+  - web_eval: { id: "page:1", script: "JSON.stringify((window.__loaded||[]).slice().sort())", text: "[\"app\"]", timeout_secs: 10 }
+  # Every ad slot is hidden, and the story is still there.
+  - web_eval: { id: "page:1", script: "JSON.stringify(window.__visibleAds())", text: "[]", timeout_secs: 15 }
+  - web_eval: { id: "page:1", script: "document.getElementById('headline').getBoundingClientRect().height > 0 ? 'shown' : 'hidden'", text: "shown" }
+  - screenshot: ads-blocked

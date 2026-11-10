@@ -1,0 +1,4 @@
+[Adblock Plus 2.0]
+! Title: Net Skip fixture list (antiadblockfilters)
+! Net Skip's own test list for fixture mode (MPL-2.0, The Daybrite Project). Intentionally empty.
+! Expires: 4 days

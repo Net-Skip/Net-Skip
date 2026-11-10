@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>$(DAY_APP_TITLE)</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(MARKETING_VERSION)</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>$(DAY_URL_SCHEME)</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>day.external-urls</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>http</string>
+				<string>https</string>
+			</array>
+		</dict>
+	</array>
+	<key>CFBundleVersion</key>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.utilities</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>paypal</string>
+		<string>instagram</string>
+		<string>instagram-stories</string>
+		<string>youtube</string>
+		<string>pocket</string>
+		<string>firefox-focus</string>
+		<string>firefox-klar</string>
+		<string>ymail</string>
+		<string>ms-outlook</string>
+		<string>airmail</string>
+		<string>italiaonline-mailto</string>
+		<string>mailru-mailto</string>
+		<string>mymail-mailto</string>
+		<string>readdle-spark</string>
+		<string>itms-books</string>
+		<string>googlegmail</string>
+		<string>fastmail</string>
+		<string>protonmail</string>
+		<string>whatsapp</string>
+		<string>comgooglemaps-x-callback</string>
+		<string>foursquare</string>
+		<string>here-location</string>
+		<string>yandexmaps</string>
+		<string>yandexnavi</string>
+		<string>comgooglemaps</string>
+		<string>twitter</string>
+		<string>vk</string>
+		<string>waze</string>
+		<string>googlechrome</string>
+		<string>firefox</string>
+		<string>touch-http</string>
+		<string>yandexbrowser-open-url</string>
+		<string>vimeo</string>
+		<string>vine</string>
+		<string>coub</string>
+		<string>uber</string>
+		<string>citymapper</string>
+		<string>lyft</string>
+		<string>opera-http</string>
+		<string>ddgQuickLink</string>
+		<string>moovit</string>
+		<string>alook</string>
+		<string>dgis</string>
+		<string>microsoft-edge-http</string>
+		<string>brave</string>
+		<string>onionhttp</string>
+		<string>ucbrowser</string>
+		<string>dolphin</string>
+		<string>org-appextension-feature-password-management</string>
+	</array>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<!-- A browser loads whatever address it is given, and favicons and search suggestions come
+	     from the same sites, so App Transport Security allows plain HTTP everywhere, as the
+	     Skip-based Net Skip did. -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>UILaunchScreen</key>
+	<dict/>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<true/>
+	</dict>
+	<key>DayWindowMinHeight</key>
+	<string>$(DAY_WINDOW_MIN_HEIGHT)</string>
+	<key>DayWindowMinWidth</key>
+	<string>$(DAY_WINDOW_MIN_WIDTH)</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>Net Skip needs access to your camera so that websites you visit can use it for video calls, scanning QR codes, and capturing photos when you grant them permission.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Net Skip uses your location to provide location-aware features to websites you visit, such as maps, local search results, and weather information when you grant them permission.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Net Skip needs access to your microphone so that websites you visit can use it for voice and video calls, voice search, and recording audio when you grant them permission.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Net Skip uses motion and orientation data so that websites you visit can offer interactive experiences that respond to how you move and tilt your device when you grant them permission.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Net Skip uses speech recognition so that you can dictate URLs, search queries, and form input by voice instead of typing.</string>
+</dict>
+</plist>

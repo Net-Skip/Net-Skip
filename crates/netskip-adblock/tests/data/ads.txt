@@ -1,0 +1,18 @@
+[Adblock Plus 2.0]
+! Title: Day test ads
+! Expires: 2 days
+! Copyright © The Daybrite Project
+! SPDX-License-Identifier: MPL-2.0
+! A hand-written list for netskip-adblock's tests. Every host is under .example.
+||ads.example^
+/banner/ad-*.js$script
+@@||ads.example/allowed.js
+||widgets.example^$domain=news.example|~safe.example
+||strict.example/promo/$important
+##.ad-banner
+##div[data-ad-slot]
+news.example##.sponsored
+news.example#@#.ad-banner
+@@||quiet.example^$generichide
+news.example##+js(set-constant, adsEnabled, false)
+news.example#$#abort-on-property-read adsEnabled

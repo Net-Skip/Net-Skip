@@ -1,0 +1,33 @@
+# Copyright © The Daybrite Project
+# SPDX-License-Identifier: MPL-2.0
+#
+# The Korean listing text: the same table as store/storefront.toml's [storefront.metadata], in a
+# file of its own so a translator edits one file per language. What it leaves out (the URLs) is
+# the default locale's.
+[storefront.metadata]
+name = "Net Skip"
+subtitle = "빠르고 사생활을 지키는 웹 브라우저"
+short = "탭, 북마크, 방문 기록을 갖추고 검색 엔진을 직접 고를 수 있는 웹 브라우저."
+description = """
+Net Skip은 휴대폰, 태블릿, 컴퓨터에서 쓰는 웹 브라우저입니다. 기기에 내장된 웹 엔진을 사용하므로 페이지가 빠르게 로드되고 부드럽게 스크롤되며, 페이지 주변의 컨트롤은 작고 방해되지 않습니다.
+
+주소 막대에 몇 글자만 입력하면 Net Skip이 방문 기록에서 사이트 주소를 완성합니다. 입력하는 동안 북마크, 방문 기록, 열린 탭, 검색 엔진의 제안이 표시됩니다.
+
+• 광고 및 추적기 차단: 끄기, 약하게, 강하게, 매우 강하게 중에서 모든 사이트 또는 사이트별로 선택할 수 있습니다. 필터 목록은 배포처에서 받아 자동으로 업데이트됩니다.
+• 탭: 태블릿과 컴퓨터에서는 탭 막대, 휴대폰에서는 열린 탭 격자.
+• 링크는 링크가 있던 페이지 옆의 새 탭에서 열립니다. '닫은 탭 다시 열기'로 최근에 닫은 탭을 25개까지 되살릴 수 있습니다.
+• Kagi, DuckDuckGo, Google, Bing, Ecosia, Qwant, Startpage 등으로 검색하거나, 주소를 입력해 원하는 검색 엔진을 추가할 수 있습니다.
+• 북마크는 자주 방문한 사이트와 함께 시작 페이지의 즐겨찾기에 표시됩니다.
+• 방문 기록은 날짜별로 묶여 있고 검색할 수 있습니다. 지난 1시간, 오늘, 또는 전체 기록을 지울 수 있습니다.
+• 비공개 탭에서 연 페이지는 방문 기록에 남지 않으며, 탭을 닫으면 쿠키도 지워집니다.
+• 페이지에서 찾기, 페이지 확대/축소, 다음 실행 시 탭 복원을 지원합니다.
+
+Net Skip은 방문 기록과 북마크를 기기에 보관하며, 광고도 추적도 없습니다. 주소 막대에 입력한 내용을 검색 엔진으로 보내는 검색 제안은 설정에서 끌 수 있습니다.
+
+Net Skip은 Mozilla Public License 2.0에 따른 오픈 소스입니다: github.com/Net-Skip/Net-Skip
+"""
+keywords = ["브라우저", "웹", "인터넷", "탭", "비공개", "검색", "kagi", "북마크", "방문 기록"]
+release-notes = """
+Net Skip 2.0은 처음부터 새로 만들었습니다. 주소 막대는 입력하는 동안 방문 기록에서 사이트를 완성하고, 탭은 그 탭을 연 페이지 옆에 열립니다. 기본 검색 엔진은 Kagi이며, 다른 13개 중에서 고르거나 원하는 검색 엔진을 추가할 수 있습니다. 이제 휴대폰과 태블릿뿐 아니라 컴퓨터에서도 실행됩니다.
+"""
+promo = "몇 글자만 입력하면 Net Skip이 방문 기록에서 사이트 주소를 완성합니다."

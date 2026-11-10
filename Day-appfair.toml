@@ -1,0 +1,16 @@
+# Copyright © The Daybrite Project
+# SPDX-License-Identifier: MPL-2.0
+#
+# The App Fair build of this app (https://daybrite.dev/docs/flavors). The catalog
+# (github.com/appfair/appfair-apps) builds every submission with `day --flavor appfair …`, which
+# merges this file over Day.toml. These are the identities the Net Skip already in the App Store
+# and Google Play publishes under; Day.toml states them per platform as well, so the flavored
+# build and the base build install over the same app.
+[app]
+id = "org.appfair.app.Net-Skip"
+
+[app.android]
+id = "org.appfair.app.Net_Skip"
+
+[app.harmony]
+id = "org.appfair.app.Net_Skip"

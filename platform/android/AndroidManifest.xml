@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Android-only additions Day merges into its generated manifest; delete the file to use the
+    defaults. https://daybrite.dev/docs/reference/platforms/android-material#manifest-customization
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools">
+    <!-- Hardware no device needs in order to install Net Skip. Google Play reads the camera and
+         microphone permissions in Day.toml as required hardware unless these say otherwise; the
+         list is the one the Skip-based Net Skip shipped with, plus camera.autofocus, which the
+         camera permission implies as well. -->
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+    <uses-feature android:name="android.hardware.camera2" android:required="false" />
+    <uses-feature android:name="android.hardware.microphone" android:required="false" />
+    <uses-feature android:name="android.hardware.telephony" android:required="false" />
+    <uses-feature android:name="android.hardware.wifi" android:required="false" />
+    <uses-feature android:name="android.hardware.screen.PORTRAIT" android:required="false" />
+    <uses-feature android:name="android.hardware.sensor.proximity" android:required="false" />
+</manifest>

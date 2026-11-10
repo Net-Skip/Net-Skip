@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+Copyright © The Daybrite Project
+SPDX-License-Identifier: MPL-2.0
+
+The entitlements the Skip-based Net Skip shipped with, kept so this version installs as an
+update with the same capabilities. com.apple.developer.web-browser is what lets people choose
+Net Skip as their default browser. platform/ios/DayApp.xcconfig points CODE_SIGN_ENTITLEMENTS here.
+-->
+<plist version="1.0">
+<dict>
+	<key>aps-environment</key>
+	<string>$(DAY_APNS_ENVIRONMENT)</string>
+	<key>com.apple.developer.applesignin</key>
+	<array>
+		<string>Default</string>
+	</array>
+	<key>com.apple.developer.authentication-services.autofill-credential-provider</key>
+	<true/>
+	<key>com.apple.developer.browser.app-installation</key>
+	<true/>
+	<key>com.apple.developer.siri</key>
+	<true/>
+	<key>com.apple.developer.web-browser</key>
+	<true/>
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.org.appfair</string>
+		<string>group.org.appfair.app</string>
+	</array>
+	<key>keychain-access-groups</key>
+	<array>
+		<string>$(AppIdentifierPrefix)org.appfair</string>
+	</array>
+</dict>
+</plist>

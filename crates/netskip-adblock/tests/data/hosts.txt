@@ -1,0 +1,6 @@
+# Copyright © The Daybrite Project
+# SPDX-License-Identifier: MPL-2.0
+# A hand-written hosts file for netskip-adblock's tests.
+127.0.0.1 localhost
+0.0.0.0 hosts-blocked.example
+127.0.0.1 another-blocked.example # trailing comment

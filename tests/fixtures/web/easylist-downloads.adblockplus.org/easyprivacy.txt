@@ -1,0 +1,7 @@
+[Adblock Plus 2.0]
+! Title: Net Skip fixture privacy list
+! Net Skip's own test list, served in fixture mode in place of EasyPrivacy (MPL-2.0, The Daybrite Project).
+! Expires: 4 days
+tracker.example/collect.js
+tracker.example/beacon
+analytics.example/ga.js

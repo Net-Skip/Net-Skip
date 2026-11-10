@@ -1,0 +1,78 @@
+# Copyright © The Daybrite Project
+# SPDX-License-Identifier: MPL-2.0
+#
+# The Day project manifest: https://daybrite.dev/docs/reference/cli#the-conventional-project
+# `name` and `version` come from Cargo.toml.
+schema = 1
+# Net Skip can be the system's default browser: it opens web links handed to it.
+url_schemes = ["http", "https"]
+# Net Skip is in the Android share sheet for shared text; a shared link opens through on_open_url.
+share_target = ["text/plain"]
+
+[app]
+id = "org.appfair.app.NetSkip"
+title = "Net Skip"
+# Release files keep this name on every platform, whatever the home-screen title.
+artifact = "net-skip"
+# The Skip-based Net Skip shipped build 242 (version 1.5.5); the stores refuse a build number
+# they have seen.
+build = 243
+targets = ["macos-appkit", "ios-uikit", "android-material", "linux-gtk", "linux-qt", "windows-winui", "harmony-arkui"]
+
+# The window's size and minimum size in points, for every platform with resizable windows.
+[window]
+width = 1280
+height = 840
+min_width = 360
+min_height = 420
+
+# Keep the identities of the Net Skip already in the stores, so this version installs as an
+# update over it and keeps its users. Android and HarmonyOS refuse a hyphen in an id.
+[app.ios]
+id = "org.appfair.app.Net-Skip"
+
+[app.macos]
+id = "org.appfair.app.Net-Skip"
+
+[app.android]
+id = "org.appfair.app.Net_Skip"
+
+[app.harmony]
+id = "org.appfair.app.Net_Skip"
+
+# The existing store records.
+[store]
+apple-app-id = "1640618584"
+google-play-id = "org.appfair.app.Net_Skip"
+
+# Web pages may be plain HTTP: a browser loads whatever address the user asks for.
+[android]
+cleartext-traffic = true
+
+# What web pages may ask for through the platform's web engine: video calls, QR scanners, voice
+# search, maps. The reasons are the ones the Skip-based Net Skip shipped with, kept as
+# `permission_<name>` messages in resource/locales/*/app.ftl. Location stays off Android, where
+# that build never declared it.
+[permissions]
+camera = { platforms = ["ios", "macos", "android"] }
+microphone = { platforms = ["ios", "macos", "android"] }
+location-when-in-use = { platforms = ["ios", "macos"] }
+motion = { platforms = ["ios"] }
+
+[permissions.raw]
+# WebKit's speech recognition API (webkitSpeechRecognition) asks for this beside the microphone.
+ios = { NSSpeechRecognitionUsageDescription = true }
+macos = { NSSpeechRecognitionUsageDescription = true }
+# Install-time permissions the shipped build declared that Android System WebView uses for
+# pages: online state, WebRTC audio routing, media playback, and navigator.vibrate().
+android = [
+    "android.permission.ACCESS_NETWORK_STATE",
+    "android.permission.ACCESS_WIFI_STATE",
+    "android.permission.MODIFY_AUDIO_SETTINGS",
+    "android.permission.WAKE_LOCK",
+    "android.permission.VIBRATE",
+]
+
+# Report which element ids the dayscripts reach: https://daybrite.dev/docs/how-to/dayscript
+[dayscript.coverage]
+enabled = true

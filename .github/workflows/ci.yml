@@ -1,0 +1,92 @@
+# Copyright © The Daybrite Project
+# SPDX-License-Identifier: MPL-2.0
+#
+# Net Skip's CI: every target the app declares, its walkthroughs in every language it ships and
+# both appearances, and on a version tag the packages for a GitHub release, through the workflow
+# every Day app uses (https://daybrite.dev/docs/how-to/github-actions).
+#
+# Every dayscript runs with NETSKIP_FIXTURES=1, so the pages, search results, suggestions and
+# favicons come from tests/fixtures/web/ and no run depends on the network.
+name: "Net-Skip"
+
+# A push or a pull request builds against day's main branch, so a change there that breaks this
+# app shows up before it is released. The nightly run and a version tag build against the newest
+# day release. A manual run builds against the release too, unless `day-main` is ticked.
+on:
+  push:
+    branches: ["**"]
+    tags: ["v[0-9]+.[0-9]+.[0-9]+*"]
+  pull_request:
+  # Marking a staged release Latest (see `release-mode` below) rebuilds the site against it.
+  release:
+    types: [released]
+  schedule:
+    - cron: "45 1 * * *" # 01:45 Eastern; staggered across daybrite.
+      timezone: America/New_York
+  workflow_dispatch:
+    inputs:
+      day-main:
+        description: Build against day's main branch instead of the newest release
+        type: boolean
+        default: false
+
+# The repository's own jobs run this checkout's code with a read-only token. The write grants
+# sit on the job that calls the shared workflow, whose release and Pages jobs alone use them;
+# its build legs, which run this code too, narrow their token to read-only themselves.
+permissions:
+  contents: read
+
+jobs:
+  # The App Fair's rules: the licence texts, the licence notice in every source file, and the
+  # flavor manifest holding the ids this app publishes under. Submissions run the same action
+  # (https://github.com/appfair/appfair-apps).
+  appfair-lint:
+    name: appfair-lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: appfair/appfair-apps/.github/actions/appfair-lint@main
+
+  app:
+    uses: daybrite/actions/.github/workflows/dayapp.yml@v1
+    permissions:
+      contents: write # release assets on a tag build
+      pages: write    # the project site → GitHub Pages
+      id-token: write # deploy-pages OIDC token
+    secrets: inherit
+    with:
+      # Every target Day.toml declares (`[app] targets`).
+      targets: all
+      target-packages: |
+        windows-winui: webview2-runtime
+      day-source: ${{ inputs.day-main && 'main' || 'auto' }}
+      # Formatting and the unit tests of both crates (the model's rules and the app's store,
+      # fixtures, favicons and scripts) before any target builds.
+      preflight-checks: fmt test
+      scripts: auto
+      launch-env: NETSKIP_FIXTURES=1 NETSKIP_MEMORY_LIBRARY=1 NETSKIP_BLOCKING=aggressive
+      # The behavioral suites run once per device; the walkthrough, which captures the store
+      # screenshots, runs in every language and appearance.
+      scripts-once: >-
+        dayscript/smoke.yaml
+        dayscript/browse.yaml
+        dayscript/tabs.yaml
+        dayscript/address-bar.yaml
+        dayscript/library.yaml
+        dayscript/settings.yaml
+        dayscript/adblock.yaml
+        dayscript/filter-lists.yaml
+      locales: all
+      themes: light dark
+      android-devices: |
+        device=pixel, os=36, orientation=portrait, slug=phone
+        device=medium_tablet, os=36, orientation=landscape, slug=tablet
+      # A tagged build attaches its packages to the release. The App Fair queue compares its
+      # own build against these, so leave them on.
+      release-assets: true
+      # A tag publishes a pre-release; the App Fair queue marks it Latest once the stores have
+      # it, which fires `release: released` above and rebuilds the site.
+      release-mode: pre-release
+      # website/site.toml builds the project site from daysite with the App Fair theme on every
+      # push to main. The app has no web build to host.
+      deploy-web: false

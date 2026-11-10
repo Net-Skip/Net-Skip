@@ -1,0 +1,33 @@
+# Copyright © The Daybrite Project
+# SPDX-License-Identifier: MPL-2.0
+#
+# The Simplified Chinese listing text: the same table as store/storefront.toml's
+# [storefront.metadata], in a file of its own so a translator edits one file per language. What it
+# leaves out (the URLs) is the default locale's.
+[storefront.metadata]
+name = "Net Skip"
+subtitle = "快速、注重隐私的网页浏览器"
+short = "带有标签页、书签和历史记录，可自选搜索引擎的网页浏览器。"
+description = """
+Net Skip 是一款适用于手机、平板电脑和电脑的网页浏览器。它使用设备自带的网页引擎，因此页面加载迅速、滚动流畅，页面周围的控件小巧而不碍事。
+
+在地址栏中输入几个字母，Net Skip 就会根据你的历史记录补全网站地址。输入时还会显示来自书签、历史记录、已打开的标签页和搜索引擎的建议。
+
+• 广告和跟踪器拦截：关闭、轻度、强力或激进，可对所有网站或单个网站设置。过滤列表来自其发布者，并会自动更新。
+• 标签页：在平板电脑和电脑上是标签栏，在手机上是已打开标签页的网格。
+• 链接会在来源页面旁边的新标签页中打开。“重新打开已关闭的标签页”可找回最近关闭的 25 个标签页。
+• 可使用 Kagi、DuckDuckGo、Google、Bing、Ecosia、Qwant、Startpage 等搜索，也可通过网址添加任意搜索引擎。
+• 书签会作为收藏夹显示在起始页上，旁边是你最常访问的网站。
+• 历史记录按天分组，并且可以搜索。可清除最近一小时、今天或全部历史记录。
+• 无痕标签页中的页面不会记入历史记录，关闭标签页时也会忘记其 Cookie。
+• 支持页面内查找和页面缩放，下次打开 App 时会恢复你的标签页。
+
+Net Skip 将你的历史记录和书签保存在设备上，没有广告，也没有跟踪。搜索建议会将你在地址栏中输入的内容发送给搜索引擎，你可以在设置中将其关闭。
+
+Net Skip 是开源软件，采用 Mozilla Public License 2.0 授权：github.com/Net-Skip/Net-Skip
+"""
+keywords = ["浏览器", "网页", "互联网", "标签页", "无痕", "隐私", "搜索", "kagi", "书签", "历史记录"]
+release-notes = """
+Net Skip 2.0 经过了全面重建。地址栏会在你输入时根据历史记录补全网站，标签页会在打开它的页面旁边打开，默认搜索引擎为 Kagi，另有 13 个可供选择，也可以添加任意搜索引擎。现在除了手机和平板电脑，App 也能在电脑上运行。
+"""
+promo = "只需输入几个字母，Net Skip 就会根据你的历史记录补全网站地址。"

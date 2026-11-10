@@ -1,0 +1,17 @@
+# Copyright © The Daybrite Project
+# SPDX-License-Identifier: MPL-2.0
+#
+# Launch, load a fixture page from the address bar, and capture the browser.
+# Run with NETSKIP_FIXTURES=1 (CI's launch-env), so no page comes from the network.
+name: smoke
+description: The browser opens on the start page and loads a page typed in the address bar.
+flow:
+  - wait_for: { id: address }
+  - assert_visible: { id: "start_page:1" }
+  - screenshot: start-page
+  - focus: { id: address }
+  - input: { id: address, text: "example.com" }
+  - submit: { id: address }
+  - web_eval: { id: "page:1", script: "document.title", text: "Example Domain", timeout_secs: 30 }
+  - wait_idle: {}
+  - screenshot: page

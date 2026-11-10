@@ -1,0 +1,21 @@
+# Copyright © The Daybrite Project
+# SPDX-License-Identifier: MPL-2.0
+#
+# A development build that installs beside the store app (https://daybrite.dev/docs/flavors):
+# its own ids, so a local build never replaces the Net Skip from the App Store or Google Play,
+# or erases its history and bookmarks. `day launch --flavor dev`.
+[app]
+id = "org.appfair.app.NetSkip.dev"
+title = "Net Skip Dev"
+
+[app.ios]
+id = "org.appfair.app.Net-Skip.dev"
+
+[app.macos]
+id = "org.appfair.app.Net-Skip.dev"
+
+[app.android]
+id = "org.appfair.app.Net_Skip.dev"
+
+[app.harmony]
+id = "org.appfair.app.Net_Skip.dev"

@@ -1,0 +1,68 @@
+# Copyright © The Daybrite Project
+# SPDX-License-Identifier: MPL-2.0
+#
+# Everyday browsing against the fixture pages (NETSKIP_FIXTURES=1): typing an address, inline
+# completion from history, following links, Back and Forward, find in page, and bookmarks.
+name: browse
+description: Load pages, complete an address from history, navigate, find text and bookmark.
+flow:
+  - wait_for: { id: address }
+  # Type an address on the start page.
+  - focus: { id: address }
+  - input: { id: address, text: "example.com" }
+  - submit: { id: address }
+  - web_eval: { id: "page:1", script: "document.title", text: "Example Domain", timeout_secs: 30 }
+  - assert_value: { id: address, value: "example.com" }
+  # Follow a link.
+  - web_eval: { id: "page:1", script: "document.getElementById('link-news').click(), true", text: "true" }
+  - web_eval: { id: "page:1", script: "document.title", text: "Example News", timeout_secs: 30 }
+  # Go somewhere from the address bar, then back and forward. (Chromium engines skip a history
+  # entry a page left without a user gesture, and a scripted click carries none, so Back is
+  # exercised across a navigation the browser itself started.) Android and HarmonyOS lay the
+  # toolbar out as Chrome does: no Back button, the system back goes back in the page, and
+  # Forward is in the ⋮ menu.
+  - focus: { id: address }
+  - input: { id: address, text: "example.com/about.html" }
+  - submit: { id: address }
+  - web_eval: { id: "page:1", script: "document.title", text: "About Example", timeout_secs: 30 }
+  - tap: { id: back, skip_on: [android-material, harmony-arkui] }
+  - nav_back: { native: true, only_on: [android-material, harmony-arkui] }
+  - web_eval: { id: "page:1", script: "document.title", text: "Example News", timeout_secs: 30 }
+  - tap: { id: forward, skip_on: [android-material, harmony-arkui] }
+  - context_menu: { id: more, item_id: more_forward, only_on: [android-material, harmony-arkui] }
+  - web_eval: { id: "page:1", script: "document.title", text: "About Example", timeout_secs: 30 }
+  - tap: { id: back, skip_on: [android-material, harmony-arkui] }
+  - nav_back: { native: true, only_on: [android-material, harmony-arkui] }
+  - web_eval: { id: "page:1", script: "document.title", text: "Example News", timeout_secs: 30 }
+  # Find in page: the news page holds "harbor" five times.
+  - menu: { id: menu_find }
+  - wait_for: { id: find_field }
+  - input: { id: find_field, text: "harbor" }
+  - assert_text: { id: find_count, text: "1 of 5", timeout_secs: 10 }
+  - tap: { id: find_next }
+  - assert_text: { id: find_count, text: "2 of 5", timeout_secs: 10 }
+  - screenshot: find-in-page
+  - tap: { id: find_done }
+  - assert_missing: { id: find_bar }
+  # A new tab opens on the start page with the address bar ready; typing completes from history.
+  - menu: { id: menu_new_tab }
+  - wait_for: { id: "start_page:2" }
+  - focus: { id: address }
+  - input: { id: address, text: "exa" }
+  - assert_value: { id: address, value: "example.com" }
+  - wait_for: { id: "suggestion:0" }
+  - screenshot: inline-completion
+  - submit: { id: address }
+  - web_eval: { id: "page:2", script: "document.title", text: "Example Domain", timeout_secs: 30 }
+  # Bookmark the page; it shows in Bookmarks and on a new tab's Favorites.
+  - menu: { id: menu_add_bookmark }
+  - tap: { id: library, skip_on: [android-material, harmony-arkui] }
+  - context_menu: { id: more, key: bookmarks, only_on: [android-material, harmony-arkui] }
+  - wait_for: { id: bookmarks_list }
+  - assert_visible: { id: "bookmark_row:1" }
+  - screenshot: bookmarks
+  - toolbar: { item: library_done, only_on: [ios-uikit, android-material, harmony-arkui] }
+  - tap: { id: library_done, skip_on: [ios-uikit, android-material, harmony-arkui] }
+  - menu: { id: menu_new_tab }
+  - wait_for: { id: "favorite:1" }
+  - screenshot: favorites

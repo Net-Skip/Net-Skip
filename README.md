@@ -25,6 +25,9 @@ Qt WebEngine on Linux, ArkWeb on HarmonyOS), and the browser around it is built 
   Swisscows, Yahoo!, SearXNG, Yandex, Baidu, Dogpile, Gigablast, or any engine whose search
   address you enter.
 - Bookmarks, shown as Favorites on the start page, and a searchable history grouped by day.
+- Ad and tracker blocking, Off, Light, Strong or Aggressive for every site or just one. The
+  filter lists come from their publishers and update on their own; Settings > Filter Lists
+  switches single lists on and off and adds lists by address.
 - Private tabs, find in page, page zoom, and the tabs you had open at your next launch.
 
 ## Building

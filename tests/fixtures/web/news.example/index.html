@@ -1,0 +1,114 @@
+<!doctype html>
+<!-- Copyright © The Daybrite Project · SPDX-License-Identifier: MPL-2.0 -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#9b1c1c" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#7a1616" media="(prefers-color-scheme: dark)">
+<meta name="description" content="Local news, weather, business, sport and culture from Port Avelin and the north shore.">
+<title>The Daily Lantern — News from Port Avelin and the North Shore</title>
+<link rel="icon" type="image/svg+xml" href="https://news.example/favicon.svg">
+<link rel="icon" type="image/png" sizes="128x128" href="https://news.example/favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://news.example/apple-touch-icon.png">
+<link rel="stylesheet" href="https://news.example/assets/site.css">
+<script>
+// Test markers: scripts push their names into window.__loaded; images, frames and scripts
+// report load and error events into window.__events. See tests/fixtures/web/README.md.
+window.__loaded = window.__loaded || [];
+window.__events = window.__events || [];
+addEventListener('message', function (e) {
+  if (e.data && e.data.fixture === 'ads-frame') window.__loaded.push('ads-frame');
+});
+</script>
+<script async src="https://analytics.example/ga.js" onload="(window.__events=window.__events||[]).push('analytics-ga:load')" onerror="(window.__events=window.__events||[]).push('analytics-ga:error')"></script>
+<script async src="https://tracker.example/collect.js" onload="(window.__events=window.__events||[]).push('tracker-collect:load')" onerror="(window.__events=window.__events||[]).push('tracker-collect:error')"></script>
+<script async src="https://ads.example/adserver/banner.js" onload="(window.__events=window.__events||[]).push('ads-banner:load')" onerror="(window.__events=window.__events||[]).push('ads-banner:error')"></script>
+<script defer src="https://news.example/assets/app.js" onload="(window.__events=window.__events||[]).push('app:load')" onerror="(window.__events=window.__events||[]).push('app:error')"></script>
+</head>
+<body>
+<div class="util"><div class="wrap"><span class="hide-sm">Tuesday, 10 November 2026</span><span>14° Port Avelin</span><span class="live" id="app-status"></span><span class="sp"></span><a href="https://news.example/#subscribe">Subscribe</a><a class="hide-sm" href="https://news.example/#sign-in">Sign in</a></div></div>
+<div class="wrap">
+<header class="mast"><a class="logo" id="logo" href="https://news.example/">The Daily Lantern</a><p>Port Avelin &amp; the North Shore · Since 1889</p></header>
+<nav class="sections" aria-label="Sections"><a class="on" href="https://news.example/">Front page</a><a href="https://news.example/#news">News</a><a href="https://news.example/#business">Business</a><a href="https://news.example/#climate">Climate</a><a href="https://news.example/#sport">Sport</a><a href="https://news.example/#culture">Culture</a><a href="https://news.example/#opinion">Opinion</a><a href="https://news.example/#travel">Travel</a><a href="https://skies.example/">Weather</a></nav>
+<div id="div-gpt-ad-1" class="adbox" data-test-ad><span class="tag">Advertisement</span><span class="ad">AD</span><span class="size">728 × 90 · Leaderboard</span><span class="creative"></span></div>
+<div class="ticker" role="status"><b>LATEST</b><span>Skerry Holm ferry suspended from 18:00 · Harbor trust relays twelve visitor moorings · Saltness bridge reopens Thursday</span></div>
+<main>
+<div class="front">
+  <div>
+    <article class="lead" id="news">
+      <p class="kicker">Weather · Live</p>
+      <h1 id="headline"><a href="https://news.example/#headline">Gales to close north shore ferry routes as first winter storm arrives</a></h1>
+      <div class="lead-grid">
+        <div>
+          <p class="dek">Gusts of up to 60 km/h are forecast along the coast from this evening. Ferries to Skerry Holm and the outer islands will stay in harbor until Thursday morning.</p>
+          <p class="byline">By <b>Hanna Selby</b> and <b>Tomasz Wren</b> · Updated 13:40</p>
+          <ul class="bullets">
+            <li>Holm Quay school closes early; buses leave at 13:15</li>
+            <li>Coastal path between Kell Bay and Saltness shut at high tide</li>
+            <li>What to do if your boat is still on a mooring</li>
+          </ul>
+        </div>
+        <figure><img class="art" src="https://news.example/art/coast.svg" alt="The coast near Port Avelin under a clearing sky" width="800" height="450"><figcaption>The outer sound this morning, hours before the wind picked up.</figcaption></figure>
+      </div>
+    </article>
+    <div class="pair">
+      <a class="story" href="https://news.example/#bridge"><img class="art" src="https://news.example/art/bridge.svg" alt="" width="800" height="450"><h3>Saltness bridge reopens Thursday after two-year repair</h3><p>Engineers have replaced every one of the 312 hangers. Tolls will stay frozen until spring.</p><span class="byline">Transport · 4 min read</span></a>
+      <a class="story" href="https://news.example/#business"><img class="art" src="https://news.example/art/markets.svg" alt="" width="800" height="450"><h3>Fish auction prices hit a ten-year high as boats stay ashore</h3><p>Cod and haddock fetched record bids at Port Avelin’s Monday auction, the last before the storm.</p><span class="byline">Business · 3 min read</span></a>
+    </div>
+    <div class="ad-banner adbox" id="ad-banner-mid" data-test-ad><span class="tag">Advertisement</span><span class="ad">AD</span><span class="size">970 × 120 · Banner</span><span class="creative"></span></div>
+    <section class="block" id="business" aria-labelledby="biz-title">
+      <h2 id="biz-title">Business &amp; climate</h2>
+      <div class="cols4">
+        <a class="story" href="https://news.example/#climate"><img class="art" src="https://news.example/art/turbines.svg" alt="" width="800" height="450"><h3>Wind farm off Morrow Point approved after five-year wait</h3><p>Forty turbines will power every home on the north shore.</p></a>
+        <a class="story" href="https://news.example/#news"><img class="art" src="https://news.example/art/skyline.svg" alt="" width="800" height="450"><h3>Port Avelin’s housing plan explained</h3><p>Where the 800 new homes will go, and who can buy them.</p></a>
+        <article class="sponsored adbox" id="sponsored-1" data-test-ad><span class="tag">Sponsored</span><h3>Brightline Ferries: island fares from 12 this winter</h3><p>Book the crossing to Skerry Holm and the outer islands. Paid content.</p><span class="ad">AD</span></article>
+        <a class="story" href="https://news.example/#news"><img class="art" src="https://news.example/art/library.svg" alt="" width="800" height="450"><h3>The town library will open on Sundays from January</h3><p>A trial run, paid for by a bequest from a former harbor master.</p></a>
+      </div>
+    </section>
+  </div>
+  <aside class="side" aria-label="Most read and opinion">
+    <h2>Most read</h2>
+    <ol class="most">
+      <li><a href="https://news.example/#headline">Gales to close north shore ferry routes tonight</a></li>
+      <li><a href="https://news.example/#bridge">Saltness bridge reopens after two-year repair</a></li>
+      <li><a href="https://news.example/#sport">Avelin Rovers draw level with a goal in the 94th minute</a></li>
+      <li><a href="https://news.example/#culture">The lighthouse cottage that sold for a single coin</a></li>
+      <li><a href="https://news.example/#news">Council approves a second ferry for summer</a></li>
+    </ol>
+    <ins class="adsbygoogle adbox" id="ad-adsense" data-ad-client="ca-pub-0000000000000000" data-test-ad><span class="tag">Advertisement</span><span class="ad">AD</span><span class="size">300 × 250 · Display</span><span class="creative"></span></ins>
+    <h2 id="opinion">Opinion</h2>
+    <a class="opinion" href="https://news.example/#opinion"><div><b>Ruth Ansel</b><span>The ferry is not a luxury. It is the island’s only road.</span></div><i style="background:#2f5d62">RA</i></a>
+    <a class="opinion" href="https://news.example/#opinion"><div><b>Kwame Doyle</b><span>Let the library open on Sundays for good.</span></div><i style="background:#8a6a2a">KD</i></a>
+    <a class="opinion" href="https://news.example/#opinion"><div><b>The Lantern view</b><span>Wind turbines off Morrow Point are worth the wait.</span></div><i style="background:#9b1c1c">L</i></a>
+    <iframe id="google_ads_iframe_1" src="https://ads.example/adserver/frame.html" title="Advertisement" width="300" height="250" scrolling="no" data-test-ad onload="(window.__events=window.__events||[]).push('ads-frame:load')" onerror="(window.__events=window.__events||[]).push('ads-frame:error')"></iframe>
+  </aside>
+</div>
+<div class="below">
+  <section class="article-tail" id="culture" aria-labelledby="culture-title">
+    <p class="kicker">Culture</p>
+    <h2 id="culture-title">The lighthouse cottage that sold for a single coin</h2>
+    <p>When the harbor trust put the keepers’ cottage at Gannet Rock up for sale last spring, it set one condition: the buyer had to keep the light’s old logbooks on the island and open the cottage to schoolchildren twice a year. The price, the trust said, was negotiable.</p>
+    <p>It sold on Friday for a single silver coin, minted in 1889, the year this newspaper was founded. The buyers, a retired ferry engineer and her brother, say they will spend the winter fixing the roof and the spring painting the window frames the same deep red they were when their grandfather kept the light.</p>
+    <div class="adbox" id="ad-slot-mpu" data-ad-slot="mpu-2" data-test-ad><span class="tag">Advertisement</span><span class="ad">AD</span><span class="size">300 × 250 · In-article</span><span class="creative"></span></div>
+    <p>“We are not going to make it fancy,” said Ilse Marrow, 67, standing in the cottage’s small kitchen. “We are going to make it dry. Then we are going to put the kettle on and read every one of those logbooks, start to finish.”</p>
+    <p>The trust says the logbooks, which cover 104 years of weather, shipping and the occasional family argument, will be digitized next year. Readers with photographs of the cottage before 1960 are asked to contact the newsroom.</p>
+    <div id="taboola-below-article" class="adbox" data-test-ad><div class="head">You may like<span>Sponsored links · AD</span></div><div class="tb-grid"><a class="tb" href="https://ads.example/adserver/click?c=0"><i style="background:linear-gradient(135deg,#b5523b,#6b4f8a)">AD</i><b>Locals are switching to this quiet kettle, and the reason is simple</b><span>Sponsored · HomeHearth</span></a><a class="tb" href="https://ads.example/adserver/click?c=1"><i style="background:linear-gradient(135deg,#2f5d62,#3b6e8f)">AD</i><b>The 12 most beautiful harbor towns you have never heard of</b><span>Sponsored · Wander Weekly</span></a><a class="tb" href="https://ads.example/adserver/click?c=2"><i style="background:linear-gradient(135deg,#6b4f8a,#8a6a2a)">AD</i><b>Why sailors swear by this one knot (it is not the bowline)</b><span>Sponsored · Deck & Line</span></a><a class="tb" href="https://ads.example/adserver/click?c=3"><i style="background:linear-gradient(135deg,#3b6e8f,#5c7a3a)">AD</i><b>Retirees on the north shore are doing this with their gardens</b><span>Sponsored · GreenPlot</span></a><a class="tb" href="https://ads.example/adserver/click?c=4"><i style="background:linear-gradient(135deg,#8a6a2a,#b5523b)">AD</i><b>This wool jumper sold out three times. It is back.</b><span>Sponsored · Fjord Knit Co.</span></a><a class="tb" href="https://ads.example/adserver/click?c=5"><i style="background:linear-gradient(135deg,#5c7a3a,#2f5d62)">AD</i><b>Ten winter recipes that only need one pan</b><span>Sponsored · Larder</span></a></div></div>
+  </section>
+  <aside id="sport" aria-label="Recommended">
+    <div class="OUTBRAIN adbox" id="outbrain-widget" data-widget-id="AR_1" data-test-ad><div class="head">Recommended for you<span>Promoted · AD</span></div><ul><li><i style="background:linear-gradient(135deg,#2f5d62,#3b6e8f)">AD</i><a href="https://ads.example/adserver/click?r=0">A ferry captain explains the one sound that means trouble<span>Seaway Stories</span></a></li><li><i style="background:linear-gradient(135deg,#6b4f8a,#8a6a2a)">AD</i><a href="https://ads.example/adserver/click?r=1">Inside the island bakery that opens at five<span>Coast Living</span></a></li><li><i style="background:linear-gradient(135deg,#3b6e8f,#5c7a3a)">AD</i><a href="https://ads.example/adserver/click?r=2">How to read a tide table in under a minute<span>Tidewise</span></a></li><li><i style="background:linear-gradient(135deg,#8a6a2a,#b5523b)">AD</i><a href="https://ads.example/adserver/click?r=3">The surprising history of lighthouse paint<span>Harbor Notes</span></a></li></ul></div>
+    <a class="story" href="https://news.example/#sport"><img class="art" src="https://news.example/art/football.svg" alt="" width="800" height="450"><h3>Avelin Rovers rescue a draw in the 94th minute</h3><p>A header from the left back, of all people, keeps the cup run alive.</p></a>
+  </aside>
+</div>
+</main>
+<footer class="foot" id="subscribe">
+  <div class="logo">The Daily Lantern</div>
+  <nav aria-label="Footer"><a href="https://news.example/#news">News</a><a href="https://news.example/#business">Business</a><a href="https://news.example/#culture">Culture</a><a href="https://news.example/#opinion">Opinion</a><a href="https://news.example/#subscribe">Subscribe</a><a href="https://news.example/#sign-in">Sign in</a></nav>
+  <p>Independent local journalism from Port Avelin since 1889. All stories, names and advertisers on this page are invented for testing.</p>
+</footer>
+</div>
+<img class="pixel" id="ads-pixel" src="https://ads.example/pixel.gif" alt="" width="1" height="1" onload="(window.__events=window.__events||[]).push('ads-pixel:load')" onerror="(window.__events=window.__events||[]).push('ads-pixel:error')">
+<img class="pixel" id="tracker-beacon" src="https://tracker.example/beacon?e=pageview&amp;p=front" alt="" width="1" height="1" onload="(window.__events=window.__events||[]).push('tracker-beacon:load')" onerror="(window.__events=window.__events||[]).push('tracker-beacon:error')">
+</body>
+</html>

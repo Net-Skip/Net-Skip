@@ -1,0 +1,78 @@
+# Copyright © The Daybrite Project
+# SPDX-License-Identifier: MPL-2.0
+[package]
+name = "net-skip"
+version.workspace = true
+edition = "2024"
+license = "MPL-2.0"
+description = "Net Skip: a web browser for phones, tablets and computers, built with Day."
+# Generates typed `res::` constants from `resource/` and the fixture site table (see build.rs).
+build = "build.rs"
+
+[features]
+# `mock` keeps bare cargo and rust-analyzer compiling; `day build` overrides it with
+# `--no-default-features --features <backend>` (https://daybrite.dev/docs/reference/project-structure).
+default = ["mock"]
+appkit = ["day/appkit", "day-piece-webview/appkit", "dep:day-toolkit-appkit", "dep:objc2"]
+gtk = ["day/gtk", "day-piece-webview/gtk", "dep:day-toolkit-gtk", "dep:gtk4"]
+qt = ["day/qt", "day-piece-webview/qt"]
+uikit = ["day/uikit", "day-piece-webview/uikit", "dep:day-toolkit-uikit", "dep:objc2"]
+material = ["day/material", "day-piece-webview/material", "dep:day-toolkit-material", "dep:jni"]
+winui = ["day/winui", "day-piece-webview/winui"]
+arkui = ["day/arkui", "day-piece-webview/arkui"]
+dom = ["day/dom", "day-piece-webview/dom"]
+# day-piece-webview has no mock renderer: a headless build shows its placeholder leaf.
+mock = ["day/mock"]
+
+# Cargo defaults to rlib; the mobile pipeline requests staticlib/cdylib via `cargo rustc`.
+[lib]
+# A constant lib name: staged artifacts and the `dayapp::` import never move on a package rename.
+name = "dayapp"
+
+[dependencies]
+day = { package = "day-app", version = "0.*", features = ["model"] }
+day-piece-settings = "0.*"
+day-piece-webview = "0.*"
+day-persistence = "0.*"
+day-part-http = "0.*"
+netskip-adblock = { path = "crates/netskip-adblock" }
+day-part-clipboard = "0.*"
+# Locale-aware dates for history (the formatter behind Fluent's DATETIME()).
+day-localization = "0.*"
+netskip-model = { version = "0.*", path = "crates/netskip-model" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+url = "2"
+
+# Per-platform touches (src/native.rs, https://daybrite.dev/docs/reference/tweaks), each riding only
+# its backend's feature; the versions are the ones Day's toolkits use.
+day-toolkit-appkit = { version = "0.*", optional = true }
+day-toolkit-uikit = { version = "0.*", optional = true }
+day-toolkit-gtk = { version = "0.*", optional = true }
+day-toolkit-material = { version = "0.*", optional = true }
+objc2 = { version = "0.6", optional = true }
+gtk4 = { version = "0.11", optional = true }
+jni = { version = "0.22", optional = true }
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+# Favicons arrive as ICO, PNG, JPEG, GIF or WebP; they are scaled and re-encoded as PNG.
+image = { version = "0.25", default-features = false, features = ["png", "jpeg", "gif", "ico", "webp"] }
+
+# `localtime_r` for the local time zone (src/clock.rs).
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"
+
+[build-dependencies]
+day-build = "0.*"
+
+[workspace]
+resolver = "2"
+members = [".", "crates/netskip-model", "crates/netskip-adblock"]
+
+[workspace.package]
+version = "2.0.0"
+
+# The bundled SQLite is C compiled at the profile's optimization level; unoptimized, a long
+# history makes completion visibly slower. Optimize it alone in debug builds.
+[profile.dev.package.libsqlite3-sys]
+opt-level = 3
