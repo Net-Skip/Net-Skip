@@ -16,7 +16,7 @@ Digita qualche lettera nella barra degli indirizzi e Net Skip completa il sito d
 • Blocco di pubblicità e tracker: Disattivato, Leggero, Forte o Aggressivo, per tutti i siti o per uno solo. Gli elenchi di filtri arrivano dai loro autori e si aggiornano da soli.
 • Schede: una barra delle schede su tablet e computer, una griglia delle schede aperte sul telefono.
 • I link si aprono in una nuova scheda accanto alla pagina da cui provengono. Riapri scheda chiusa recupera le ultime 25 che hai chiuso.
-• Cerca con Kagi, DuckDuckGo, Google, Bing, Ecosia, Qwant, Startpage e altri, o con qualsiasi motore di ricerca che aggiungi tramite il suo indirizzo.
+• Cerca con DuckDuckGo, Kagi, Google, Bing, Ecosia, Qwant, Startpage e altri, o con qualsiasi motore di ricerca che aggiungi tramite il suo indirizzo.
 • I segnalibri compaiono come Preferiti nella pagina di avvio, accanto ai siti che visiti di più.
 • La cronologia è raggruppata per giorno e si può cercare. Cancella l’ultima ora, la giornata di oggi o tutto.
 • Le schede private tengono le loro pagine fuori dalla cronologia e dimenticano i cookie quando le chiudi.
@@ -28,6 +28,6 @@ Net Skip è open source con licenza Mozilla Public License 2.0: github.com/Net-S
 """
 keywords = ["browser", "web", "internet", "schede", "privato", "ricerca", "kagi", "segnalibri", "cronologia"]
 release-notes = """
-Net Skip 2.0 è stato ricostruito da zero. La barra degli indirizzi completa i siti dalla cronologia mentre scrivi, le schede si aprono accanto alla pagina che le ha aperte e Kagi è il motore di ricerca predefinito, con altri 13 tra cui scegliere o qualsiasi motore tu aggiunga. Ora l’app funziona anche sui computer, oltre che su telefoni e tablet.
+Net Skip 2.0 è stato ricostruito da zero. La barra degli indirizzi completa i siti dalla cronologia mentre scrivi, le schede si aprono accanto alla pagina che le ha aperte e DuckDuckGo è il motore di ricerca predefinito, con altri 13 tra cui scegliere o qualsiasi motore tu aggiunga. Ora l’app funziona anche sui computer, oltre che su telefoni e tablet.
 """
 promo = "Digita qualche lettera e Net Skip completa il sito dalla tua cronologia."

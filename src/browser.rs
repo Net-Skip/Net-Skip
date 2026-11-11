@@ -929,7 +929,14 @@ fn apply_state(tab: Tab, state: &PageState) {
         let title = state.title.trim().to_string();
         if !title.is_empty() && tab.title.get_untracked() != title {
             tab.title.set(title.clone());
-            let url = tab.url_untracked();
+            // The title belongs to the address reported with it. The tab's own address can
+            // trail it: going back on Android reports the earlier page's address and title
+            // together, while the tab still holds the page being left.
+            let url = if state.url.is_empty() {
+                tab.url_untracked()
+            } else {
+                fixtures::to_logical(&state.url)
+            };
             if !tab.private && history::records(&url, false) {
                 let key = address::history_key(&url).unwrap_or(url);
                 let done = store::write(move |db| store::set_title(db, &key, &title));

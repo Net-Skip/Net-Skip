@@ -3,9 +3,9 @@
 use netskip_model::search::*;
 
 #[test]
-fn kagi_is_the_default() {
+fn duckduckgo_is_the_default() {
     assert_eq!(default_engine().id, DEFAULT_ENGINE);
-    assert_eq!(default_engine().name, "Kagi");
+    assert_eq!(default_engine().name, "DuckDuckGo");
 }
 
 #[test]

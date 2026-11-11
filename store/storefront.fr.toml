@@ -16,7 +16,7 @@ Tapez quelques lettres dans la barre d’adresse et Net Skip complète le site �
 • Blocage des publicités et des traqueurs : Désactivé, Léger, Fort ou Agressif, pour tous les sites ou un seul. Les listes de filtres viennent de leurs éditeurs et se mettent à jour d’elles-mêmes.
 • Onglets : une barre d’onglets sur tablette et ordinateur, une grille des onglets ouverts sur téléphone.
 • Les liens s’ouvrent dans un nouvel onglet, à côté de la page d’origine. « Rouvrir l’onglet fermé » ramène les 25 derniers onglets fermés.
-• Recherchez avec Kagi, DuckDuckGo, Google, Bing, Ecosia, Qwant, Startpage et d’autres, ou avec tout moteur de recherche que vous ajoutez par son adresse.
+• Recherchez avec DuckDuckGo, Kagi, Google, Bing, Ecosia, Qwant, Startpage et d’autres, ou avec tout moteur de recherche que vous ajoutez par son adresse.
 • Vos signets apparaissent en Favoris sur la page de démarrage, à côté des sites que vous consultez le plus.
 • L’historique est classé par jour et se consulte par recherche. Effacez la dernière heure, la journée ou tout.
 • Les onglets privés gardent leurs pages hors de votre historique et oublient leurs cookies quand vous les fermez.
@@ -28,6 +28,6 @@ Net Skip est open source, sous licence Mozilla Public License 2.0 : github.com/
 """
 keywords = ["navigateur", "web", "internet", "onglets", "privé", "recherche", "kagi", "signets", "historique"]
 release-notes = """
-Net Skip 2.0 a été entièrement reconstruit. La barre d’adresse complète les sites à partir de votre historique pendant la saisie, les onglets s’ouvrent à côté de la page qui les a ouverts, et Kagi est le moteur de recherche par défaut, avec 13 autres au choix ou tout moteur que vous ajoutez. L’app fonctionne désormais aussi sur ordinateur, en plus des téléphones et tablettes.
+Net Skip 2.0 a été entièrement reconstruit. La barre d’adresse complète les sites à partir de votre historique pendant la saisie, les onglets s’ouvrent à côté de la page qui les a ouverts, et DuckDuckGo est le moteur de recherche par défaut, avec 13 autres au choix ou tout moteur que vous ajoutez. L’app fonctionne désormais aussi sur ordinateur, en plus des téléphones et tablettes.
 """
 promo = "Tapez quelques lettres et Net Skip complète le site à partir de votre historique."

@@ -16,7 +16,7 @@ Escribe unas letras en la barra de direcciones y Net Skip completa el sitio a pa
 • Bloqueo de anuncios y rastreadores: Desactivado, Ligero, Fuerte o Agresivo, para todos los sitios o solo uno. Las listas de filtros vienen de sus autores y se actualizan solas.
 • Pestañas: una barra de pestañas en tableta y ordenador, y una cuadrícula de pestañas abiertas en el teléfono.
 • Los enlaces se abren en una pestaña nueva junto a la página de la que vienen. Reabrir pestaña cerrada recupera las últimas 25 que cerraste.
-• Busca con Kagi, DuckDuckGo, Google, Bing, Ecosia, Qwant, Startpage y otros, o con cualquier buscador que añadas por su dirección.
+• Busca con DuckDuckGo, Kagi, Google, Bing, Ecosia, Qwant, Startpage y otros, o con cualquier buscador que añadas por su dirección.
 • Los marcadores aparecen como Favoritos en la página de inicio, junto a los sitios que más visitas.
 • El historial se agrupa por días y se puede buscar. Borra la última hora, el día de hoy o todo.
 • Las pestañas privadas dejan sus páginas fuera de tu historial y olvidan sus cookies al cerrarlas.
@@ -28,6 +28,6 @@ Net Skip es de código abierto con la Mozilla Public License 2.0: github.com/Net
 """
 keywords = ["navegador", "web", "internet", "pestañas", "privado", "búsqueda", "kagi", "marcadores", "historial"]
 release-notes = """
-Net Skip 2.0 se ha rehecho desde cero. La barra de direcciones completa los sitios a partir de tu historial mientras escribes, las pestañas se abren junto a la página que las abrió y Kagi es el buscador predeterminado, con otros 13 para elegir o cualquiera que añadas. La app ahora funciona también en ordenadores, además de teléfonos y tabletas.
+Net Skip 2.0 se ha rehecho desde cero. La barra de direcciones completa los sitios a partir de tu historial mientras escribes, las pestañas se abren junto a la página que las abrió y DuckDuckGo es el buscador predeterminado, con otros 13 para elegir o cualquiera que añadas. La app ahora funciona también en ordenadores, además de teléfonos y tabletas.
 """
 promo = "Escribe unas letras y Net Skip completa el sitio a partir de tu historial."

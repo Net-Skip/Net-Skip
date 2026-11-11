@@ -36,18 +36,8 @@ pub struct SearchEngine {
     pub suggest: Option<(&'static str, SuggestionFormat)>,
 }
 
-/// Every built-in engine, in the order the settings list shows them. Kagi leads as the default.
+/// Every built-in engine, in the order the settings list shows them. DuckDuckGo leads as the default.
 pub const ENGINES: &[SearchEngine] = &[
-    SearchEngine {
-        id: "kagi",
-        name: "Kagi",
-        home: "https://kagi.com/",
-        query: "https://kagi.com/search?q={searchTerms}",
-        suggest: Some((
-            "https://kagi.com/api/autosuggest?q={searchTerms}",
-            SuggestionFormat::OpenSearch,
-        )),
-    },
     SearchEngine {
         id: "duckduckgo",
         name: "DuckDuckGo",
@@ -55,6 +45,16 @@ pub const ENGINES: &[SearchEngine] = &[
         query: "https://duckduckgo.com/?q={searchTerms}",
         suggest: Some((
             "https://duckduckgo.com/ac/?q={searchTerms}&type=list",
+            SuggestionFormat::OpenSearch,
+        )),
+    },
+    SearchEngine {
+        id: "kagi",
+        name: "Kagi",
+        home: "https://kagi.com/",
+        query: "https://kagi.com/search?q={searchTerms}",
+        suggest: Some((
+            "https://kagi.com/api/autosuggest?q={searchTerms}",
             SuggestionFormat::OpenSearch,
         )),
     },
@@ -169,7 +169,7 @@ pub const ENGINES: &[SearchEngine] = &[
 ];
 
 /// The engine a fresh install searches with.
-pub const DEFAULT_ENGINE: &str = "kagi";
+pub const DEFAULT_ENGINE: &str = "duckduckgo";
 
 /// The id the preferences store for a user-supplied template.
 pub const CUSTOM_ENGINE: &str = "custom";
@@ -258,9 +258,9 @@ pub fn engine(id: &str) -> Option<&'static SearchEngine> {
     ENGINES.iter().find(|e| e.id == id)
 }
 
-/// The default engine, Kagi.
+/// The default engine, DuckDuckGo.
 pub fn default_engine() -> &'static SearchEngine {
-    // The catalog's first entry is the default; the test `kagi_is_the_default` holds it there.
+    // The catalog's first entry is the default; the test `duckduckgo_is_the_default` holds it there.
     &ENGINES[0]
 }
 

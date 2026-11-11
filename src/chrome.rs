@@ -671,7 +671,22 @@ pub fn bookmark_current(browser: Browser) {
     if let Some(t) = browser.current_untracked()
         && t.has_page()
     {
-        library::toggle_bookmark(t.url_untracked(), t.title.get_untracked());
+        let url = t.url_untracked();
+        let reported = t.title.get_untracked();
+        let js = t.js;
+        // The title comes from the page itself: the engine's report of a new page's title can
+        // trail its address, and a page bookmarked just as it loaded took the title of the page
+        // before it. The tab's title stands in where the page cannot be asked.
+        day::task(async move {
+            let title = js
+                .eval("document.title")
+                .await
+                .ok()
+                .and_then(|json| serde_json::from_str::<String>(&json).ok())
+                .filter(|title| !title.trim().is_empty())
+                .unwrap_or(reported);
+            library::toggle_bookmark(url, title);
+        });
     }
 }
 

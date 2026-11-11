@@ -16,7 +16,7 @@ Digite algumas letras na barra de endereços e o Net Skip completa o site a part
 • Bloqueio de anúncios e rastreadores: Desativado, Leve, Forte ou Agressivo, para todos os sites ou só um. As listas de filtros vêm de quem as publica e se atualizam sozinhas.
 • Abas: uma barra de abas no tablet e no computador, e uma grade de abas abertas no celular.
 • Os links abrem em uma nova aba ao lado da página de onde vieram. Reabrir aba fechada traz de volta as últimas 25 que você fechou.
-• Pesquise com Kagi, DuckDuckGo, Google, Bing, Ecosia, Qwant, Startpage e outros, ou com qualquer mecanismo de busca que você adicionar pelo endereço.
+• Pesquise com DuckDuckGo, Kagi, Google, Bing, Ecosia, Qwant, Startpage e outros, ou com qualquer mecanismo de busca que você adicionar pelo endereço.
 • Os favoritos aparecem na página de início, ao lado dos sites que você mais visita.
 • O histórico é agrupado por dia e pode ser pesquisado. Limpe a última hora, o dia de hoje ou tudo.
 • As abas privadas deixam suas páginas fora do histórico e esquecem os cookies quando você as fecha.
@@ -28,6 +28,6 @@ O Net Skip é de código aberto, sob a Mozilla Public License 2.0: github.com/Ne
 """
 keywords = ["navegador", "web", "internet", "abas", "privado", "pesquisa", "kagi", "favoritos", "histórico"]
 release-notes = """
-O Net Skip 2.0 foi refeito do zero. A barra de endereços completa os sites a partir do seu histórico enquanto você digita, as abas abrem ao lado da página que as abriu e o Kagi é o mecanismo de busca padrão, com outros 13 para escolher ou qualquer um que você adicionar. O app agora funciona também em computadores, além de celulares e tablets.
+O Net Skip 2.0 foi refeito do zero. A barra de endereços completa os sites a partir do seu histórico enquanto você digita, as abas abrem ao lado da página que as abriu e o DuckDuckGo é o mecanismo de busca padrão, com outros 13 para escolher ou qualquer um que você adicionar. O app agora funciona também em computadores, além de celulares e tablets.
 """
 promo = "Digite algumas letras e o Net Skip completa o site a partir do seu histórico."

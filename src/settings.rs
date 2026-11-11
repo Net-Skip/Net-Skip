@@ -78,7 +78,7 @@ pub fn engine() -> Engine {
     Engine::resolve(&SEARCH_ENGINE.get(), &CUSTOM_SEARCH.get())
 }
 
-/// The engine's name for "Search Kagi", or the custom template's host.
+/// The engine's name for "Search DuckDuckGo", or the custom template's host.
 pub fn engine_name(engine: &Engine) -> String {
     match engine.name() {
         Some(name) => name.to_string(),

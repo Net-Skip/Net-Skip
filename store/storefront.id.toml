@@ -16,7 +16,7 @@ Ketik beberapa huruf di bilah alamat, dan Net Skip melengkapi situsnya dari riwa
 • Pemblokir iklan dan pelacak: Mati, Ringan, Kuat, atau Agresif, untuk semua situs atau satu situs saja. Daftar filter berasal dari penerbitnya dan diperbarui sendiri.
 • Tab: bilah tab di tablet atau komputer, dan kisi tab yang terbuka di ponsel.
 • Tautan terbuka di tab baru di samping halaman asalnya. Buka Lagi Tab Tertutup mengembalikan 25 tab terakhir yang Anda tutup.
-• Cari dengan Kagi, DuckDuckGo, Google, Bing, Ecosia, Qwant, Startpage, dan lainnya, atau dengan mesin pencari apa pun yang Anda tambahkan lewat alamatnya.
+• Cari dengan DuckDuckGo, Kagi, Google, Bing, Ecosia, Qwant, Startpage, dan lainnya, atau dengan mesin pencari apa pun yang Anda tambahkan lewat alamatnya.
 • Bookmark muncul sebagai Favorit di halaman awal, di samping situs yang paling sering Anda kunjungi.
 • Riwayat dikelompokkan per hari dan bisa dicari. Hapus satu jam terakhir, hari ini, atau semuanya.
 • Tab pribadi tidak menyimpan halamannya di riwayat dan melupakan cookie-nya saat Anda menutupnya.
@@ -28,6 +28,6 @@ Net Skip adalah sumber terbuka di bawah Mozilla Public License 2.0: github.com/N
 """
 keywords = ["peramban", "browser", "web", "internet", "tab", "privat", "pencarian", "kagi", "bookmark", "riwayat"]
 release-notes = """
-Net Skip 2.0 dibangun ulang dari awal. Bilah alamat melengkapi situs dari riwayat Anda selagi Anda mengetik, tab terbuka di samping halaman yang membukanya, dan Kagi menjadi mesin pencari bawaan, dengan 13 pilihan lain atau mesin apa pun yang Anda tambahkan. Aplikasi ini kini juga berjalan di komputer, selain di ponsel dan tablet.
+Net Skip 2.0 dibangun ulang dari awal. Bilah alamat melengkapi situs dari riwayat Anda selagi Anda mengetik, tab terbuka di samping halaman yang membukanya, dan DuckDuckGo menjadi mesin pencari bawaan, dengan 13 pilihan lain atau mesin apa pun yang Anda tambahkan. Aplikasi ini kini juga berjalan di komputer, selain di ponsel dan tablet.
 """
 promo = "Ketik beberapa huruf dan Net Skip melengkapi situsnya dari riwayat Anda."

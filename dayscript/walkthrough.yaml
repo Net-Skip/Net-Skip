@@ -50,6 +50,9 @@ flow:
   # Favorites on a new tab's start page.
   - menu: { id: menu_new_tab }
   - wait_for: { id: "start_page:2" }
+  # The keyboard slides up as the new tab's address bar takes focus. Nothing a step waits on
+  # follows that animation on Android, so the capture waits it out.
+  - pause: { secs: 1, only_on: [android-material] }
   - screenshot:
       name: favorites
       title: { en: "Favorites and frequently visited sites", ar: "المفضلة والمواقع الأكثر زيارة", de: "Favoriten und häufig besuchte Websites", es: "Favoritos y sitios visitados con frecuencia", fr: "Favoris et sites fréquents", hi: "पसंदीदा और अक्सर देखी गई साइटें", id: "Favorit dan situs yang sering dikunjungi", it: "Preferiti e siti visitati spesso", ja: "お気に入りとよく閲覧するサイト", ko: "즐겨찾기와 자주 방문한 사이트", pt-BR: "Favoritos e sites visitados com frequência", ru: "Избранное и часто посещаемые сайты", zh-CN: "收藏夹和常去网站" }
@@ -90,5 +93,5 @@ flow:
   - wait_for: { id: "pref:netskip.search.engine" }
   - screenshot:
       name: settings-search
-      title: { en: "Kagi, or the search engine you choose", ar: "‏Kagi، أو محرك البحث الذي تختاره", de: "Kagi oder die Suchmaschine deiner Wahl", es: "Kagi, o el buscador que elijas", fr: "Kagi, ou le moteur de recherche de votre choix", hi: "Kagi, या आपकी पसंद का खोज इंजन", id: "Kagi, atau mesin pencari pilihan Anda", it: "Kagi, o il motore di ricerca che preferisci", ja: "Kagi、またはお好みの検索エンジン", ko: "Kagi 또는 원하는 검색 엔진", pt-BR: "Kagi, ou o buscador que você preferir", ru: "Kagi или любая другая поисковая система", zh-CN: "Kagi，或你选择的搜索引擎" }
+      title: { en: "DuckDuckGo, or the search engine you choose", ar: "‏DuckDuckGo، أو محرك البحث الذي تختاره", de: "DuckDuckGo oder die Suchmaschine deiner Wahl", es: "DuckDuckGo, o el buscador que elijas", fr: "DuckDuckGo, ou le moteur de recherche de votre choix", hi: "DuckDuckGo, या आपकी पसंद का खोज इंजन", id: "DuckDuckGo, atau mesin pencari pilihan Anda", it: "DuckDuckGo, o il motore di ricerca che preferisci", ja: "DuckDuckGo、またはお好みの検索エンジン", ko: "DuckDuckGo 또는 원하는 검색 엔진", pt-BR: "DuckDuckGo, ou o buscador que você preferir", ru: "DuckDuckGo или любая другая поисковая система", zh-CN: "DuckDuckGo，或你选择的搜索引擎" }
   - toolbar: { item: settings_done, only_on: [ios, android, harmony] }

@@ -49,13 +49,13 @@ flow:
   - wait_for: { id: "suggestion:2" }
   - screenshot: suggestions
   - tap: { id: "suggestion:0" }
-  - web_eval: { id: "page:1", script: "document.title", text: "harbor – Kagi", timeout_secs: 30 }
+  - web_eval: { id: "page:1", script: "document.title", text: "harbor – DuckDuckGo", timeout_secs: 30 }
   - assert_value: { id: address, value: "harbor" }
   # A leading "?" searches for an address instead of loading it.
   - focus: { id: address }
   - input: { id: address, text: "?example.com" }
   - submit: { id: address }
-  - web_eval: { id: "page:1", script: "document.title", text: "example.com – Kagi", timeout_secs: 30 }
+  - web_eval: { id: "page:1", script: "document.title", text: "example.com – DuckDuckGo", timeout_secs: 30 }
   # A bare word searches; an address with a path loads.
   - focus: { id: address }
   - input: { id: address, text: "example.net/about" }

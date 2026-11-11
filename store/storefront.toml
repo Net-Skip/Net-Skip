@@ -14,7 +14,7 @@ contact-last-name = "Fair"
 contact-phone = "3107337836"
 review-notes = """
 Net Skip is a web browser and needs no sign-in. Type an address or a search in the address bar
-and press Go. Searches go to Kagi by default; Settings > Search lists the other engines. Tap the
+and press Go. Searches go to DuckDuckGo by default; Settings > Search lists the other engines. Tap the
 tabs button to see open tabs and open new ones, and the book button for bookmarks and history.
 """
 
@@ -33,7 +33,7 @@ Type a few letters in the address bar and Net Skip completes the site from your 
 • Ad and tracker blocking, Off, Light, Strong or Aggressive, set for every site or just one. The filter lists come from their publishers and update on their own.
 • Tabs: a tab strip on a tablet or computer, and a grid of open tabs on a phone.
 • Links open in a new tab beside the page they came from. Reopen Closed Tab brings back the last 25 you closed.
-• Search with Kagi, DuckDuckGo, Google, Bing, Ecosia, Qwant, Startpage, and more, or any search engine you add by its address.
+• Search with DuckDuckGo, Kagi, Google, Bing, Ecosia, Qwant, Startpage, and more, or any search engine you add by its address.
 • Bookmarks appear as Favorites on the start page, beside the sites you visit most.
 • History is grouped by day and searchable. Clear the last hour, today, or everything.
 • Private tabs keep their pages out of your history and forget their cookies when you close them.
@@ -45,7 +45,7 @@ Net Skip is open source under the Mozilla Public License 2.0: github.com/Net-Ski
 """
 keywords = ["browser", "web", "internet", "tabs", "private", "search", "kagi", "bookmarks", "history"]
 release-notes = """
-Net Skip 2.0 is rebuilt from the ground up. The address bar completes sites from your history as you type, tabs open beside the page that opened them, and Kagi is the default search engine, with 13 others to choose from or any engine you add. The app now runs on computers as well as phones and tablets.
+Net Skip 2.0 is rebuilt from the ground up. The address bar completes sites from your history as you type, tabs open beside the page that opened them, and DuckDuckGo is the default search engine, with 13 others to choose from or any engine you add. The app now runs on computers as well as phones and tablets.
 """
 promo = "Type a few letters and Net Skip completes the site from your history."
 marketing-url = "https://net-skip.github.io/Net-Skip/"
@@ -55,6 +55,11 @@ privacy-url = "https://appfair.org/privacy/"
 # The walkthrough captures (dayscript/walkthrough.yaml) each listing shows, in order.
 [storefront.ios-uikit.screenshots]
 default = ["page", "ads-blocked", "inline-completion", "tab-grid", "favorites", "history", "settings-search"]
+# The iPad's tab overview draws its page snapshots part-way, so its capture stays out until that
+# is fixed.
+ipad = ["page", "ads-blocked", "inline-completion", "favorites", "history", "settings-search"]
 
 [storefront.android-material.screenshots]
 default = ["page", "ads-blocked", "inline-completion", "tab-grid", "favorites", "history", "settings-search"]
+# The tablet's tab overview draws its page snapshots part-way, as the iPad's does.
+tablet = ["page", "ads-blocked", "inline-completion", "favorites", "history", "settings-search"]

@@ -16,7 +16,7 @@ Tippe ein paar Buchstaben in die Adressleiste, und Net Skip ergänzt die Website
 • Werbe- und Trackerblocker in den Stufen Aus, Leicht, Stark und Aggressiv, für alle Websites oder nur eine. Die Filterlisten kommen von ihren Herausgebern und aktualisieren sich selbst.
 • Tabs: eine Tableiste auf Tablet und Computer, eine Übersicht der offenen Tabs auf dem Smartphone.
 • Links öffnen sich in einem neuen Tab neben der Seite, von der sie kommen. „Geschlossenen Tab wieder öffnen“ holt die letzten 25 geschlossenen Tabs zurück.
-• Suche mit Kagi, DuckDuckGo, Google, Bing, Ecosia, Qwant, Startpage und weiteren, oder mit jeder Suchmaschine, die du über ihre Adresse hinzufügst.
+• Suche mit DuckDuckGo, Kagi, Google, Bing, Ecosia, Qwant, Startpage und weiteren, oder mit jeder Suchmaschine, die du über ihre Adresse hinzufügst.
 • Lesezeichen erscheinen als Favoriten auf der Startseite, neben den Websites, die du am häufigsten besuchst.
 • Der Verlauf ist nach Tagen gruppiert und durchsuchbar. Lösche die letzte Stunde, den heutigen Tag oder alles.
 • Private Tabs halten ihre Seiten aus deinem Verlauf heraus und vergessen ihre Cookies, sobald du sie schließt.
@@ -28,6 +28,6 @@ Net Skip ist Open Source unter der Mozilla Public License 2.0: github.com/Net-Sk
 """
 keywords = ["Browser", "Webbrowser", "Internet", "Tabs", "privat", "Suche", "Kagi", "Lesezeichen", "Verlauf"]
 release-notes = """
-Net Skip 2.0 ist von Grund auf neu gebaut. Die Adressleiste ergänzt Websites beim Tippen aus deinem Verlauf, Tabs öffnen sich neben der Seite, die sie geöffnet hat, und Kagi ist die Standardsuchmaschine, mit 13 weiteren zur Auswahl oder jeder, die du selbst hinzufügst. Die App läuft jetzt auch auf Computern, nicht nur auf Smartphones und Tablets.
+Net Skip 2.0 ist von Grund auf neu gebaut. Die Adressleiste ergänzt Websites beim Tippen aus deinem Verlauf, Tabs öffnen sich neben der Seite, die sie geöffnet hat, und DuckDuckGo ist die Standardsuchmaschine, mit 13 weiteren zur Auswahl oder jeder, die du selbst hinzufügst. Die App läuft jetzt auch auf Computern, nicht nur auf Smartphones und Tablets.
 """
 promo = "Tippe ein paar Buchstaben, und Net Skip ergänzt die Website aus deinem Verlauf."

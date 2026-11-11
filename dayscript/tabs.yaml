@@ -16,6 +16,10 @@ flow:
   # comes from the menu and the address bar.
   - web_eval: { id: "page:1", script: "document.getElementById('link-org').click(), true", text: "true", only_on: [macos-appkit, macos-gtk, linux-gtk, ios] }
   - menu: { id: menu_new_tab, skip_on: [macos-appkit, macos-gtk, linux-gtk, ios] }
+  # The new tab's start page shows, not the page of the tab it was opened from. Android reads
+  # whether the view is on screen; the other platforms here report no native visibility.
+  - wait_for: { id: "start_page:2", skip_on: [macos-appkit, macos-gtk, linux-gtk, ios] }
+  - assert_hidden: { id: "page:1", only_on: [android] }
   - focus: { id: address, skip_on: [macos-appkit, macos-gtk, linux-gtk, ios] }
   - input: { id: address, text: "example.org", skip_on: [macos-appkit, macos-gtk, linux-gtk, ios] }
   - submit: { id: address, skip_on: [macos-appkit, macos-gtk, linux-gtk, ios] }

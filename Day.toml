@@ -14,9 +14,9 @@ id = "org.appfair.app.NetSkip"
 title = "Net Skip"
 # Release files keep this name on every platform, whatever the home-screen title.
 artifact = "net-skip"
-# The Skip-based Net Skip shipped build 242 (version 1.5.5); the stores refuse a build number
-# they have seen.
-build = 243
+# The Skip-based Net Skip shipped build 242 (version 1.5.5), and 2.0's first upload was 243; the
+# stores refuse a build number they have seen.
+build = 244
 targets = ["macos-appkit", "ios-uikit", "android-material", "linux-gtk", "linux-qt", "windows-winui", "harmony-arkui"]
 
 # The window's size and minimum size in points, for every platform with resizable windows.
