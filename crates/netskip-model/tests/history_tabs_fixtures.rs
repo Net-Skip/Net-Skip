@@ -412,3 +412,45 @@ fn load_progress_only_moves_forward() {
     );
     assert_eq!(LoadProgress::default().report(true, 7.0).value, 1.0);
 }
+
+#[test]
+fn the_views_used_longest_ago_are_unloaded_and_never_the_selected_one() {
+    use netskip_model::tabs::views_to_unload;
+    let views = [(1u64, 50), (2, 10), (3, 40), (4, 20), (5, 30)];
+    // Five views, three may stay: the two used longest ago go.
+    assert_eq!(views_to_unload(&views, Some(&1), 3), vec![2, 4]);
+    // The selected tab stays even when it is the oldest.
+    assert_eq!(views_to_unload(&views, Some(&2), 3), vec![4, 5]);
+    // Memory pressure keeps only the selected tab.
+    assert_eq!(views_to_unload(&views, Some(&3), 1), vec![2, 4, 5, 1]);
+    assert!(views_to_unload(&views, Some(&1), 5).is_empty());
+    assert!(views_to_unload(&views, Some(&1), 9).is_empty());
+}
+
+#[test]
+fn byte_counts_read_as_sizes() {
+    use netskip_model::tabs::format_bytes;
+    assert_eq!(format_bytes(0), "0 bytes");
+    assert_eq!(format_bytes(999), "999 bytes");
+    assert_eq!(format_bytes(1_500), "1.5 KB");
+    assert_eq!(format_bytes(20_400_000), "20 MB");
+    assert_eq!(format_bytes(999_600), "1.0 MB");
+    assert_eq!(format_bytes(3_200_000_000), "3.2 GB");
+}
+
+#[test]
+fn the_loopback_is_never_a_fixture() {
+    let urls = netskip_model::fixtures::FixtureUrls::new("https://day-resource.invalid/1/");
+    for url in [
+        "http://127.0.0.1:9/",
+        "http://localhost:8080/a?b",
+        "https://127.0.0.1/",
+    ] {
+        assert_eq!(urls.to_physical(url), url);
+        assert_eq!(urls.to_logical(url), url);
+    }
+    assert_ne!(
+        urls.to_physical("https://127.example/"),
+        "https://127.example/"
+    );
+}

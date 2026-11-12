@@ -23,5 +23,6 @@ flow:
   - assert_value: { id: address, value: "ferry" }
   # Back to the default for the next run.
   - navigate: { route: "settings/search" }
+  - wait_for: { id: "pref:netskip.search.engine" }
   - select: { id: "pref:netskip.search.engine", index: 0 }
   - toolbar: { item: settings_done, only_on: [ios, android, harmony] }

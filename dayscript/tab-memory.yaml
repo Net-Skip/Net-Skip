@@ -1,0 +1,77 @@
+# Copyright © The Daybrite Project
+# SPDX-License-Identifier: MPL-2.0
+#
+# Tabs out of memory (NETSKIP_FIXTURES=1): a phone or tablet keeps the web views of the eight
+# tabs used last. The ninth tab lets the first one's page go; coming back to it loads the page
+# again, scrolled to where it was. A computer keeps far more, so this runs on the touch platforms.
+name: tab-memory
+description: Open more tabs than stay in memory and return to the first.
+flow:
+  - wait_for: { id: address }
+  - focus: { id: address }
+  - input: { id: address, text: "https://harbor.example/stories/lighthouse-coast.html" }
+  - submit: { id: address }
+  - web_eval: { id: "page:1", script: "document.title.startsWith('The Lighthouse Coast') ? 'ok' : document.title", text: "ok", timeout_secs: 30 }
+  # Read part of the way down the long story.
+  - web_eval: { id: "page:1", script: "window.scrollTo(0, 900), 'scrolled'", text: "scrolled" }
+  - web_eval: { id: "page:1", script: "window.scrollY > 800 ? 'down' : String(window.scrollY)", text: "down", timeout_secs: 10 }
+  - pause: { secs: 1 }
+  - menu: { id: menu_new_tab, only_on: [ios, android, harmony] }
+  - wait_for: { id: "start_page:2", only_on: [ios, android, harmony] }
+  - focus: { id: address, only_on: [ios, android, harmony] }
+  - input: { id: address, text: "example.com/?tab=2", only_on: [ios, android, harmony] }
+  - submit: { id: address, only_on: [ios, android, harmony] }
+  - web_eval: { id: "page:2", script: "document.title", text: "Example Domain", timeout_secs: 30, only_on: [ios, android, harmony] }
+  - menu: { id: menu_new_tab, only_on: [ios, android, harmony] }
+  - wait_for: { id: "start_page:3", only_on: [ios, android, harmony] }
+  - focus: { id: address, only_on: [ios, android, harmony] }
+  - input: { id: address, text: "example.com/?tab=3", only_on: [ios, android, harmony] }
+  - submit: { id: address, only_on: [ios, android, harmony] }
+  - web_eval: { id: "page:3", script: "document.title", text: "Example Domain", timeout_secs: 30, only_on: [ios, android, harmony] }
+  - menu: { id: menu_new_tab, only_on: [ios, android, harmony] }
+  - wait_for: { id: "start_page:4", only_on: [ios, android, harmony] }
+  - focus: { id: address, only_on: [ios, android, harmony] }
+  - input: { id: address, text: "example.com/?tab=4", only_on: [ios, android, harmony] }
+  - submit: { id: address, only_on: [ios, android, harmony] }
+  - web_eval: { id: "page:4", script: "document.title", text: "Example Domain", timeout_secs: 30, only_on: [ios, android, harmony] }
+  - menu: { id: menu_new_tab, only_on: [ios, android, harmony] }
+  - wait_for: { id: "start_page:5", only_on: [ios, android, harmony] }
+  - focus: { id: address, only_on: [ios, android, harmony] }
+  - input: { id: address, text: "example.com/?tab=5", only_on: [ios, android, harmony] }
+  - submit: { id: address, only_on: [ios, android, harmony] }
+  - web_eval: { id: "page:5", script: "document.title", text: "Example Domain", timeout_secs: 30, only_on: [ios, android, harmony] }
+  - menu: { id: menu_new_tab, only_on: [ios, android, harmony] }
+  - wait_for: { id: "start_page:6", only_on: [ios, android, harmony] }
+  - focus: { id: address, only_on: [ios, android, harmony] }
+  - input: { id: address, text: "example.com/?tab=6", only_on: [ios, android, harmony] }
+  - submit: { id: address, only_on: [ios, android, harmony] }
+  - web_eval: { id: "page:6", script: "document.title", text: "Example Domain", timeout_secs: 30, only_on: [ios, android, harmony] }
+  - menu: { id: menu_new_tab, only_on: [ios, android, harmony] }
+  - wait_for: { id: "start_page:7", only_on: [ios, android, harmony] }
+  - focus: { id: address, only_on: [ios, android, harmony] }
+  - input: { id: address, text: "example.com/?tab=7", only_on: [ios, android, harmony] }
+  - submit: { id: address, only_on: [ios, android, harmony] }
+  - web_eval: { id: "page:7", script: "document.title", text: "Example Domain", timeout_secs: 30, only_on: [ios, android, harmony] }
+  - menu: { id: menu_new_tab, only_on: [ios, android, harmony] }
+  - wait_for: { id: "start_page:8", only_on: [ios, android, harmony] }
+  - focus: { id: address, only_on: [ios, android, harmony] }
+  - input: { id: address, text: "example.com/?tab=8", only_on: [ios, android, harmony] }
+  - submit: { id: address, only_on: [ios, android, harmony] }
+  - web_eval: { id: "page:8", script: "document.title", text: "Example Domain", timeout_secs: 30, only_on: [ios, android, harmony] }
+  - menu: { id: menu_new_tab, only_on: [ios, android, harmony] }
+  - wait_for: { id: "start_page:9", only_on: [ios, android, harmony] }
+  - focus: { id: address, only_on: [ios, android, harmony] }
+  - input: { id: address, text: "example.com/?tab=9", only_on: [ios, android, harmony] }
+  - submit: { id: address, only_on: [ios, android, harmony] }
+  - web_eval: { id: "page:9", script: "document.title", text: "Example Domain", timeout_secs: 30, only_on: [ios, android, harmony] }
+  # Nine tabs, eight web views: the first tab's is gone, the second's is not.
+  - assert_missing: { id: "page:1", only_on: [ios, android, harmony] }
+  - assert_visible: { id: "page:9", only_on: [ios, android, harmony] }
+  - web_eval: { id: "page:2", script: "document.title", text: "Example Domain", only_on: [ios, android, harmony] }
+  # Next Tab from the last tab is the first: its page loads again, where it was being read.
+  - menu: { id: menu_next_tab, only_on: [ios, android, harmony] }
+  - web_eval: { id: "page:1", script: "document.title.startsWith('The Lighthouse Coast') ? 'ok' : document.title", text: "ok", timeout_secs: 30, only_on: [ios, android, harmony] }
+  - web_eval: { id: "page:1", script: "window.scrollY > 600 ? 'restored' : String(window.scrollY)", text: "restored", timeout_secs: 15, only_on: [ios, android, harmony] }
+  - assert_value: { id: address, value: "harbor.example", only_on: [ios, android, harmony] }
+  # Making room for it let go of the tab used longest ago, which is now the second.
+  - assert_missing: { id: "page:2", only_on: [ios, android, harmony] }

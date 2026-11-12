@@ -20,10 +20,11 @@ use crate::store::{self, Bookmark, HistoryPage};
 use crate::{res, settings};
 
 day::routes! {
-    /// The library's two lists.
+    /// The library's lists.
     pub enum Pane {
         Bookmarks => "bookmarks",
         History => "history",
+        Downloads => "downloads",
     }
 }
 
@@ -297,6 +298,7 @@ pub fn library_page(browser: Browser, pane: Pane) -> impl Piece {
     let selected = Signal::new(match pane {
         Pane::Bookmarks => 0usize,
         Pane::History => 1,
+        Pane::Downloads => 2,
     });
     let query = Signal::new(String::new());
     let editing = Signal::new(false);
@@ -306,17 +308,23 @@ pub fn library_page(browser: Browser, pane: Pane) -> impl Piece {
         move || selected.get(),
         move |pane| match pane {
             0 => bookmarks_list(browser, query, editing).any(),
-            _ => history_list(browser, query).any(),
+            1 => history_list(browser, query).any(),
+            _ => crate::downloads::downloads_list(query).any(),
         },
     )
     .grow(Dimension::Both);
     let prompt = move || match selected.get() {
         0 => res::str::search_bookmarks().format(),
-        _ => res::str::search_history().format(),
+        1 => res::str::search_history().format(),
+        _ => res::str::search_downloads().format(),
     };
     let switcher = picker(
         selected,
-        [(0usize, res::str::bookmarks()), (1, res::str::history())],
+        [
+            (0usize, res::str::bookmarks()),
+            (1, res::str::history()),
+            (2, res::str::downloads()),
+        ],
     )
     .segmented()
     .grow(Dimension::Width)
@@ -348,6 +356,15 @@ pub fn library_page(browser: Browser, pane: Pane) -> impl Piece {
                             .id(day::id!(clear_history))
                     },
                 ),
+                when(
+                    move || selected.get() == 2,
+                    || {
+                        button(res::str::clear_downloads())
+                            .enabled(crate::downloads::any_finished)
+                            .action(crate::downloads::clear)
+                            .id(day::id!(clear_downloads))
+                    },
+                ),
                 button(res::str::done())
                     .prominent()
                     .action(close)
@@ -376,7 +393,8 @@ pub fn library_page(browser: Browser, pane: Pane) -> impl Piece {
     nav_stack(path, root.id(day::id!(library_page)))
         .title(move || match selected.get() {
             0 => res::str::bookmarks().format(),
-            _ => res::str::history().format(),
+            1 => res::str::history().format(),
+            _ => res::str::downloads().format(),
         })
         .toolbar(move || {
             if !TOUCH {
@@ -399,11 +417,18 @@ pub fn library_page(browser: Browser, pane: Pane) -> impl Piece {
                         .placement(ToolbarPlacement::Bottom)
                         .action(move || editing.update(|e| *e = !*e)),
                 );
-            } else {
+            } else if selected.get() == 1 {
                 items.push(
                     toolbar_button(day::id!(clear_history), res::str::clear_history_button())
                         .placement(ToolbarPlacement::Bottom)
                         .action(choose_clear_range),
+                );
+            } else {
+                items.push(
+                    toolbar_button(day::id!(clear_downloads), res::str::clear_downloads())
+                        .placement(ToolbarPlacement::Bottom)
+                        .enabled(crate::downloads::any_finished)
+                        .action(crate::downloads::clear),
                 );
             }
             items

@@ -228,6 +228,55 @@ clear_website_data_confirm = Remove all cookies and website data? You will be si
 clear_bookmarks = Delete All Bookmarks
 clear_bookmarks_confirm = Delete every bookmark? This can't be undone.
 
+## Downloads, links to other apps, sign-in and error pages
+downloads = Downloads
+download_confirm = Download “{ $name }”?
+download = Download
+search_downloads = Search downloads
+downloads_empty = Files you download appear here.
+download_progress = { $received } of { $total }
+download_failed = Failed
+download_canceled = Canceled
+clear_downloads = Clear
+remove_download = Remove from List
+open_app_title = Open in another app?
+open_app_message = This link opens outside Net Skip: { $url }
+open = Open
+sign_in_title = Sign In
+sign_in_message = “{ $host }” asks for a name and password.
+sign_in_failed = That name or password was not accepted.
+user_name = User Name
+password = Password
+sign_in = Sign In
+error_offline_title = You’re Offline
+error_offline_message = Connect to the internet, then try again.
+error_host_title = Site Not Found
+error_host_message = Net Skip can’t find the server “{ $host }”.
+error_timeout_title = The Site Took Too Long to Respond
+error_timeout_message = “{ $host }” didn’t answer in time.
+error_connection_title = Can’t Connect
+error_connection_message = Net Skip couldn’t connect to “{ $host }”.
+error_secure_title = Can’t Connect Securely
+error_secure_message = Net Skip couldn’t make a secure connection to “{ $host }”.
+error_certificate_title = This Connection Is Not Private
+error_certificate_message = “{ $host }” has a security certificate that is not trusted. Someone may be impersonating the site to steal your information.
+error_crashed_title = This Page Stopped Working
+error_crashed_message = A problem with the page made it close.
+error_other_title = This Page Can’t Be Opened
+error_other_message = Net Skip couldn’t open the page at “{ $host }”.
+try_again = Try Again
+visit_anyway = Visit Website Anyway
+visit_anyway_title = Visit this website?
+visit_anyway_message = Your connection to “{ $host }” will not be private.
+
+## The user agent setting
+settings_websites = Websites
+user_agent = User Agent
+user_agent_caption = What Net Skip tells websites it is. Pages load again when this changes.
+user_agent_default = Default
+user_agent_engine = Embedded Web View
+user_agent_custom = Custom User Agent
+
 ## Permission prompts
 # What the system shows when a web page asks for a device feature (Day.toml [permissions]).
 permission_camera = Net Skip needs access to your camera so that websites you visit can use it for video calls, scanning QR codes, and capturing photos when you grant them permission.

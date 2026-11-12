@@ -1,0 +1,79 @@
+# Copyright © The Daybrite Project
+# SPDX-License-Identifier: MPL-2.0
+#
+# Real HTTP, which the fixture pages cannot stand in for: downloads, HTTP sign-in and a
+# self-signed certificate, against tests/server/duties_server.py. Start the server first; on an
+# Android emulator also run `adb reverse tcp:8765 tcp:8765` and `adb reverse tcp:8766 tcp:8766`.
+# Run it with NETSKIP_FIXTURES=1, which saves downloads to a folder emptied at every launch.
+name: server
+description: Downloads, sign-in and a self-signed certificate against the local duties server.
+flow:
+  - wait_for: { id: address }
+  - focus: { id: address }
+  - input: { id: address, text: "http://127.0.0.1:8765/" }
+  - submit: { id: address }
+  - web_eval: { id: "page:1", script: "document.title", text: "Duties server", timeout_secs: 30 }
+  # An attachment.
+  - web_eval: { id: "page:1", script: "document.getElementById('pdf').click(), 'clicked'", text: "clicked" }
+  - assert_presented: {}
+  - respond: { button: 1 }
+  - wait_for: { id: downloads_list }
+  - assert_text: { id: "download_status:report.pdf", text: "193 bytes", timeout_secs: 20 }
+  - toolbar: { item: library_done, only_on: [ios, android] }
+  - tap: { id: library_done, only_on: [macos-appkit] }
+  # A type no page shows.
+  - web_eval: { id: "page:1", script: "document.getElementById('zip').click(), 'clicked'", text: "clicked" }
+  - assert_presented: {}
+  - respond: { button: 1 }
+  - wait_for: { id: downloads_list }
+  - assert_text: { id: "download_status:archive.zip", text: "22 bytes", timeout_secs: 20 }
+  - toolbar: { item: library_done, only_on: [ios, android] }
+  - tap: { id: library_done, only_on: [macos-appkit] }
+  # The download attribute names the file.
+  - web_eval: { id: "page:1", script: "document.getElementById('attr').click(), 'clicked'", text: "clicked" }
+  - assert_presented: {}
+  - respond: { button: 1 }
+  - wait_for: { id: downloads_list }
+  - assert_text: { id: "download_status:renamed.txt", text: "38 bytes", timeout_secs: 20 }
+  - toolbar: { item: library_done, only_on: [ios, android] }
+  - tap: { id: library_done, only_on: [macos-appkit] }
+  # A slow one, canceled part-way.
+  - web_eval: { id: "page:1", script: "document.getElementById('slow').click(), 'clicked'", text: "clicked" }
+  - assert_presented: {}
+  - respond: { button: 1 }
+  - wait_for: { id: downloads_list }
+  - pause: { secs: 2 }
+  - screenshot: { name: slow-running }
+  - tap: { id: "download_dismiss:slow.bin" }
+  - assert_text: { id: "download_status:slow.bin", key: download_canceled, timeout_secs: 10 }
+  - screenshot: { name: slow-canceled }
+  - toolbar: { item: library_done, only_on: [ios, android] }
+  - tap: { id: library_done, only_on: [macos-appkit] }
+  # The page is still the one the downloads started from.
+  - web_eval: { id: "page:1", script: "document.title", text: "Duties server" }
+  # HTTP sign-in: a wrong password asks again, the right one loads the page.
+  - focus: { id: address }
+  - input: { id: address, text: "http://127.0.0.1:8765/auth" }
+  - submit: { id: address }
+  - wait_for: { id: sign_in_page, timeout_secs: 20 }
+  - input: { id: sign_in_user, text: "ada" }
+  - input: { id: sign_in_password, text: "wrong" }
+  - tap: { id: sign_in_submit }
+  - wait_for: { id: sign_in_failed, timeout_secs: 20 }
+  - screenshot: { name: sign-in }
+  - input: { id: sign_in_user, text: "ada" }
+  - input: { id: sign_in_password, text: "lovelace" }
+  - tap: { id: sign_in_submit }
+  - web_eval: { id: "page:1", script: "document.getElementById('who').textContent", text: "Signed in as ada", timeout_secs: 20 }
+  # A certificate nobody vouches for: the error page, then visiting anyway.
+  - focus: { id: address }
+  - input: { id: address, text: "https://127.0.0.1:8766/" }
+  - submit: { id: address }
+  - wait_for: { id: "error_page:1", timeout_secs: 30 }
+  - assert_text: { id: "error_title:1", key: error_certificate_title }
+  - screenshot: { name: certificate }
+  - tap: { id: "error_visit_anyway:1" }
+  - assert_presented: {}
+  - respond: { button: 1 }
+  - web_eval: { id: "page:1", script: "document.title", text: "Duties server", timeout_secs: 30 }
+  - assert_missing: { id: "error_page:1" }

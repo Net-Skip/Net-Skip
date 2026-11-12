@@ -1,0 +1,5 @@
+Port Avelin tide table
+High water 02:05 4.1 m
+Low water  08:22 0.9 m
+High water 14:20 4.3 m
+Low water  20:41 0.7 m

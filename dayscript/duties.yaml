@@ -1,0 +1,72 @@
+# Copyright © The Daybrite Project
+# SPDX-License-Identifier: MPL-2.0
+#
+# What a page asks of its browser (NETSKIP_FIXTURES=1): script dialogs, a download, a page that
+# does not load, and a link to another app. These are the app's to answer on WebKit and on
+# Android's WebView; the other engines show dialogs of their own and are not asked here.
+name: duties
+description: Answer a page's dialogs, download a file, see the error page, and decline another app.
+flow:
+  - wait_for: { id: address }
+  - focus: { id: address }
+  - input: { id: address, text: "https://files.example/" }
+  - submit: { id: address }
+  - web_eval: { id: "page:1", script: "document.title.startsWith('Dropbay') ? 'ok' : document.title", text: "ok", timeout_secs: 30 }
+  # alert(): the dialog names the site, and the page goes on once it is closed.
+  - web_eval: { id: "page:1", script: "document.getElementById('alert').click(), 'clicked'", text: "clicked", only_on: [ios, android, macos-appkit] }
+  - assert_presented: { title: "files.example", only_on: [ios, android, macos-appkit] }
+  - respond: { button: 0, only_on: [ios, android, macos-appkit] }
+  - web_eval: { id: "page:1", script: "document.getElementById('result').textContent", text: "alert closed", timeout_secs: 10, only_on: [ios, android, macos-appkit] }
+  # confirm(): OK is true, Cancel is false.
+  - web_eval: { id: "page:1", script: "document.getElementById('confirm').click(), 'clicked'", text: "clicked", only_on: [ios, android, macos-appkit] }
+  - assert_presented: { title: "files.example", only_on: [ios, android, macos-appkit] }
+  - respond: { button: 1, only_on: [ios, android, macos-appkit] }
+  - web_eval: { id: "page:1", script: "document.getElementById('result').textContent", text: "confirm true", timeout_secs: 10, only_on: [ios, android, macos-appkit] }
+  - web_eval: { id: "page:1", script: "document.getElementById('confirm').click(), 'clicked'", text: "clicked", only_on: [ios, android, macos-appkit] }
+  - assert_presented: { title: "files.example", only_on: [ios, android, macos-appkit] }
+  - respond: { dismiss: true, only_on: [ios, android, macos-appkit] }
+  - web_eval: { id: "page:1", script: "document.getElementById('result').textContent", text: "confirm false", timeout_secs: 10, only_on: [ios, android, macos-appkit] }
+  # prompt(): the text typed comes back to the page.
+  - web_eval: { id: "page:1", script: "document.getElementById('prompt').click(), 'clicked'", text: "clicked", only_on: [ios, android, macos-appkit] }
+  - assert_presented: { title: "files.example", only_on: [ios, android, macos-appkit] }
+  - respond: { text: "Petrel", only_on: [ios, android, macos-appkit] }
+  - web_eval: { id: "page:1", script: "document.getElementById('result').textContent", text: "prompt Petrel", timeout_secs: 10, only_on: [ios, android, macos-appkit] }
+  # A file served as an attachment: the browser asks, saves it, and lists it in Downloads.
+  - web_eval: { id: "page:1", script: "document.getElementById('download').click(), 'clicked'", text: "clicked", only_on: [ios, android, macos-appkit] }
+  - assert_presented: { only_on: [ios, android, macos-appkit] }
+  - respond: { button: 1, only_on: [ios, android, macos-appkit] }
+  - wait_for: { id: downloads_list, only_on: [ios, android, macos-appkit] }
+  - assert_text: { id: "download_status:tide-table.txt", text: "115 bytes", timeout_secs: 20, only_on: [ios, android, macos-appkit] }
+  - screenshot: { name: downloads, only_on: [ios, android, macos-appkit] }
+  - tap: { id: "download_dismiss:tide-table.txt", only_on: [ios, android, macos-appkit] }
+  - wait_for: { id: downloads_empty, only_on: [ios, android, macos-appkit] }
+  - toolbar: { item: library_done, only_on: [ios, android] }
+  - tap: { id: library_done, only_on: [macos-appkit] }
+  # A file the page makes itself (a blob: address), named by its link's download attribute.
+  - web_eval: { id: "page:1", script: "document.getElementById('download-blob').click(), 'clicked'", text: "clicked", only_on: [ios, android, macos-appkit] }
+  - assert_presented: { only_on: [ios, android, macos-appkit] }
+  - respond: { button: 1, only_on: [ios, android, macos-appkit] }
+  - wait_for: { id: downloads_list, only_on: [ios, android, macos-appkit] }
+  - assert_text: { id: "download_status:mooring-notes.txt", text: "35 bytes", timeout_secs: 20, only_on: [ios, android, macos-appkit] }
+  - toolbar: { item: library_done, only_on: [ios, android] }
+  - tap: { id: library_done, only_on: [macos-appkit] }
+  # A link to another app asks first, and declining stays on the page.
+  - web_eval: { id: "page:1", script: "document.getElementById('app').click(), 'clicked'", text: "clicked", only_on: [ios, android, macos-appkit] }
+  - assert_presented: { only_on: [ios, android, macos-appkit] }
+  - respond: { dismiss: true, only_on: [ios, android, macos-appkit] }
+  - web_eval: { id: "page:1", script: "document.title.startsWith('Dropbay') ? 'ok' : document.title", text: "ok", only_on: [ios, android, macos-appkit] }
+  # A server that is not there: the error page says so, and Try Again tries again.
+  - focus: { id: address }
+  - input: { id: address, text: "http://127.0.0.1:59321/" }
+  - submit: { id: address }
+  - wait_for: { id: "error_page:1", timeout_secs: 30, only_on: [ios, android, macos-appkit] }
+  - assert_text: { id: "error_title:1", key: error_connection_title, only_on: [ios, android, macos-appkit] }
+  - screenshot: { name: error-page, only_on: [ios, android, macos-appkit] }
+  - tap: { id: "error_retry:1", only_on: [ios, android, macos-appkit] }
+  - wait_for: { id: "error_page:1", timeout_secs: 30, only_on: [ios, android, macos-appkit] }
+  # A page that loads takes the error page away.
+  - focus: { id: address }
+  - input: { id: address, text: "https://files.example/" }
+  - submit: { id: address }
+  - web_eval: { id: "page:1", script: "document.title.startsWith('Dropbay') ? 'ok' : document.title", text: "ok", timeout_secs: 30 }
+  - assert_missing: { id: "error_page:1" }

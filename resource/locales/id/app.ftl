@@ -220,6 +220,55 @@ clear_website_data_confirm = Hapus semua cookie dan data situs web? Anda akan ke
 clear_bookmarks = Hapus Semua Bookmark
 clear_bookmarks_confirm = Hapus semua bookmark? Tindakan ini tidak dapat dibatalkan.
 
+## Downloads, links to other apps, sign-in and error pages
+downloads = Unduhan
+download_confirm = Unduh “{ $name }”?
+download = Unduh
+search_downloads = Cari unduhan
+downloads_empty = File yang Anda unduh muncul di sini.
+download_progress = { $received } dari { $total }
+download_failed = Gagal
+download_canceled = Dibatalkan
+clear_downloads = Bersihkan
+remove_download = Hapus dari Daftar
+open_app_title = Buka di app lain?
+open_app_message = Tautan ini terbuka di luar Net Skip: { $url }
+open = Buka
+sign_in_title = Masuk
+sign_in_message = “{ $host }” meminta nama dan kata sandi.
+sign_in_failed = Nama atau kata sandi itu tidak diterima.
+user_name = Nama Pengguna
+password = Kata Sandi
+sign_in = Masuk
+error_offline_title = Anda Sedang Offline
+error_offline_message = Sambungkan ke internet, lalu coba lagi.
+error_host_title = Situs Tidak Ditemukan
+error_host_message = Net Skip tidak dapat menemukan server “{ $host }”.
+error_timeout_title = Situs Terlalu Lama Merespons
+error_timeout_message = “{ $host }” tidak menjawab tepat waktu.
+error_connection_title = Tidak Dapat Terhubung
+error_connection_message = Net Skip tidak dapat terhubung ke “{ $host }”.
+error_secure_title = Tidak Dapat Terhubung dengan Aman
+error_secure_message = Net Skip tidak dapat membuat koneksi aman ke “{ $host }”.
+error_certificate_title = Koneksi Ini Tidak Pribadi
+error_certificate_message = Sertifikat keamanan “{ $host }” tidak tepercaya. Seseorang mungkin menyamar sebagai situs ini untuk mencuri informasi Anda.
+error_crashed_title = Halaman Ini Berhenti Bekerja
+error_crashed_message = Masalah pada halaman membuatnya tertutup.
+error_other_title = Halaman Ini Tidak Dapat Dibuka
+error_other_message = Net Skip tidak dapat membuka halaman di “{ $host }”.
+try_again = Coba Lagi
+visit_anyway = Tetap Kunjungi Situs Web
+visit_anyway_title = Kunjungi situs web ini?
+visit_anyway_message = Koneksi Anda ke “{ $host }” tidak akan pribadi.
+
+## The user agent setting
+settings_websites = Situs Web
+user_agent = Agen Pengguna
+user_agent_caption = Identitas yang disampaikan Net Skip ke situs web. Halaman dimuat ulang saat ini diubah.
+user_agent_default = Default
+user_agent_engine = Tampilan Web Tertanam
+user_agent_custom = Agen Pengguna Khusus
+
 ## Permission prompts
 # What the system shows when a web page asks for a device feature (Day.toml [permissions]).
 permission_camera = Net Skip memerlukan akses ke kamera Anda agar situs web yang Anda kunjungi dapat menggunakannya untuk panggilan video, memindai kode QR, dan mengambil foto saat Anda memberinya izin.

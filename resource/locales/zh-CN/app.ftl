@@ -220,6 +220,55 @@ clear_website_data_confirm = 移除所有 Cookie 和网站数据？你将退出�
 clear_bookmarks = 删除所有书签
 clear_bookmarks_confirm = 删除所有书签？此操作无法撤销。
 
+## Downloads, links to other apps, sign-in and error pages
+downloads = 下载
+download_confirm = 下载“{ $name }”？
+download = 下载
+search_downloads = 搜索下载
+downloads_empty = 你下载的文件会显示在这里。
+download_progress = { $received }/{ $total }
+download_failed = 失败
+download_canceled = 已取消
+clear_downloads = 清除
+remove_download = 从列表中移除
+open_app_title = 在其他 App 中打开？
+open_app_message = 此链接将在 Net Skip 之外打开：{ $url }
+open = 打开
+sign_in_title = 登录
+sign_in_message = “{ $host }”要求输入名称和密码。
+sign_in_failed = 该名称或密码未被接受。
+user_name = 用户名
+password = 密码
+sign_in = 登录
+error_offline_title = 你已离线
+error_offline_message = 请连接互联网，然后重试。
+error_host_title = 找不到网站
+error_host_message = Net Skip 找不到服务器“{ $host }”。
+error_timeout_title = 网站响应时间过长
+error_timeout_message = “{ $host }”未及时响应。
+error_connection_title = 无法连接
+error_connection_message = Net Skip 无法连接到“{ $host }”。
+error_secure_title = 无法安全连接
+error_secure_message = Net Skip 无法与“{ $host }”建立安全连接。
+error_certificate_title = 此连接非私密连接
+error_certificate_message = “{ $host }”的安全证书不受信任。可能有人在冒充该网站以窃取你的信息。
+error_crashed_title = 此页面已停止工作
+error_crashed_message = 页面出现问题，已被关闭。
+error_other_title = 无法打开此页面
+error_other_message = Net Skip 无法打开“{ $host }”上的页面。
+try_again = 重试
+visit_anyway = 仍然访问网站
+visit_anyway_title = 访问此网站？
+visit_anyway_message = 你与“{ $host }”的连接将不是私密的。
+
+## The user agent setting
+settings_websites = 网站
+user_agent = 用户代理
+user_agent_caption = Net Skip 向网站表明的身份。更改后页面会重新加载。
+user_agent_default = 默认
+user_agent_engine = 内嵌网页视图
+user_agent_custom = 自定用户代理
+
 ## Permission prompts
 # What the system shows when a web page asks for a device feature (Day.toml [permissions]).
 permission_camera = Net Skip 需要访问你的相机，以便你访问的网站在你授权后可用于视频通话、扫描二维码和拍摄照片。

@@ -296,3 +296,45 @@ impl LoadProgress {
         }
     }
 }
+
+/// The tabs whose web views to let go so that at most `keep` stay live: the ones used longest
+/// ago, never the selected tab. `views` is every tab that holds a web view, with when it was
+/// last used. A phone keeps a handful of pages in memory and reloads the rest when the user
+/// returns to them, as Safari and Chrome do.
+pub fn views_to_unload<K: Clone + PartialEq>(
+    views: &[(K, i64)],
+    selected: Option<&K>,
+    keep: usize,
+) -> Vec<K> {
+    let excess = views.len().saturating_sub(keep.max(1));
+    let mut others: Vec<&(K, i64)> = views
+        .iter()
+        .filter(|(key, _)| Some(key) != selected)
+        .collect();
+    others.sort_by_key(|(_, used)| *used);
+    others
+        .into_iter()
+        .take(excess)
+        .map(|(key, _)| key.clone())
+        .collect()
+}
+
+/// A byte count as people read one: `512 bytes`, `1.5 KB`, `20 MB`, `3.2 GB`, in powers of
+/// 1000 as the stores and file managers show sizes. One decimal below ten of a unit.
+pub fn format_bytes(bytes: u64) -> String {
+    const UNITS: [&str; 4] = ["KB", "MB", "GB", "TB"];
+    if bytes < 1000 {
+        return format!("{bytes} bytes");
+    }
+    let mut value = bytes as f64 / 1000.0;
+    let mut unit = 0;
+    while value >= 999.5 && unit < UNITS.len() - 1 {
+        value /= 1000.0;
+        unit += 1;
+    }
+    if value < 9.95 {
+        format!("{value:.1} {}", UNITS[unit])
+    } else {
+        format!("{value:.0} {}", UNITS[unit])
+    }
+}

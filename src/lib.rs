@@ -16,6 +16,7 @@ pub mod adblock;
 pub mod browser;
 pub mod chrome;
 mod clock;
+pub mod downloads;
 pub mod favicons;
 pub mod fixtures;
 pub mod library;
@@ -76,10 +77,12 @@ fn menus(browser: Browser) -> Vec<MenuEntry> {
         menu_separator(),
         menu_item(res::str::next_tab())
             .shortcut(Shortcut::primary("]").shift())
-            .action(move || browser.select_next(false)),
+            .action(move || browser.select_next(false))
+            .id(day::id!(menu_next_tab)),
         menu_item(res::str::previous_tab())
             .shortcut(Shortcut::primary("[").shift())
-            .action(move || browser.select_next(true)),
+            .action(move || browser.select_next(true))
+            .id(day::id!(menu_previous_tab)),
         menu_separator(),
     ];
     for i in 0..9 {

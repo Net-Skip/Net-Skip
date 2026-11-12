@@ -1,0 +1,68 @@
+<!doctype html>
+<!-- Copyright © The Daybrite Project -->
+<!-- SPDX-License-Identifier: MPL-2.0 -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dropbay — Files and forms</title>
+<style>
+  body { font: 16px/1.5 system-ui, sans-serif; margin: 24px; color: #1c2430; background: #f6f4ef; }
+  h1 { font-size: 22px; }
+  section { background: #fff; border-radius: 12px; padding: 16px; margin: 16px 0; }
+  button, a.button { font: inherit; padding: 8px 14px; border-radius: 8px; border: 1px solid #c7ccd4; background: #fff; margin: 4px 4px 4px 0; display: inline-block; color: #0b57d0; text-decoration: none; }
+  output { display: block; margin-top: 8px; color: #555; }
+</style>
+</head>
+<body>
+<h1>Dropbay</h1>
+<p>A page that asks its browser for everything a page can ask for: dialogs, a download, a file, and another app.</p>
+
+<section>
+  <h2>Dialogs</h2>
+  <button id="alert">Alert</button>
+  <button id="confirm">Confirm</button>
+  <button id="prompt">Prompt</button>
+  <output id="result">nothing yet</output>
+</section>
+
+<section>
+  <h2>Download</h2>
+  <a class="button" id="download" href="download/tide-table.txt">Tide table (text)</a>
+  <a class="button" id="download-blob" href="#">Generated notes (blob)</a>
+</section>
+
+<section>
+  <h2>Upload</h2>
+  <input type="file" id="file">
+  <output id="picked">no file</output>
+</section>
+
+<section>
+  <h2>Other apps</h2>
+  <a class="button" id="mail" href="mailto:harbormaster@files.example?subject=Mooring">Write to the harbormaster</a>
+  <a class="button" id="app" href="dropbay-app://open/mooring/14">Open in the Dropbay app</a>
+</section>
+
+<script>
+  // Each dialog opens a moment after its button, so a script that clicks the button gets its
+  // answer back before the dialog blocks the page.
+  const result = document.getElementById('result');
+  const later = (f) => setTimeout(f, 50);
+  document.getElementById('alert').onclick = () => later(() => { alert('The tide turns at 14:20.'); result.textContent = 'alert closed'; });
+  document.getElementById('confirm').onclick = () => later(() => { result.textContent = 'confirm ' + confirm('Release mooring 14?'); });
+  document.getElementById('prompt').onclick = () => later(() => { result.textContent = 'prompt ' + prompt('Name of the vessel?', 'Kittiwake'); });
+  document.getElementById('file').onchange = (e) => {
+    const f = e.target.files[0];
+    document.getElementById('picked').textContent = f ? f.name + ' ' + f.size : 'no file';
+  };
+  document.getElementById('download-blob').onclick = (e) => {
+    e.preventDefault();
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob(['Mooring 14 is free until Thursday.\n'], { type: 'text/plain' }));
+    a.download = 'mooring-notes.txt';
+    a.click();
+  };
+</script>
+</body>
+</html>

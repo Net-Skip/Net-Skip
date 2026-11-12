@@ -1,0 +1,29 @@
+# Copyright © The Daybrite Project
+# SPDX-License-Identifier: MPL-2.0
+#
+# What Net Skip tells sites it is (NETSKIP_FIXTURES=1): a browser by default, never an app's
+# embedded view, and whatever Settings chooses instead. WebKit and Android's WebView honor the
+# setting; the other engines keep their own string.
+name: user-agent
+description: Send a browser's user agent by default and the one chosen in Settings.
+flow:
+  - wait_for: { id: address }
+  - focus: { id: address }
+  - input: { id: address, text: "example.com" }
+  - submit: { id: address }
+  - web_eval: { id: "page:1", script: "document.title", text: "Example Domain", timeout_secs: 30 }
+  # The default has Safari's or Chrome's shape and none of an embedded view's marks.
+  - web_eval: { id: "page:1", script: "(function(){ var ua = navigator.userAgent; return /; wv\\)| Version\\/4\\.0 /.test(ua) ? 'embedded: ' + ua : (/ Safari\\/[0-9.]+$/.test(ua) && (/ Version\\/[0-9.]+ /.test(ua) || / Chrome\\//.test(ua)) ? 'browser' : 'bare: ' + ua); })()", text: "browser", only_on: [ios, android, macos-appkit] }
+  # Choosing another in Settings loads the page again with it.
+  - navigate: { route: "settings/browsing" }
+  - wait_for: { id: "pref:netskip.sites.user_agent" }
+  - select: { id: "pref:netskip.sites.user_agent", index: 3 }
+  - toolbar: { item: settings_done, only_on: [ios, android, harmony] }
+  - web_eval: { id: "page:1", script: "(function(){ return /Firefox\\//.test(navigator.userAgent) ? 'firefox' : navigator.userAgent; })()", text: "firefox", timeout_secs: 30, only_on: [ios, android, macos-appkit] }
+  - web_eval: { id: "page:1", script: "document.title", text: "Example Domain", timeout_secs: 30 }
+  # Back to the default for the next run.
+  - navigate: { route: "settings/browsing" }
+  - wait_for: { id: "pref:netskip.sites.user_agent" }
+  - select: { id: "pref:netskip.sites.user_agent", index: 0 }
+  - toolbar: { item: settings_done, only_on: [ios, android, harmony] }
+  - web_eval: { id: "page:1", script: "(function(){ return /Firefox\\//.test(navigator.userAgent) ? 'firefox' : 'default'; })()", text: "default", timeout_secs: 30, only_on: [ios, android, macos-appkit] }

@@ -220,6 +220,55 @@ clear_website_data_confirm = すべてのCookieとWebサイトデータを削除
 clear_bookmarks = すべてのブックマークを削除
 clear_bookmarks_confirm = すべてのブックマークを削除しますか？この操作は取り消せません。
 
+## Downloads, links to other apps, sign-in and error pages
+downloads = ダウンロード
+download_confirm = “{ $name }”をダウンロードしますか？
+download = ダウンロード
+search_downloads = ダウンロードを検索
+downloads_empty = ダウンロードしたファイルがここに表示されます。
+download_progress = { $received } / { $total }
+download_failed = 失敗
+download_canceled = キャンセル済み
+clear_downloads = 消去
+remove_download = リストから削除
+open_app_title = ほかのアプリで開きますか？
+open_app_message = このリンクはNet Skipの外で開きます: { $url }
+open = 開く
+sign_in_title = サインイン
+sign_in_message = “{ $host }”が名前とパスワードを求めています。
+sign_in_failed = その名前またはパスワードは受け付けられませんでした。
+user_name = ユーザ名
+password = パスワード
+sign_in = サインイン
+error_offline_title = オフラインです
+error_offline_message = インターネットに接続してから、やり直してください。
+error_host_title = サイトが見つかりません
+error_host_message = Net Skipはサーバ“{ $host }”を見つけられません。
+error_timeout_title = サイトの応答に時間がかかりすぎています
+error_timeout_message = “{ $host }”は時間内に応答しませんでした。
+error_connection_title = 接続できません
+error_connection_message = Net Skipは“{ $host }”に接続できませんでした。
+error_secure_title = 安全に接続できません
+error_secure_message = Net Skipは“{ $host }”への安全な接続を確立できませんでした。
+error_certificate_title = この接続はプライベートではありません
+error_certificate_message = “{ $host }”のセキュリティ証明書は信頼されていません。誰かがこのサイトになりすまして、あなたの情報を盗もうとしている可能性があります。
+error_crashed_title = このページは動作を停止しました
+error_crashed_message = ページに問題が起きたため、閉じられました。
+error_other_title = このページを開けません
+error_other_message = Net Skipは“{ $host }”のページを開けませんでした。
+try_again = やり直す
+visit_anyway = このWebサイトを閲覧
+visit_anyway_title = このWebサイトを閲覧しますか？
+visit_anyway_message = “{ $host }”への接続はプライベートではなくなります。
+
+## The user agent setting
+settings_websites = Webサイト
+user_agent = ユーザエージェント
+user_agent_caption = Net SkipがWebサイトに伝える自身の種類です。変更するとページが再読み込みされます。
+user_agent_default = デフォルト
+user_agent_engine = 組み込みWebビュー
+user_agent_custom = カスタムユーザエージェント
+
 ## Permission prompts
 # What the system shows when a web page asks for a device feature (Day.toml [permissions]).
 permission_camera = Net Skipは、許可した場合に閲覧中のウェブサイトがビデオ通話、QRコードのスキャン、写真撮影に利用できるよう、カメラへのアクセスを必要とします。

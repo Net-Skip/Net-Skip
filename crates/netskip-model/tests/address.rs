@@ -349,3 +349,47 @@ fn reserved_names_are_addresses() {
     // A made-up name is still a search.
     assert_eq!(search("kitchen.notatld"), "kitchen.notatld");
 }
+
+#[test]
+fn only_the_systems_own_apps_open_without_a_question() {
+    for url in [
+        "mailto:a@example.com",
+        "TEL:+15551234",
+        "sms:5551234",
+        "geo:1,2",
+        "market://details?id=x",
+    ] {
+        assert!(opens_without_asking(url), "{url}");
+    }
+    for url in [
+        "intent://scan/#Intent;scheme=zxing;end",
+        "myapp://open",
+        "https://example.com/",
+        "nonsense",
+    ] {
+        assert!(!opens_without_asking(url), "{url}");
+    }
+}
+
+#[test]
+fn the_user_agent_setting_resolves_to_the_default_the_engine_a_preset_or_typed_text() {
+    assert_eq!(user_agent_choice("default", ""), UserAgentChoice::Browser);
+    assert_eq!(user_agent_choice("nonsense", "x"), UserAgentChoice::Browser);
+    assert_eq!(user_agent_choice("engine", ""), UserAgentChoice::Engine);
+    assert_eq!(user_agent_choice("custom", "  "), UserAgentChoice::Browser);
+    assert_eq!(
+        user_agent_choice("custom", " Mine/1.0 "),
+        UserAgentChoice::Text("Mine/1.0".into())
+    );
+    let UserAgentChoice::Text(firefox) = user_agent_choice("firefox-android", "") else {
+        panic!("a preset is text");
+    };
+    assert!(firefox.contains("Firefox/") && firefox.contains("Mobile"));
+    // Every preset is a full user agent with an id of its own, and none marks an embedded view.
+    for (i, (id, name, text)) in USER_AGENTS.iter().enumerate() {
+        assert!(text.starts_with("Mozilla/5.0 ("), "{id}");
+        assert!(!text.contains("; wv"), "{id}");
+        assert!(!name.is_empty());
+        assert!(USER_AGENTS[i + 1..].iter().all(|(other, _, _)| other != id));
+    }
+}

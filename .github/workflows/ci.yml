@@ -76,6 +76,9 @@ jobs:
         dayscript/settings.yaml
         dayscript/adblock.yaml
         dayscript/filter-lists.yaml
+        dayscript/duties.yaml
+        dayscript/tab-memory.yaml
+        dayscript/user-agent.yaml
       locales: all
       themes: light dark
       android-devices: |

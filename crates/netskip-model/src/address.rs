@@ -273,6 +273,28 @@ pub fn classify(text: &str) -> Option<Input> {
     Some(Input::Search(text.to_string()))
 }
 
+/// Schemes a page may send to another app without asking the user first: the system's own
+/// mail, phone, message, map and store apps. Any other app's scheme is asked about, so a page
+/// cannot start an app the user did not expect.
+const APP_SCHEMES: &[&str] = &[
+    "mailto",
+    "tel",
+    "sms",
+    "facetime",
+    "facetime-audio",
+    "maps",
+    "geo",
+    "itms-apps",
+    "itms-appss",
+    "market",
+];
+
+/// Whether a link to `url` leaves for another app without a question ([`APP_SCHEMES`]).
+pub fn opens_without_asking(url: &str) -> bool {
+    url.split_once(':')
+        .is_some_and(|(scheme, _)| APP_SCHEMES.contains(&scheme.to_ascii_lowercase().as_str()))
+}
+
 /// A URL the system opens rather than the page (`mailto:`, `tel:`), when `url` is one.
 pub fn is_system_url(url: &str) -> bool {
     Url::parse(url).is_ok_and(|u| SYSTEM_SCHEMES.contains(&u.scheme()))
@@ -558,4 +580,80 @@ pub fn monogram_hue(url: &str) -> u16 {
         h = (h ^ u32::from(b)).wrapping_mul(16777619);
     }
     (h % 360) as u16
+}
+
+/// The user agents Settings offers beside the default, as `(id, name, string)`. The names are
+/// products and stay as they are in every language. The strings are what each browser sends
+/// today with its version reduced the way the browser itself reduces it; a site reads them to
+/// choose a layout, so the phone ones get phone pages and the computer ones desktop pages.
+pub const USER_AGENTS: &[(&str, &str, &str)] = &[
+    (
+        "safari-iphone",
+        "Safari (iPhone)",
+        "Mozilla/5.0 (iPhone; CPU iPhone OS 18_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Mobile/15E148 Safari/604.1",
+    ),
+    (
+        "chrome-android",
+        "Chrome (Android)",
+        "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Mobile Safari/537.36",
+    ),
+    (
+        "firefox-android",
+        "Firefox (Android)",
+        "Mozilla/5.0 (Android 15; Mobile; rv:144.0) Gecko/144.0 Firefox/144.0",
+    ),
+    (
+        "safari-mac",
+        "Safari (Mac)",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15",
+    ),
+    (
+        "chrome-windows",
+        "Chrome (Windows)",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36",
+    ),
+    (
+        "firefox-windows",
+        "Firefox (Windows)",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:144.0) Gecko/20100101 Firefox/144.0",
+    ),
+];
+
+/// The setting's value for the platform browser's own string, which is the default.
+pub const USER_AGENT_DEFAULT: &str = "default";
+/// The setting's value for the engine's embedded-view string.
+pub const USER_AGENT_ENGINE: &str = "engine";
+/// The setting's value for a string the user typed.
+pub const USER_AGENT_CUSTOM: &str = "custom";
+
+/// What a user agent setting asks the web view for.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub enum UserAgentChoice {
+    /// The platform browser's string.
+    Browser,
+    /// The engine's own.
+    Engine,
+    /// This string.
+    Text(String),
+}
+
+/// Resolve the setting `id` (with the typed `custom` string). An unknown id, and a custom
+/// choice with nothing typed, are the default.
+pub fn user_agent_choice(id: &str, custom: &str) -> UserAgentChoice {
+    if id == USER_AGENT_ENGINE {
+        return UserAgentChoice::Engine;
+    }
+    if id == USER_AGENT_CUSTOM {
+        let custom = custom.trim();
+        return if custom.is_empty() {
+            UserAgentChoice::Browser
+        } else {
+            UserAgentChoice::Text(custom.to_string())
+        };
+    }
+    USER_AGENTS
+        .iter()
+        .find(|(preset, _, _)| *preset == id)
+        .map(|(_, _, text)| UserAgentChoice::Text((*text).to_string()))
+        .unwrap_or(UserAgentChoice::Browser)
 }

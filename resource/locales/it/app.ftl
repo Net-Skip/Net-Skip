@@ -228,6 +228,55 @@ clear_website_data_confirm = Rimuovere tutti i cookie e i dati dei siti web? Ver
 clear_bookmarks = Elimina tutti i segnalibri
 clear_bookmarks_confirm = Eliminare tutti i segnalibri? L’operazione non può essere annullata.
 
+## Downloads, links to other apps, sign-in and error pages
+downloads = Download
+download_confirm = Scaricare “{ $name }”?
+download = Scarica
+search_downloads = Cerca nei download
+downloads_empty = Qui compaiono i file che scarichi.
+download_progress = { $received } di { $total }
+download_failed = Non riuscito
+download_canceled = Annullato
+clear_downloads = Svuota
+remove_download = Rimuovi dall’elenco
+open_app_title = Aprire in un’altra app?
+open_app_message = Questo link si apre fuori da Net Skip: { $url }
+open = Apri
+sign_in_title = Accedi
+sign_in_message = “{ $host }” richiede un nome e una password.
+sign_in_failed = Il nome o la password non sono stati accettati.
+user_name = Nome utente
+password = Password
+sign_in = Accedi
+error_offline_title = Sei offline
+error_offline_message = Connettiti a internet e riprova.
+error_host_title = Sito non trovato
+error_host_message = Net Skip non trova il server “{ $host }”.
+error_timeout_title = Il sito impiega troppo tempo a rispondere
+error_timeout_message = “{ $host }” non ha risposto in tempo.
+error_connection_title = Impossibile connettersi
+error_connection_message = Net Skip non è riuscito a connettersi a “{ $host }”.
+error_secure_title = Impossibile connettersi in modo sicuro
+error_secure_message = Net Skip non è riuscito a stabilire una connessione sicura con “{ $host }”.
+error_certificate_title = Questa connessione non è privata
+error_certificate_message = Il certificato di sicurezza di “{ $host }” non è attendibile. Qualcuno potrebbe fingersi il sito per rubare le tue informazioni.
+error_crashed_title = Questa pagina ha smesso di funzionare
+error_crashed_message = Un problema con la pagina ne ha causato la chiusura.
+error_other_title = Impossibile aprire questa pagina
+error_other_message = Net Skip non è riuscito ad aprire la pagina di “{ $host }”.
+try_again = Riprova
+visit_anyway = Visita comunque il sito
+visit_anyway_title = Visitare questo sito web?
+visit_anyway_message = La tua connessione a “{ $host }” non sarà privata.
+
+## The user agent setting
+settings_websites = Siti web
+user_agent = User agent
+user_agent_caption = Come Net Skip si presenta ai siti web. Le pagine vengono ricaricate quando lo cambi.
+user_agent_default = Predefinito
+user_agent_engine = Vista web integrata
+user_agent_custom = User agent personalizzato
+
 ## Permission prompts
 # What the system shows when a web page asks for a device feature (Day.toml [permissions]).
 permission_camera = Net Skip necessita dell’accesso alla tua fotocamera affinché i siti web che visiti possano usarla per videochiamate, scansione di codici QR e scatto di foto quando concedi loro l’autorizzazione.

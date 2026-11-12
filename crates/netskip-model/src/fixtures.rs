@@ -35,6 +35,12 @@ impl FixtureUrls {
     pub fn to_physical(&self, logical: &str) -> String {
         for scheme in ["https", "http"] {
             if let Some(rest) = logical.strip_prefix(&format!("{scheme}://")) {
+                // The device's own loopback is never a fixture: a dayscript reaches a port
+                // nothing listens on to see the error page, and a developer a local server.
+                let host = rest.split(['/', ':', '?', '#']).next().unwrap_or_default();
+                if matches!(host, "127.0.0.1" | "localhost") {
+                    return logical.to_string();
+                }
                 let rest = if rest.contains('/') {
                     rest.to_string()
                 } else {

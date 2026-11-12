@@ -12,11 +12,13 @@
 use std::rc::Rc;
 
 use day::prelude::*;
-use day_piece_webview::{WebProfile, web_view};
+use day_piece_webview::{
+    AuthRequest, AuthResponder, LinkPolicy, LoadErrorKind, WebProfile, web_view,
+};
 use netskip_model::address;
 use netskip_model::complete::{Row, RowKind};
 
-use crate::browser::{Browser, Omnibox, Tab, is_blank, row_text};
+use crate::browser::{Browser, Omnibox, PageError, PageErrorKind, Tab, is_blank, row_text};
 use crate::library::{self, Pane};
 use crate::native::AddressFieldLook;
 use crate::{favicons, fixtures, res, scripts, settings};
@@ -135,6 +137,7 @@ pub fn window(browser: Browser) -> impl Piece {
             library::library_page(browser, *pane)
         })
         .sheet(),
+        cover(browser.sign_in, move |_: &SignIn| sign_in_page(browser)).sheet(),
     ))
     .grow(Dimension::Both)
     // Chrome's Back on a phone: the system back goes back in the page's history while the tab
@@ -154,12 +157,243 @@ fn tab_content(browser: Browser, key: String) -> impl Piece {
     let tab = browser.make_tab(&key);
     zstack((
         when(move || tab.has_view.get(), move || page_view(browser, tab)),
+        // Over whatever the engine shows for a load that failed.
+        when(
+            move || tab.error.with(Option::is_some) && !tab.start.get(),
+            move || error_page(tab),
+        ),
         when(
             move || tab.start.get(),
             move || library::start_page(browser, tab),
         ),
     ))
     .grow(Dimension::Both)
+}
+
+day::routes! {
+    /// The sheet that asks for a server's name and password.
+    pub enum SignIn {
+        Server => "sign-in",
+    }
+}
+
+thread_local! {
+    /// The sign-in the sheet is answering, with a number that tells one request from the next.
+    /// Dropping the responder cancels the sign-in.
+    static SIGN_IN: std::cell::RefCell<Option<(u64, AuthResponder)>> = const { std::cell::RefCell::new(None) };
+    static SIGN_IN_SERIAL: std::cell::Cell<u64> = const { std::cell::Cell::new(0) };
+}
+
+/// A server asks for a name and password: show the sheet. A second request while one is
+/// showing takes its place, and the first is canceled.
+fn ask_sign_in(browser: Browser, request: AuthRequest, responder: AuthResponder) {
+    let serial = SIGN_IN_SERIAL.with(|n| n.replace(n.get() + 1) + 1);
+    SIGN_IN.with(|slot| *slot.borrow_mut() = Some((serial, responder)));
+    browser.sign_in_request.set(Some(request));
+    browser.sign_in.set(Some(SignIn::Server));
+}
+
+/// The sign-in sheet: who is asking, the two fields, and Cancel beside Sign In.
+fn sign_in_page(browser: Browser) -> impl Piece {
+    let user = Signal::new(String::new());
+    let password = Signal::new(String::new());
+    let request = browser.sign_in_request.get_untracked();
+    let host = request.as_ref().map(|r| r.host.clone()).unwrap_or_default();
+    let failed = request.as_ref().is_some_and(|r| r.failures > 0);
+    // The request this sheet was built for. A server that refuses an answer asks again, and
+    // that request's sheet may be up before this one has finished closing.
+    let serial = SIGN_IN_SERIAL.with(std::cell::Cell::get);
+    let take = move || {
+        SIGN_IN.with(|slot| {
+            let mut slot = slot.borrow_mut();
+            match slot.as_ref() {
+                Some((current, _)) if *current == serial => slot.take().map(|(_, r)| r),
+                _ => None,
+            }
+        })
+    };
+    let submit = move || {
+        if let Some(responder) = take() {
+            responder.sign_in(user.get_untracked(), password.get_untracked());
+        }
+        browser.sign_in.set(None);
+    };
+    // Closing the sheet any other way (Cancel, a swipe, the system back) cancels the sign-in.
+    day::reactive::Scope::current().on_cleanup(move || {
+        if let Some(responder) = take() {
+            responder.cancel();
+        }
+    });
+    column((
+        label(res::str::sign_in_title()).font(Font::Title3).bold(),
+        label(res::str::sign_in_message(host))
+            .secondary()
+            .id(day::id!(sign_in_message)),
+        when(
+            move || failed,
+            || {
+                label(res::str::sign_in_failed())
+                    .color(Color::hex(0xd13b2e))
+                    .id(day::id!(sign_in_failed))
+            },
+        ),
+        text_field(user)
+            .placeholder(res::str::user_name())
+            .id(day::id!(sign_in_user)),
+        secure_field(password)
+            .placeholder(res::str::password())
+            .on_submit(submit)
+            .id(day::id!(sign_in_password)),
+        row((
+            button(res::str::cancel())
+                .action(move || browser.sign_in.set(None))
+                .id(day::id!(sign_in_cancel)),
+            button(res::str::sign_in())
+                .prominent()
+                .action(submit)
+                .id(day::id!(sign_in_submit)),
+        ))
+        .spacing(Space::M)
+        .aligned(Alignment::Trailing),
+    ))
+    .spacing(Space::M)
+    .align(HAlign::Leading)
+    .padding(Space::L)
+    .grow(Dimension::Width)
+    .aligned(Alignment::Top)
+    .id(day::id!(sign_in_page))
+}
+
+/// A link that leaves for another app. The system's own apps (mail, phone, maps, the store)
+/// open at once; for any other, the user is asked first, so a page cannot start an app
+/// unannounced.
+fn app_link(tab: Tab, url: &str) -> LinkPolicy {
+    if address::opens_without_asking(url) {
+        return LinkPolicy::OpenSystem;
+    }
+    let url = url.to_string();
+    day::task(async move {
+        let open = confirm(res::str::open_app_title())
+            .message(res::str::open_app_message(address::display(&url, true)))
+            .confirm_label(res::str::open())
+            .await;
+        if open && let Some(fallback) = day_piece_webview::open_app_link(&url) {
+            // No app takes the link, and it names a web page to show instead.
+            tab.load(&fallback);
+        }
+    });
+    LinkPolicy::Ignore
+}
+
+/// What an error page says: its title and its explanation, which names the server where one
+/// is known.
+fn error_text(error: &PageError) -> (String, String) {
+    let host = url::Url::parse(&error.url)
+        .ok()
+        .and_then(|u| u.host_str().map(str::to_owned))
+        .unwrap_or_else(|| address::display(&error.url, false));
+    let (title, message) = match error.kind {
+        PageErrorKind::Crashed => (
+            res::str::error_crashed_title().format(),
+            res::str::error_crashed_message().format(),
+        ),
+        PageErrorKind::Load(LoadErrorKind::Offline) => (
+            res::str::error_offline_title().format(),
+            res::str::error_offline_message().format(),
+        ),
+        PageErrorKind::Load(LoadErrorKind::HostNotFound) => (
+            res::str::error_host_title().format(),
+            res::str::error_host_message(host).format(),
+        ),
+        PageErrorKind::Load(LoadErrorKind::Timeout) => (
+            res::str::error_timeout_title().format(),
+            res::str::error_timeout_message(host).format(),
+        ),
+        PageErrorKind::Load(LoadErrorKind::Certificate) => (
+            res::str::error_certificate_title().format(),
+            res::str::error_certificate_message(host).format(),
+        ),
+        PageErrorKind::Load(LoadErrorKind::Secure) => (
+            res::str::error_secure_title().format(),
+            res::str::error_secure_message(host).format(),
+        ),
+        PageErrorKind::Load(LoadErrorKind::Connection) => (
+            res::str::error_connection_title().format(),
+            res::str::error_connection_message(host).format(),
+        ),
+        PageErrorKind::Load(LoadErrorKind::Unsupported | LoadErrorKind::Other) => (
+            res::str::error_other_title().format(),
+            res::str::error_other_message(host).format(),
+        ),
+    };
+    (title, message)
+}
+
+/// The page a tab shows when its page did not load: what went wrong, and Try Again. A
+/// certificate the system does not trust offers Go Back first, and visiting anyway only after
+/// a confirmation.
+fn error_page(tab: Tab) -> impl Piece {
+    let text = move || tab.error.get().as_ref().map(error_text).unwrap_or_default();
+    let certificate = move || {
+        tab.error.with(|e| {
+            e.as_ref()
+                .is_some_and(|e| e.kind == PageErrorKind::Load(LoadErrorKind::Certificate))
+        })
+    };
+    let visit_anyway = move || {
+        let Some(error) = tab.error.get_untracked() else {
+            return;
+        };
+        let Some(host) = url::Url::parse(&error.url)
+            .ok()
+            .and_then(|u| u.host_str().map(str::to_owned))
+        else {
+            return;
+        };
+        day::task(async move {
+            let visit = confirm(res::str::visit_anyway_title())
+                .message(res::str::visit_anyway_message(host.clone()))
+                .confirm_label(res::str::visit_anyway())
+                .destructive()
+                .await;
+            if visit {
+                // The exception lasts until the app exits and is never stored.
+                day_piece_webview::trust_host(&host);
+                tab.retry();
+            }
+        });
+    };
+    scroll(
+        column((
+            label(move || text().0)
+                .font(Font::Title2)
+                .bold()
+                .id(day::id!(error_title, tab.id)),
+            label(move || text().1)
+                .secondary()
+                .id(day::id!(error_message, tab.id)),
+            row((
+                when(certificate, move || {
+                    button(res::str::visit_anyway())
+                        .action(visit_anyway)
+                        .id(day::id!(error_visit_anyway, tab.id))
+                }),
+                button(res::str::try_again())
+                    .prominent()
+                    .action(move || tab.retry())
+                    .id(day::id!(error_retry, tab.id)),
+            ))
+            .spacing(Space::M),
+        ))
+        .spacing(Space::M)
+        .align(HAlign::Leading)
+        .padding(Space::XL)
+        .max_width(560.0)
+        .grow(Dimension::Width),
+    )
+    .grow(Dimension::Both)
+    .background(|| day::system_color(SystemColor::Background))
+    .id(day::id!(error_page, tab.id))
 }
 
 /// The tab's web view, in the tab's own profile, wired to its commands.
@@ -201,6 +435,20 @@ fn page_view(browser: Browser, tab: Tab) -> impl Piece {
         .desktop_mode(tab.desktop)
         .javascript(move || settings::JAVASCRIPT.get())
         .on_load(move || browser.loaded(tab))
+        .on_load_error(move |error| browser.load_failed(tab, error))
+        .on_renderer_gone(move |_| browser.renderer_gone(tab))
+        // A dialog names the site that asked: its real address, also for a fixture page.
+        .on_dialog(|mut request, responder| {
+            request.url = fixtures::to_logical(&request.url);
+            day_piece_webview::present_dialog(request, responder);
+        })
+        .on_auth(move |request, responder| ask_sign_in(browser, request, responder))
+        .on_download(move |request, responder| crate::downloads::offer(browser, request, responder))
+        .on_app_link(move |url| app_link(tab, url))
+        // Sites see a browser, not an app's embedded view; Settings can make it another.
+        .user_agent(untrack(settings::user_agent))
+        // Safari's swipes from the screen's edges, back and forward through the tab's pages.
+        .swipe_navigation(true)
         .on_new_tab(
             res::str::open_in_new_tab(),
             res::str::open_in_background_tab(),

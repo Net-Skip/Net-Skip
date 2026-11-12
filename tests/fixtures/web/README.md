@@ -16,6 +16,11 @@ The dayscripts rely on what these pages contain, so change them together:
 - `example.com/news/` holds the word "harbor" exactly 5 times (find in page).
 - `example.com/` links to `/news/`, `/about.html`, and opens `https://example.org/` in a new tab.
 - Each site has a `favicon.png`, which the start page and the tab strip show.
+- `files.example/` (*Dropbay*) has a button for each script dialog (`#alert`, `#confirm`,
+  `#prompt`, answering into `#result`), a file served as an attachment
+  (`download/tide-table.txt`, 115 bytes; anything under a `download/` directory is), a
+  generated `blob:` download, a file input that reports into `#picked`, and links to `mailto:`
+  and to an app scheme no app handles (`dropbay-app:`).
 
 The pages and icons were written for these tests and carry no third-party content.
 

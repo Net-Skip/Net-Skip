@@ -6,6 +6,7 @@
 use crate::{browser::Browser, res, store};
 use day::prelude::*;
 use day_piece_settings::prelude::*;
+use netskip_model::address;
 use netskip_model::history::ClearRange;
 use netskip_model::search::{self, CUSTOM_ENGINE, ENGINES, Engine};
 
@@ -41,6 +42,13 @@ pub static SHOW_FREQUENT: Pref<bool> = Pref::new("netskip.start.frequent", || tr
 pub static DESKTOP_SITES: Pref<bool> = Pref::new("netskip.sites.desktop", || false);
 /// Let pages run JavaScript.
 pub static JAVASCRIPT: Pref<bool> = Pref::new("netskip.sites.javascript", || true);
+/// What Net Skip tells sites it is: the platform browser's string, the engine's own, a preset
+/// (`netskip_model::address::USER_AGENTS`), or the string in [`USER_AGENT_CUSTOM`].
+pub static USER_AGENT: Pref<String> = Pref::new("netskip.sites.user_agent", || {
+    address::USER_AGENT_DEFAULT.to_string()
+});
+pub static USER_AGENT_CUSTOM: Pref<String> =
+    Pref::new("netskip.sites.user_agent.custom", String::new);
 /// The zoom chosen for each site, `site=percent` lines; a site not listed opens at [`PAGE_ZOOM`].
 pub static SITE_ZOOM: Pref<String> = Pref::new("netskip.sites.zoom", String::new);
 
@@ -78,6 +86,16 @@ pub fn engine() -> Engine {
     Engine::resolve(&SEARCH_ENGINE.get(), &CUSTOM_SEARCH.get())
 }
 
+/// What the web views tell sites they are, from the setting. A tracked read.
+pub fn user_agent() -> day_piece_webview::UserAgent {
+    use address::UserAgentChoice;
+    match address::user_agent_choice(&USER_AGENT.get(), &USER_AGENT_CUSTOM.get()) {
+        UserAgentChoice::Browser => day_piece_webview::UserAgent::Browser,
+        UserAgentChoice::Engine => day_piece_webview::UserAgent::Engine,
+        UserAgentChoice::Text(text) => day_piece_webview::UserAgent::Custom(text),
+    }
+}
+
 /// The engine's name for "Search DuckDuckGo", or the custom template's host.
 pub fn engine_name(engine: &Engine) -> String {
     match engine.name() {
@@ -102,6 +120,23 @@ pub fn install() -> Prefs {
         res::str::search_custom().format(),
     ));
     let zooms: Vec<(i64, String)> = ZOOM_STEPS.iter().map(|z| (*z, format!("{z}%"))).collect();
+    let mut agents = vec![(
+        address::USER_AGENT_DEFAULT.to_string(),
+        res::str::user_agent_default().format(),
+    )];
+    agents.extend(
+        address::USER_AGENTS
+            .iter()
+            .map(|(id, name, _)| (id.to_string(), name.to_string())),
+    );
+    agents.push((
+        address::USER_AGENT_ENGINE.to_string(),
+        res::str::user_agent_engine().format(),
+    ));
+    agents.push((
+        address::USER_AGENT_CUSTOM.to_string(),
+        res::str::search_custom().format(),
+    ));
     Preferences::new()
         .about(
             About::from_manifest()
@@ -181,6 +216,19 @@ pub fn install() -> Prefs {
                                 .caption(res::str::upgrade_https_caption()),
                         )
                         .row(rows::choice(&PAGE_ZOOM, res::str::page_zoom(), zooms)),
+                )
+                .section(
+                    Section::new()
+                        .title(res::str::settings_websites())
+                        .row(
+                            rows::choice(&USER_AGENT, res::str::user_agent(), agents)
+                                .caption(res::str::user_agent_caption()),
+                        )
+                        .row(
+                            rows::text(&USER_AGENT_CUSTOM, res::str::user_agent_custom())
+                                .placeholder("Mozilla/5.0 …")
+                                .available(|| USER_AGENT.get() == address::USER_AGENT_CUSTOM),
+                        ),
                 ),
         )
         .group(

@@ -51,6 +51,21 @@ pub fn install() {
     });
 }
 
+/// Where a fixture run saves downloads: a folder in the cache, made empty when the app starts.
+pub fn downloads_dir() -> Option<std::path::PathBuf> {
+    static DIR: OnceLock<Option<std::path::PathBuf>> = OnceLock::new();
+    if !active() {
+        return None;
+    }
+    DIR.get_or_init(|| {
+        let dir = day::storage::cache_dir()?.join("fixture-downloads");
+        let _ = std::fs::remove_dir_all(&dir);
+        std::fs::create_dir_all(&dir).ok()?;
+        Some(dir)
+    })
+    .clone()
+}
+
 /// Whether fixture mode is on.
 pub fn active() -> bool {
     matches!(ACTIVE.get(), Some(Some(_)))
@@ -99,7 +114,20 @@ fn serve(urls: &FixtureUrls, req: &ResourceRequest) -> ResourceResponse {
                 let text = String::from_utf8_lossy(bytes);
                 return html(urls.rewrite_html(&text));
             }
-            return ResourceResponse::new(mime, bytes.to_vec());
+            let mut response = ResourceResponse::new(mime, bytes.to_vec());
+            // Anything under a `download/` directory is served the way a server marks a file
+            // to be saved rather than shown.
+            if fr.path.contains("/download/") {
+                // The type says "a file" too: WebKit shows the engine a custom scheme's
+                // response without its headers, and decides by the type alone.
+                response.mime = "application/octet-stream".into();
+                let file_name = fr.path.rsplit('/').next().unwrap_or("download");
+                response.headers.push((
+                    "Content-Disposition".into(),
+                    format!("attachment; filename=\"{file_name}\""),
+                ));
+            }
+            return response;
         }
     }
     let logical = format!(

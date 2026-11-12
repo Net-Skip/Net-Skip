@@ -56,6 +56,15 @@ requests from them.
 day launch -t macos-appkit --env NETSKIP_FIXTURES=1 --script dayscript/browse.yaml
 ```
 
+Downloads over real HTTP, HTTP sign-in and certificate errors need a server, which the fixture
+pages cannot stand in for. `tests/server/duties_server.py` is one for the local machine, and
+`tests/server/server.yaml` drives the app against it:
+
+```sh
+python3 tests/server/duties_server.py &
+day launch -t ios-uikit --env NETSKIP_FIXTURES=1 --script tests/server/server.yaml
+```
+
 ## License
 
 Net Skip is free software under the [Mozilla Public License 2.0](LICENSE). The interface icons

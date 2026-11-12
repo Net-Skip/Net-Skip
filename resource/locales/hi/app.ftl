@@ -228,6 +228,55 @@ clear_website_data_confirm = सभी कुकी और वेबसाइट
 clear_bookmarks = सभी बुकमार्क मिटाएँ
 clear_bookmarks_confirm = सभी बुकमार्क मिटाएँ? इसे वापस नहीं लाया जा सकता।
 
+## Downloads, links to other apps, sign-in and error pages
+downloads = डाउनलोड
+download_confirm = “{ $name }” डाउनलोड करें?
+download = डाउनलोड करें
+search_downloads = डाउनलोड में खोजें
+downloads_empty = आप जो फ़ाइलें डाउनलोड करते हैं, वे यहाँ दिखती हैं।
+download_progress = { $total } में से { $received }
+download_failed = विफल
+download_canceled = रद्द किया गया
+clear_downloads = साफ़ करें
+remove_download = सूची से हटाएँ
+open_app_title = किसी दूसरे ऐप में खोलें?
+open_app_message = यह लिंक Net Skip के बाहर खुलता है: { $url }
+open = खोलें
+sign_in_title = साइन इन करें
+sign_in_message = “{ $host }” नाम और पासवर्ड माँग रहा है।
+sign_in_failed = वह नाम या पासवर्ड स्वीकार नहीं किया गया।
+user_name = उपयोगकर्ता नाम
+password = पासवर्ड
+sign_in = साइन इन करें
+error_offline_title = आप ऑफ़लाइन हैं
+error_offline_message = इंटरनेट से कनेक्ट करें, फिर दोबारा कोशिश करें।
+error_host_title = साइट नहीं मिली
+error_host_message = Net Skip को सर्वर “{ $host }” नहीं मिल रहा है।
+error_timeout_title = साइट ने जवाब देने में बहुत समय लिया
+error_timeout_message = “{ $host }” ने समय पर जवाब नहीं दिया।
+error_connection_title = कनेक्ट नहीं हो सका
+error_connection_message = Net Skip “{ $host }” से कनेक्ट नहीं हो सका।
+error_secure_title = सुरक्षित रूप से कनेक्ट नहीं हो सका
+error_secure_message = Net Skip “{ $host }” के साथ सुरक्षित कनेक्शन नहीं बना सका।
+error_certificate_title = यह कनेक्शन निजी नहीं है
+error_certificate_message = “{ $host }” का सुरक्षा प्रमाणपत्र विश्वसनीय नहीं है। हो सकता है कोई आपकी जानकारी चुराने के लिए इस साइट का रूप धर रहा हो।
+error_crashed_title = इस पेज ने काम करना बंद कर दिया
+error_crashed_message = पेज में आई किसी समस्या के कारण यह बंद हो गया।
+error_other_title = यह पेज खोला नहीं जा सकता
+error_other_message = Net Skip “{ $host }” का पेज नहीं खोल सका।
+try_again = दोबारा कोशिश करें
+visit_anyway = फिर भी वेबसाइट पर जाएँ
+visit_anyway_title = इस वेबसाइट पर जाएँ?
+visit_anyway_message = “{ $host }” से आपका कनेक्शन निजी नहीं होगा।
+
+## The user agent setting
+settings_websites = वेबसाइटें
+user_agent = यूज़र एजेंट
+user_agent_caption = Net Skip वेबसाइटों को ख़ुद को क्या बताता है। इसे बदलने पर पेज दोबारा लोड होते हैं।
+user_agent_default = डिफ़ॉल्ट
+user_agent_engine = एम्बेडेड वेब व्यू
+user_agent_custom = कस्टम यूज़र एजेंट
+
 ## Permission prompts
 # What the system shows when a web page asks for a device feature (Day.toml [permissions]).
 permission_camera = Net Skip को आपके कैमरे तक पहुँच की आवश्यकता है ताकि जिन वेबसाइटों पर आप जाते हैं वे आपकी अनुमति देने पर वीडियो कॉल, QR कोड स्कैन और फ़ोटो खींचने के लिए इसका उपयोग कर सकें।

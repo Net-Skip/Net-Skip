@@ -27,6 +27,7 @@ Use examples with the API supported by this project's Day dependency version. Ch
 - `src/chrome.rs`: the toolbar and tab strip (computer, tablet), the bottom bar (phone), the
   address field, the suggestion list, find in page, and the tab grid.
 - `src/library.rs`: the start page (Favorites, Frequently Visited), Bookmarks and History.
+- `src/downloads.rs`: asking before a file is saved, the Downloads list and its storage.
 - `src/store.rs`: history and bookmarks in SQLite through day-persistence, with tests.
 - `src/settings.rs`: the preferences and the Settings groups.
 - `src/fixtures.rs`: fixture mode (`NETSKIP_FIXTURES=1`), which serves `tests/fixtures/web/`
@@ -36,6 +37,8 @@ Use examples with the API supported by this project's Day dependency version. Ch
   completion ranking, tab placement, history day groups, fixture address mapping) and their
   tests: `cargo test -p netskip-model`.
 - `dayscript/`: the walkthroughs; every script runs with `NETSKIP_FIXTURES=1`.
+- `tests/server/`: a local server and a dayscript for what needs real HTTP (downloads,
+  sign-in, a self-signed certificate). CI does not run it.
 - `resource/locales/<locale>/app.ftl`: app-owned UI strings.
 - `Day.toml`, `Day-appfair.toml`: app identity (the existing store ids), targets, window.
 

@@ -260,6 +260,55 @@ clear_website_data_confirm = إزالة كل ملفات تعريف الارتب�
 clear_bookmarks = حذف كل الإشارات المرجعية
 clear_bookmarks_confirm = حذف كل الإشارات المرجعية؟ لا يمكن التراجع عن ذلك.
 
+## Downloads, links to other apps, sign-in and error pages
+downloads = التنزيلات
+download_confirm = تنزيل ”{ $name }“؟
+download = تنزيل
+search_downloads = البحث في التنزيلات
+downloads_empty = تظهر هنا الملفات التي تنزّلها.
+download_progress = { $received } من { $total }
+download_failed = فشل
+download_canceled = أُلغي
+clear_downloads = مسح
+remove_download = إزالة من القائمة
+open_app_title = الفتح في تطبيق آخر؟
+open_app_message = يُفتح هذا الرابط خارج Net Skip: { $url }
+open = فتح
+sign_in_title = تسجيل الدخول
+sign_in_message = يطلب ”{ $host }“ اسمًا وكلمة سر.
+sign_in_failed = لم يُقبل هذا الاسم أو كلمة السر.
+user_name = اسم المستخدم
+password = كلمة السر
+sign_in = تسجيل الدخول
+error_offline_title = أنت غير متصل
+error_offline_message = اتصل بالإنترنت ثم حاول مرة أخرى.
+error_host_title = تعذّر العثور على الموقع
+error_host_message = لا يستطيع Net Skip العثور على الخادم ”{ $host }“.
+error_timeout_title = استغرق الموقع وقتًا طويلًا للرد
+error_timeout_message = لم يردّ ”{ $host }“ في الوقت المناسب.
+error_connection_title = تعذّر الاتصال
+error_connection_message = لم يتمكن Net Skip من الاتصال بـ ”{ $host }“.
+error_secure_title = تعذّر الاتصال بشكل آمن
+error_secure_message = لم يتمكن Net Skip من إنشاء اتصال آمن بـ ”{ $host }“.
+error_certificate_title = هذا الاتصال غير خاص
+error_certificate_message = شهادة الأمان الخاصة بـ ”{ $host }“ غير موثوقة. ربما ينتحل شخص ما صفة الموقع لسرقة معلوماتك.
+error_crashed_title = توقفت هذه الصفحة عن العمل
+error_crashed_message = تسببت مشكلة في الصفحة في إغلاقها.
+error_other_title = تعذّر فتح هذه الصفحة
+error_other_message = لم يتمكن Net Skip من فتح الصفحة على ”{ $host }“.
+try_again = حاول مرة أخرى
+visit_anyway = زيارة الموقع على أي حال
+visit_anyway_title = زيارة هذا الموقع؟
+visit_anyway_message = لن يكون اتصالك بـ ”{ $host }“ خاصًا.
+
+## The user agent setting
+settings_websites = المواقع
+user_agent = وكيل المستخدم
+user_agent_caption = ما يعرّف به Net Skip نفسه للمواقع. يُعاد تحميل الصفحات عند تغييره.
+user_agent_default = الافتراضي
+user_agent_engine = عرض الويب المضمّن
+user_agent_custom = وكيل مستخدم مخصص
+
 ## Permission prompts
 # What the system shows when a web page asks for a device feature (Day.toml [permissions]).
 permission_camera = يحتاج Net Skip إلى الوصول إلى الكاميرا حتى تتمكن المواقع التي تزورها من استخدامها لمكالمات الفيديو ومسح رموز QR والتقاط الصور عند منحها الإذن.

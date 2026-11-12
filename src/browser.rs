@@ -11,7 +11,7 @@ use std::collections::HashMap;
 use std::rc::Rc;
 
 use day::prelude::*;
-use day_piece_webview::{JsHandle, PageState, ScrollState};
+use day_piece_webview::{JsHandle, LoadError, LoadErrorKind, PageState, ScrollState};
 use netskip_model::address::{self, Input};
 use netskip_model::complete::{self, Candidate, Inline, Limits, Row, RowKind};
 use netskip_model::history;
@@ -39,6 +39,23 @@ pub struct Find {
     pub query: Signal<String>,
     /// (current match, 1-based; total matches).
     pub matches: Signal<(u32, u32)>,
+}
+
+/// Why a tab shows an error page instead of its web page.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum PageErrorKind {
+    /// The page did not load.
+    Load(LoadErrorKind),
+    /// The page's process ended twice in a row, so it was not reloaded again.
+    Crashed,
+}
+
+/// The error page a tab shows, and the address it is about.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct PageError {
+    pub kind: PageErrorKind,
+    /// The real address that failed.
+    pub url: String,
 }
 
 /// One tab. `Copy`: it holds handles, not values.
@@ -85,6 +102,18 @@ pub struct Tab {
     pub blocked: Signal<usize>,
     /// What the engine reports about the page: title, progress, back/forward availability.
     pub page: Signal<PageState>,
+    /// The error page showing over the web view, until the next load.
+    pub error: Signal<Option<PageError>>,
+    /// Where to scroll the page once it has loaded again, after its web view was let go.
+    pub restore_scroll: Signal<f64>,
+    /// When the tab was last shown or given a web view (ms), which decides whose web view is
+    /// let go first.
+    pub used: Signal<i64>,
+    /// When the page's process last ended (ms), to tell one crash from a page that keeps crashing.
+    pub crashed_at: Signal<i64>,
+    /// The `http://` address the user typed, while its upgrade to HTTPS loads: where to go
+    /// when the site turns out to have no HTTPS.
+    pub http_fallback: Signal<Option<String>>,
 }
 
 impl Tab {
@@ -128,6 +157,9 @@ impl Tab {
             }
             self.start.set(false);
             self.find.open.set(false);
+            self.error.set(None);
+            self.restore_scroll.set(0.0);
+            self.http_fallback.set(None);
             self.location.set(physical);
             self.progress
                 .set(self.progress.get_untracked().report(true, 0.0));
@@ -145,6 +177,7 @@ impl Tab {
         if self.start.get_untracked() {
             return;
         }
+        self.error.set(None);
         if self.can_back.get_untracked() || !self.from_start.get_untracked() {
             self.back.notify();
             self.loads.update(|n| *n += 1);
@@ -170,8 +203,10 @@ impl Tab {
     pub fn go_forward(self) {
         if self.start.get_untracked() && !is_blank(&self.location.get_untracked()) {
             self.start.set(false);
+            self.wake();
             return;
         }
+        self.error.set(None);
         self.forward.notify();
         self.loads.update(|n| *n += 1);
     }
@@ -194,10 +229,63 @@ impl Tab {
             self.progress
                 .set(self.progress.get_untracked().report(false, 1.0));
         } else if !self.start.get_untracked() {
+            self.error.set(None);
             self.reload.notify();
             self.progress
                 .set(self.progress.get_untracked().report(true, 0.0));
             self.loads.update(|n| *n += 1);
+        }
+    }
+
+    /// Whether the tab's page is not in memory: it has an address and no web view.
+    pub fn asleep(self) -> bool {
+        !self.has_view.get_untracked() && !is_blank(&self.location.get_untracked())
+    }
+
+    /// Let the tab's web view go, keeping its address, title, picture and scroll position.
+    /// The page loads again when the tab is next shown ([`Tab::wake`]). Its back and forward
+    /// history goes with the web view.
+    pub fn unload(self) {
+        if !self.has_view.get_untracked() {
+            return;
+        }
+        batch(|| {
+            self.restore_scroll.set(self.scroll.get_untracked().offset);
+            self.has_view.set(false);
+            self.can_back.set(false);
+            self.can_forward.set(false);
+            self.find.open.set(false);
+            self.progress.set(LoadProgress::default());
+        });
+    }
+
+    /// Give the tab its web view back and load its page again.
+    pub fn wake(self) {
+        if !self.asleep() || self.start.get_untracked() {
+            return;
+        }
+        batch(|| {
+            self.error.set(None);
+            self.used.set(crate::now_ms());
+            self.progress
+                .set(self.progress.get_untracked().report(true, 0.0));
+            self.loads.update(|n| *n += 1);
+            self.has_view.set(true);
+        });
+    }
+
+    /// The error page's Try Again: load the address that failed again. (A reload would not do:
+    /// after a load fails, WebKit's current page is still the one before it.) A tab whose web
+    /// view is gone gets it back, which loads the page.
+    pub fn retry(self) {
+        let Some(error) = self.error.get_untracked() else {
+            return;
+        };
+        if self.has_view.get_untracked() && !error.url.is_empty() {
+            self.load(&error.url);
+        } else {
+            self.error.set(None);
+            self.wake();
         }
     }
 
@@ -224,7 +312,25 @@ struct Seed {
     title: String,
     private: bool,
     opener: Option<u64>,
+    /// A tab restored from the last session: its page loads when the tab is first shown.
+    lazy: bool,
 }
+
+/// How many web views a window keeps in memory. A phone or tablet reloads the pages of the
+/// tabs used longest ago when the user returns to them; a computer has room for more.
+const LIVE_VIEWS: usize = if cfg!(any(
+    target_os = "ios",
+    target_os = "android",
+    target_env = "ohos"
+)) {
+    8
+} else {
+    32
+};
+
+/// Two ends of a page's process closer together than this (ms) are a page that keeps
+/// crashing, and it is not reloaded a second time.
+const CRASH_LOOP_MS: i64 = 15_000;
 
 /// One window's browser. `Copy`: handles only.
 #[derive(Clone, Copy)]
@@ -245,6 +351,9 @@ pub struct Browser {
     pub overview: Signal<bool>,
     /// The library (bookmarks and history) is showing, on this tab of it.
     pub library: Signal<Option<library::Pane>>,
+    /// The sign-in sheet is showing, for the server in `sign_in_request`.
+    pub sign_in: Signal<Option<crate::chrome::SignIn>>,
+    pub sign_in_request: Signal<Option<day_piece_webview::AuthRequest>>,
     pub omnibox: Omnibox,
     /// This is the app's first window, which restores and saves the session.
     primary: bool,
@@ -264,6 +373,8 @@ impl Ambient for Browser {
             run: Signal::new(Rc::new(RefCell::new(OpenerRun::new()))),
             overview: Signal::new(false),
             library: Signal::new(None),
+            sign_in: Signal::new(None),
+            sign_in_request: Signal::new(None),
             omnibox: Omnibox::new(),
             // Fixture runs neither restore nor save a session: each script starts from one tab.
             primary: PRIMARY.with(|p| !p.replace(true)) && !fixtures::active(),
@@ -319,8 +430,47 @@ impl Ambient for Browser {
                     v.retain(|k, _| open.contains(k));
                 });
                 browser.omnibox.end_editing(browser);
+                // The tab now showing gets its page back if it was let go, and the views
+                // used longest ago make room for it.
+                if let Some(tab) = browser.current_untracked() {
+                    tab.used.set(now);
+                    tab.wake();
+                }
+                browser.trim_views(LIVE_VIEWS);
             },
         );
+        // A tab that loads its first page takes a web view too.
+        watch(
+            move || {
+                browser
+                    .live
+                    .with(|m| m.values().filter(|t| t.has_view.get()).count())
+            },
+            move |views, _| {
+                if *views > LIVE_VIEWS {
+                    browser.trim_views(LIVE_VIEWS);
+                }
+            },
+        );
+        // A web view is told what to call itself when it is built. A new user agent lets every
+        // tab's view go, and the one showing is built again, which loads its page with it.
+        watch(settings::user_agent, move |_, before| {
+            if before.is_none() {
+                return;
+            }
+            browser.trim_views(0);
+            if let Some(tab) = browser.current_untracked() {
+                tab.unload();
+                day::task(async move {
+                    day::sleep(0).await;
+                    tab.wake();
+                });
+            }
+        });
+        // Under memory pressure only the page on screen stays in memory.
+        day::on_lifecycle(Lifecycle::DidReceiveMemoryWarning, move || {
+            browser.trim_views(1);
+        });
         if browser.primary {
             // Save the session whenever a tab opens, closes, moves or loads another page.
             watch(
@@ -404,18 +554,44 @@ impl Browser {
     /// Open a tab on `url` (the start page for an empty one). A tab opened from another
     /// (`opener`) goes after it; any other goes last.
     pub fn open(self, url: &str, foreground: bool, private: bool, opener: Option<u64>) -> String {
-        self.open_titled(url, "", foreground, private, opener, None)
+        self.open_seed(
+            Seed {
+                url: url.to_string(),
+                title: String::new(),
+                private,
+                opener,
+                lazy: false,
+            },
+            foreground,
+            None,
+        )
     }
 
+    /// A tab with a known title, for the ones that come back: reopened, or restored from the
+    /// last session (`lazy`, which loads its page when the tab is first shown).
     fn open_titled(
         self,
         url: &str,
         title: &str,
         foreground: bool,
-        private: bool,
-        opener: Option<u64>,
         at: Option<usize>,
+        lazy: bool,
     ) -> String {
+        self.open_seed(
+            Seed {
+                url: url.to_string(),
+                title: title.to_string(),
+                private: false,
+                opener: None,
+                lazy,
+            },
+            foreground,
+            at,
+        )
+    }
+
+    fn open_seed(self, seed: Seed, foreground: bool, at: Option<usize>) -> String {
+        let opener = seed.opener;
         self.serial.update(|n| *n += 1);
         let id = self.serial.get_untracked();
         let key = id.to_string();
@@ -436,15 +612,7 @@ impl Browser {
         });
         batch(|| {
             self.seeds.update(|s| {
-                s.insert(
-                    id,
-                    Seed {
-                        url: url.to_string(),
-                        title: title.to_string(),
-                        private,
-                        opener,
-                    },
-                );
+                s.insert(id, seed);
             });
             // The page being left can be pictured only while it shows: an engine that stops
             // drawing a background view (WebView2) cannot picture it afterwards.
@@ -540,7 +708,7 @@ impl Browser {
         if let Some(tab) = entry {
             self.closed_count.update(|n| *n = n.saturating_sub(1));
             let at = tab.index.min(self.tabs.keys().len());
-            self.open_titled(&tab.url, &tab.title, true, false, None, Some(at));
+            self.open_titled(&tab.url, &tab.title, true, Some(at), false);
         }
     }
 
@@ -566,7 +734,7 @@ impl Browser {
         if let Some(tab) = entry {
             self.closed_count.update(|n| *n = n.saturating_sub(1));
             let at = tab.index.min(self.tabs.keys().len());
-            self.open_titled(&tab.url, &tab.title, true, false, None, Some(at));
+            self.open_titled(&tab.url, &tab.title, true, Some(at), false);
         }
     }
 
@@ -650,12 +818,19 @@ impl Browser {
     pub fn go(self, input: Input, typed: bool) {
         match input {
             Input::Navigate(url) => {
-                let url = if settings::UPGRADE_HTTPS.get_untracked() {
+                let upgraded = if settings::UPGRADE_HTTPS.get_untracked() {
                     address::upgrade_to_https(&url)
                 } else {
-                    url
+                    url.clone()
                 };
-                self.load_in_current(&url, typed);
+                self.load_in_current(&upgraded, typed);
+                // A site with no HTTPS still opens: the address as typed loads if the
+                // upgraded one fails (`load_failed`).
+                if upgraded != url
+                    && let Some(tab) = self.current_untracked()
+                {
+                    tab.http_fallback.set(Some(url));
+                }
             }
             Input::Search(terms) => {
                 let url = untrack(settings::engine).query_url(&terms);
@@ -677,6 +852,82 @@ impl Browser {
                 }
             }
         }
+    }
+
+    /// Let go of the web views used longest ago until at most `keep` remain. The selected tab
+    /// always keeps its own.
+    pub fn trim_views(self, keep: usize) {
+        // The window may be gone by the time the system reports memory pressure.
+        let Some(live) = self.live.try_get() else {
+            return;
+        };
+        let views: Vec<(u64, i64)> = live
+            .values()
+            .filter(|t| t.has_view.get_untracked())
+            .map(|t| (t.id, t.used.get_untracked()))
+            .collect();
+        let selected = self.current_untracked().map(|t| t.id);
+        for id in netskip_model::tabs::views_to_unload(&views, selected.as_ref(), keep) {
+            if let Some(tab) = live.get(&id) {
+                tab.unload();
+            }
+        }
+    }
+
+    /// The process running `tab`'s page ended. Its web view is rebuilt, which loads the page
+    /// again, unless that just happened: a page that keeps crashing shows an error page.
+    pub fn renderer_gone(self, tab: Tab) {
+        let now = crate::now_ms();
+        let again = now.saturating_sub(tab.crashed_at.get_untracked()) < CRASH_LOOP_MS;
+        tab.crashed_at.set(now);
+        tab.unload();
+        if again {
+            tab.error.set(Some(PageError {
+                kind: PageErrorKind::Crashed,
+                url: tab.url_untracked(),
+            }));
+        } else if self.current_untracked().is_some_and(|t| t.id == tab.id) {
+            // A turn later, so the dead view is released before its replacement is built.
+            day::task(async move {
+                day::sleep(0).await;
+                tab.wake();
+            });
+        }
+    }
+
+    /// `tab`'s page did not load: show the error page until the next load.
+    pub fn load_failed(self, tab: Tab, error: &LoadError) {
+        let url = if error.url.is_empty() {
+            tab.url_untracked()
+        } else {
+            fixtures::to_logical(&error.url)
+        };
+        warn!(
+            "load failed ({:?}, {}): {}",
+            error.kind, error.code, error.description
+        );
+        // The address was typed as http:// and upgraded: the site has no working HTTPS, so
+        // load what was typed.
+        let no_https = matches!(
+            error.kind,
+            LoadErrorKind::Connection
+                | LoadErrorKind::Secure
+                | LoadErrorKind::Certificate
+                | LoadErrorKind::Timeout
+        );
+        if no_https && let Some(plain) = tab.http_fallback.get_untracked() {
+            tab.load(&plain);
+            return;
+        }
+        batch(|| {
+            tab.error.set(Some(PageError {
+                kind: PageErrorKind::Load(error.kind),
+                url,
+            }));
+            tab.progress
+                .set(tab.progress.get_untracked().report(false, 1.0));
+        });
+        let _ = self;
     }
 
     /// The tab a web page asked for (a link opened in a new tab, `target=_blank`).
@@ -747,7 +998,7 @@ impl Browser {
         }
         let mut keys = Vec::new();
         for tab in &session.tabs {
-            let key = self.open_titled(&tab.url, &tab.title, false, false, None, None);
+            let key = self.open_titled(&tab.url, &tab.title, false, None, true);
             if tab.viewed > 0 {
                 self.viewed.update(|v| {
                     v.insert(key.clone(), tab.viewed);
@@ -771,8 +1022,13 @@ impl Browser {
                 title: String::new(),
                 private: false,
                 opener: None,
+                lazy: false,
             });
         let blank = seed.url.is_empty();
+        // A restored tab loads its page when it is first shown; the one the session had
+        // selected is showing now.
+        let selected = untrack(|| self.tabs.selected()).as_deref() == Some(key);
+        let asleep = seed.lazy && !selected;
         let tab = Tab {
             id,
             private: seed.private,
@@ -786,13 +1042,13 @@ impl Browser {
             icon: Signal::new(None),
             can_back: Signal::new(false),
             can_forward: Signal::new(false),
-            progress: Signal::new(if blank {
+            progress: Signal::new(if blank || asleep {
                 LoadProgress::default()
             } else {
                 LoadProgress::default().report(true, 0.0)
             }),
             start: Signal::new(blank),
-            has_view: Signal::new(!blank),
+            has_view: Signal::new(!blank && !asleep),
             from_start: Signal::new(false),
             typed: Signal::new(false),
             zoom: Signal::new(settings::PAGE_ZOOM.get_untracked()),
@@ -813,6 +1069,11 @@ impl Browser {
             scroll: Signal::new(ScrollState::default()),
             blocked: Signal::new(0),
             page: Signal::new(PageState::default()),
+            error: Signal::new(None),
+            restore_scroll: Signal::new(0.0),
+            used: Signal::new(crate::now_ms()),
+            crashed_at: Signal::new(i64::MIN / 2),
+            http_fallback: Signal::new(None),
         };
         // A new page starts its own count of blocked requests.
         watch(
@@ -884,6 +1145,19 @@ impl Browser {
         tab.typed.set(false);
         tab.loads.update(|n| *n += 1);
         let js = tab.js;
+        // What finished loading under an error page is the engine's own error page (Android):
+        // it is not a visit, and has no icon or picture worth keeping.
+        if tab.error.get_untracked().is_some() {
+            return;
+        }
+        // A page loaded again after its web view was let go returns to where it was scrolled.
+        let scroll = tab.restore_scroll.get_untracked();
+        if scroll > 1.0 {
+            tab.restore_scroll.set(0.0);
+            day::task(async move {
+                let _ = js.eval(format!("window.scrollTo(0, {scroll:.0})")).await;
+            });
+        }
         day::task(async move {
             let url = tab.url_untracked();
             let title = tab.title.get_untracked();
@@ -927,7 +1201,12 @@ fn apply_state(tab: Tab, state: &PageState) {
         tab.can_back.set(state.can_go_back);
         tab.can_forward.set(state.can_go_forward);
         let title = state.title.trim().to_string();
-        if !title.is_empty() && tab.title.get_untracked() != title {
+        // Under an error page the engine may show a page of its own, whose title is not the
+        // site's.
+        if !title.is_empty()
+            && tab.title.get_untracked() != title
+            && tab.error.get_untracked().is_none()
+        {
             tab.title.set(title.clone());
             // The title belongs to the address reported with it. The tab's own address can
             // trail it: going back on Android reports the earlier page's address and title
