@@ -71,7 +71,8 @@ flow:
   # Next Tab from the last tab is the first: its page loads again, where it was being read.
   - menu: { id: menu_next_tab, only_on: [ios, android, harmony] }
   - web_eval: { id: "page:1", script: "document.title.startsWith('The Lighthouse Coast') ? 'ok' : document.title", text: "ok", timeout_secs: 30, only_on: [ios, android, harmony] }
-  - web_eval: { id: "page:1", script: "window.scrollY > 600 ? 'restored' : String(window.scrollY)", text: "restored", timeout_secs: 15, only_on: [ios, android, harmony] }
+  # The position comes from the web view's scroll reports, which UIKit and Android send.
+  - web_eval: { id: "page:1", script: "window.scrollY > 600 ? 'restored' : String(window.scrollY)", text: "restored", timeout_secs: 15, only_on: [ios, android] }
   - assert_value: { id: address, value: "harbor.example", only_on: [ios, android, harmony] }
   # Making room for it let go of the tab used longest ago, which is now the second.
   - assert_missing: { id: "page:2", only_on: [ios, android, harmony] }
