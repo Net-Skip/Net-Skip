@@ -719,7 +719,7 @@ impl Browser {
 
     /// The recently closed tabs, newest first, as (title, url).
     pub fn recently_closed(self) -> Vec<(String, String)> {
-        self.closed_count.get();
+        self.closed_count.track();
         self.closed
             .get_untracked()
             .borrow()

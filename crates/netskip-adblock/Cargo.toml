@@ -42,3 +42,6 @@ block2 = "0.6"
 [[test]]
 name = "webkit_compile"
 harness = false
+
+[lints]
+workspace = true

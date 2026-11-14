@@ -480,7 +480,7 @@ pub fn engine() -> Option<&'static AdBlock> {
 /// The level the site of `url` gets. A tracked read.
 pub fn level_for(url: &str) -> Level {
     VERSION.with(|v| v.get());
-    LEVEL.get();
+    let _ = LEVEL.get();
     match (engine(), address::site(url)) {
         (Some(a), Some(site)) => a.level_for(&site),
         _ => untrack(global_level),

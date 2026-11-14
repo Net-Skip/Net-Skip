@@ -31,11 +31,14 @@ fn decisions(adblock: &AdBlock) -> Vec<(bool, Option<String>)> {
 
 fn engine_file(dir: &std::path::Path) -> std::path::PathBuf {
     std::fs::read_dir(dir)
-        .unwrap()
+        .expect("read the cache directory")
         .flatten()
         .map(|e| e.path())
         .find(|p| {
-            let name = p.file_name().unwrap().to_string_lossy();
+            let name = p
+                .file_name()
+                .expect("a directory entry has a file name")
+                .to_string_lossy();
             name.starts_with("engine-custom-") && name.ends_with(".bin")
         })
         .expect("an engine file")
@@ -92,7 +95,7 @@ fn rules_of(rules: &ContentRules) -> Vec<Vec<Value>> {
         .lists
         .iter()
         .map(|l| {
-            let json = l.read_json().unwrap();
+            let json = l.read_json().expect("read the list's rules file");
             let parsed: Value = serde_json::from_str(&json).expect("valid JSON");
             let array = parsed.as_array().expect("a JSON array").clone();
             assert_eq!(array.len(), l.rules);
@@ -102,7 +105,9 @@ fn rules_of(rules: &ContentRules) -> Vec<Vec<Value>> {
 }
 
 fn action(rule: &Value) -> &str {
-    rule["action"]["type"].as_str().unwrap()
+    rule["action"]["type"]
+        .as_str()
+        .expect("a rule has an action type")
 }
 
 #[test]

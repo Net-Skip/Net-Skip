@@ -72,16 +72,19 @@ impl FakeClock {
         )))
     }
     pub fn advance(&self, by: Duration) {
-        *self.0.lock().unwrap() += by;
+        *self.0.lock().expect("the clock lock") += by;
     }
     pub fn secs(&self) -> u64 {
-        self.now().duration_since(UNIX_EPOCH).unwrap().as_secs()
+        self.now()
+            .duration_since(UNIX_EPOCH)
+            .expect("the fake clock starts after the epoch")
+            .as_secs()
     }
 }
 
 impl Clock for FakeClock {
     fn now(&self) -> SystemTime {
-        *self.0.lock().unwrap()
+        *self.0.lock().expect("the clock lock")
     }
 }
 
@@ -121,8 +124,14 @@ impl ListServer {
                     .iter()
                     .find(|(k, _)| k.eq_ignore_ascii_case("if-none-match"))
                     .map(|(_, v)| v.clone());
-                l.lock().unwrap().push((request.url.clone(), inm.clone()));
-                let serve = r.lock().unwrap().get(&request.url).cloned();
+                l.lock()
+                    .expect("the request log lock")
+                    .push((request.url.clone(), inm.clone()));
+                let serve = r
+                    .lock()
+                    .expect("the routes lock")
+                    .get(&request.url)
+                    .cloned();
                 Ok(match serve {
                     Some(Serve::Body(body)) => {
                         let etag = format!("\"{:x}\"", body.len() * 31 + body.lines().count());
@@ -150,13 +159,16 @@ impl ListServer {
     }
 
     pub fn serve(&self, url: &str, serve: Serve) {
-        self.routes.lock().unwrap().insert(url.to_string(), serve);
+        self.routes
+            .lock()
+            .expect("the routes lock")
+            .insert(url.to_string(), serve);
     }
 
     pub fn requests_to(&self, url: &str) -> Vec<Option<String>> {
         self.log
             .lock()
-            .unwrap()
+            .expect("the request log lock")
             .iter()
             .filter(|(u, _)| u == url)
             .map(|(_, inm)| inm.clone())

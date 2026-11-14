@@ -193,7 +193,7 @@ fn a_changed_list_recompiles() {
 
 fn engine_files(dir: &std::path::Path) -> Vec<String> {
     let mut names: Vec<String> = std::fs::read_dir(dir)
-        .unwrap()
+        .expect("read the cache directory")
         .flatten()
         .map(|e| e.file_name().to_string_lossy().into_owned())
         .filter(|n| n.starts_with("engine-") && n.ends_with(".bin"))
