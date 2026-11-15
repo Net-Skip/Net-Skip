@@ -408,7 +408,7 @@ pub struct Builder {
 
 impl Builder {
     /// The directory for lists, `state.json`, compiled engines and WebKit rules. Default:
-    /// `adblock/` in the app's cache directory (`day_spec::storage::cache_dir()`).
+    /// `adblock/` in the app's cache directory (`day_process::storage::cache_dir()`).
     pub fn cache_dir(mut self, dir: impl Into<PathBuf>) -> Builder {
         self.cache_dir = Some(dir.into());
         self
@@ -449,7 +449,7 @@ impl Builder {
     pub fn build(self) -> Result<AdBlock, Error> {
         let dir = match self.cache_dir {
             Some(dir) => dir,
-            None => day_spec::storage::cache_dir()
+            None => day_process::storage::cache_dir()
                 .ok_or(Error::NoCacheDirectory)?
                 .join("adblock"),
         };

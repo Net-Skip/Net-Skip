@@ -12,8 +12,8 @@ pub trait AddressFieldLook: Decorate + Sized {
     fn frameless(self) -> Decorated<Self> {
         #[cfg(feature = "appkit")]
         {
-            use day_toolkit_appkit::ext::AppKitExt;
-            self.appkit(|view, _class, _mtm| {
+            use day_toolkit_appkit::ext::appkit;
+            self.tweak(appkit(|view, _class, _mtm| {
                 use objc2::runtime::{AnyObject, Sel};
                 use objc2::{msg_send, sel};
                 let obj: &AnyObject = view;
@@ -32,12 +32,12 @@ pub trait AddressFieldLook: Decorate + Sized {
                         let _: () = msg_send![obj, setFocusRingType: 1isize];
                     }
                 }
-            })
+            }))
         }
         #[cfg(feature = "uikit")]
         {
-            use day_toolkit_uikit::ext::UiKitExt;
-            self.uikit(|view, _class, _mtm| {
+            use day_toolkit_uikit::ext::uikit;
+            self.tweak(uikit(|view, _class, _mtm| {
                 use objc2::runtime::AnyObject;
                 use objc2::{msg_send, sel};
                 let obj: &AnyObject = view;
@@ -53,22 +53,22 @@ pub trait AddressFieldLook: Decorate + Sized {
                         let _: () = msg_send![obj, setBackgroundColor: nil];
                     }
                 }
-            })
+            }))
         }
         #[cfg(feature = "gtk")]
         {
-            use day_toolkit_gtk::ext::GtkExt;
-            self.gtk(|widget, _class| {
+            use day_toolkit_gtk::ext::gtk;
+            self.tweak(gtk(|widget, _class| {
                 use gtk4::prelude::ObjectExt;
                 if widget.has_property("has-frame") {
                     widget.set_property("has-frame", false);
                 }
-            })
+            }))
         }
         #[cfg(feature = "material")]
         {
-            use day_toolkit_material::ext::MaterialExt;
-            self.android(|view, class, env| {
+            use day_toolkit_material::ext::android;
+            self.tweak(android(|view, class, env| {
                 if !class.ends_with("TextInputLayout") {
                     return;
                 }
@@ -130,7 +130,7 @@ pub trait AddressFieldLook: Decorate + Sized {
                     }
                     Ok(())
                 })();
-            })
+            }))
         }
         #[cfg(not(any(
             feature = "appkit",

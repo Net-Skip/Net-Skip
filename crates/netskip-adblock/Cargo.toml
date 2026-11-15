@@ -21,7 +21,7 @@ day-part-http = "0.*"
 # `spawn_blocking` for compiling off the UI thread and `schedule` for the update timer.
 day-async = "0.*"
 # `storage::cache_dir()`, the app's cache directory.
-day-spec = "0.*"
+day-process = "0.*"
 # The matcher. `single-thread` stays off so one engine serves request callbacks on background
 # threads (Android's shouldInterceptRequest, ArkWeb's IO thread); `content-blocking` adds the
 # WebKit rule export. README.md "Dependencies" has the measurements.
