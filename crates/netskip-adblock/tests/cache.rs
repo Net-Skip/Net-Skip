@@ -9,6 +9,7 @@ mod common;
 use common::*;
 use netskip_adblock::{AdBlock, ContentRules, Level, RequestInfo, ResourceKind, Status};
 use serde_json::Value;
+use std::assert_matches;
 
 fn decisions(adblock: &AdBlock) -> Vec<(bool, Option<String>)> {
     let page = "https://news.example/";
@@ -77,7 +78,7 @@ fn engine_cache_round_trip() {
     std::fs::write(&file, bytes).unwrap();
     let rebuilt = blocker(&dir, &offline, &clock, level);
     block_on(rebuilt.prepare()).unwrap();
-    assert!(matches!(rebuilt.status(), Status::Ready { lists: 3, .. }));
+    assert_matches!(rebuilt.status(), Status::Ready { lists: 3, .. });
     assert!(decisions(&rebuilt).iter().all(|(block, _)| !block));
     assert!(
         rebuilt

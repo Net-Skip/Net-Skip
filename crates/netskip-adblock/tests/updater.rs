@@ -7,6 +7,7 @@
 
 mod common;
 
+use std::assert_matches;
 use std::borrow::Cow;
 use std::time::Duration;
 
@@ -211,9 +212,7 @@ fn failures_keep_the_last_copy_and_back_off() {
 
     server.serve(ADS_URL, Serve::Status(503));
     let report = block_on(adblock.update_now());
-    assert!(
-        matches!(outcome(&report, &ads), UpdateOutcome::Failed { error } if error.contains("503"))
-    );
+    assert_matches!(outcome(&report, &ads), UpdateOutcome::Failed { error } if error.contains("503"));
     assert_eq!(std::fs::read_to_string(&path).unwrap(), stored);
     assert!(ads_blocked(&adblock), "the last good copy stays in use");
     let st = state(&adblock, &ads);
@@ -229,9 +228,7 @@ fn failures_keep_the_last_copy_and_back_off() {
         Serve::Body("<!doctype html><title>Oops</title>".into()),
     );
     let report = block_on(adblock.update_due());
-    assert!(
-        matches!(outcome(&report, &ads), UpdateOutcome::Failed { error } if error.contains("HTML"))
-    );
+    assert_matches!(outcome(&report, &ads), UpdateOutcome::Failed { error } if error.contains("HTML"));
     let st = state(&adblock, &ads);
     assert_eq!(st.failures, 2);
     let wait = st.next_fetch.unwrap() - clock.secs();

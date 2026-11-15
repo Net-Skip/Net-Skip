@@ -469,7 +469,7 @@ mod tests {
         assert_eq!(parse_expires(list), Some(Duration::from_secs(4 * 86_400)));
         assert_eq!(
             parse_expires("! Expires: 1 hours\n||a^"),
-            Some(Duration::from_secs(3_600))
+            Some(Duration::from_hours(1))
         );
         assert_eq!(
             parse_expires("! Expires: 18 hours\n"),

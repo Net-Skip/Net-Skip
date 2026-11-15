@@ -1,6 +1,7 @@
 // Copyright © The Daybrite Project
 // SPDX-License-Identifier: MPL-2.0
 use netskip_model::complete::*;
+use std::assert_matches;
 
 const NOW: i64 = 1_800_000_000_000;
 const DAY: i64 = 86_400_000;
@@ -271,7 +272,7 @@ fn every_word_must_match_title_or_address() {
         .filter(|r| matches!(r, Row::Page { .. }))
         .collect();
     assert_eq!(pages.len(), 1);
-    assert!(matches!(pages[0], Row::Page { url, .. } if url.contains("Rust_(programming")));
+    assert_matches!(pages[0], Row::Page { url, .. } if url.contains("Rust_(programming"));
 }
 
 #[test]
@@ -340,7 +341,7 @@ fn limits_are_respected() {
         3
     );
     // Best first: the most visited sites lead.
-    assert!(matches!(&rows[3], Row::Page { url, .. } if url == "https://site19.example/"));
+    assert_matches!(&rows[3], Row::Page { url, .. } if url == "https://site19.example/");
 }
 
 #[test]

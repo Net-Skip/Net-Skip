@@ -10,6 +10,7 @@ mod common;
 
 use common::*;
 use netskip_adblock::{Level, RequestInfo, ResourceKind, Source, SourceId, Status, UpdateOutcome};
+use std::assert_matches;
 
 const EXTRA_URL: &str = "https://lists.test/extra.txt";
 const EXTRA: &str = "! Title: Extra\n||extra.example^\n";
@@ -78,7 +79,7 @@ fn staged_settings_apply_without_a_gap() {
 
     // Applying is immediate: the engine is already compiled, nothing loads.
     adblock.set_settings(next);
-    assert!(matches!(adblock.status(), Status::Ready { lists: 3, .. }));
+    assert_matches!(adblock.status(), Status::Ready { lists: 3, .. });
     assert!(blocks(&adblock, "https://ads.example/a.png"));
     assert!(blocks(&adblock, "https://extra.example/x.png"));
     assert!(blocks(&adblock, "https://tracker.example/t.gif"));
