@@ -709,7 +709,7 @@ pub fn filter_lists_page() -> impl Piece {
                 label(move || level_label(&LEVEL.get())).font(Font::Headline),
                 label(status_text)
                     .font(Font::Footnote)
-                    .color(move || day::system_color(SystemColor::SecondaryText))
+                    .color(SystemColor::SecondaryText)
                     .id(day::id!(filter_lists_status)),
                 when(reload_offered, || {
                     row((
@@ -744,7 +744,7 @@ pub fn filter_lists_page() -> impl Piece {
                 .align(VAlign::Center),
                 label(res::str::blocking_lists_caption())
                     .font(Font::Footnote)
-                    .color(move || day::system_color(SystemColor::SecondaryText)),
+                    .color(SystemColor::SecondaryText),
             )),
             section((column(
                 builtin_lists(false)
@@ -838,7 +838,7 @@ fn list_row(source: Source, removable: bool) -> impl Piece {
             label(move || list_detail(&detail_source))
                 .font(Font::Footnote)
                 .align(TextAlign::Leading)
-                .color(move || day::system_color(SystemColor::SecondaryText)),
+                .color(SystemColor::SecondaryText),
         ))
         .spacing(2.0)
         .align(HAlign::Leading)
@@ -877,7 +877,7 @@ fn policy_row<M1, M2>(
             label(caption)
                 .font(Font::Footnote)
                 .align(TextAlign::Leading)
-                .color(move || day::system_color(SystemColor::SecondaryText)),
+                .color(SystemColor::SecondaryText),
         ))
         .spacing(2.0)
         .align(HAlign::Leading)
@@ -944,7 +944,7 @@ fn add_list_form() -> impl Piece {
             }
         })
         .font(Font::Footnote)
-        .color(move || day::system_color(SystemColor::SecondaryText))
+        .color(SystemColor::SecondaryText)
         .align(TextAlign::Leading)
         .id(day::id!(add_list_status)),
     ))

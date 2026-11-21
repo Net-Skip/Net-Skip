@@ -11,6 +11,7 @@
 
 use std::rc::Rc;
 
+use day::Key;
 use day::prelude::*;
 use day_piece_webview::{
     AuthRequest, AuthResponder, LinkPolicy, LoadErrorKind, WebProfile, web_view,
@@ -33,20 +34,12 @@ pub fn compact() -> bool {
 
 /// A neutral shade over the window background: darker in light mode, lighter in dark mode, so
 /// the address bar, the tab strip and the suggestion panel read as layers on every platform's
-/// own background color. Tracked: it follows the appearance.
-pub fn tone(light: f64, dark: f64) -> Color {
-    if day::dark_mode() {
-        Color::rgba(1.0, 1.0, 1.0, dark)
-    } else {
-        Color::rgba(0.0, 0.0, 0.0, light)
-    }
-}
-
-/// An opaque elevated surface: the window background with a slight lift.
-fn elevated() -> Color {
-    let bg = day::system_color(SystemColor::Background);
-    let lift = if day::dark_mode() { 0.06 } else { 0.0 };
-    Color::rgba(bg.r + lift, bg.g + lift, bg.b + lift, 1.0)
+/// own background color.
+pub const fn tone(light: f64, dark: f64) -> Ink {
+    Ink::adaptive(
+        Color::rgba(0.0, 0.0, 0.0, light),
+        Color::rgba(1.0, 1.0, 1.0, dark),
+    )
 }
 
 /// Phones and tablets, where a short landscape window still means a phone held sideways.
@@ -131,8 +124,7 @@ pub fn window(browser: Browser) -> impl Piece {
         })
         .strip_id(day::id!(tabs))
         .grow(Dimension::Both),
-        cover(overview, move |_| overview_page(browser))
-            .background(|_| day::system_color(SystemColor::Background)),
+        cover(overview, move |_| overview_page(browser)).background(|_| SystemColor::Background),
         cover(browser.library, move |pane: &Pane| {
             library::library_page(browser, *pane)
         })
@@ -392,7 +384,7 @@ fn error_page(tab: Tab) -> impl Piece {
         .grow(Dimension::Width),
     )
     .grow(Dimension::Both)
-    .background(|| day::system_color(SystemColor::Background))
+    .background(SystemColor::Background)
     .id(day::id!(error_page, tab.id))
 }
 
@@ -471,7 +463,7 @@ pub fn site_icon(url: impl Fn() -> String + Copy + 'static, size: f64) -> impl P
                 .frame(size * 0.7, size * 0.7)
                 .aligned(Alignment::Center)
                 .frame(size, size)
-                .background(move || day::system_color(SystemColor::Surface))
+                .background(SystemColor::Surface)
                 .corner_radius(size * 0.22)
                 .any(),
             None => label(move || address::monogram(&url()))
@@ -536,7 +528,7 @@ fn progress_line(browser: Browser, height: f64) -> impl Piece {
         let w = size.width * p.value.clamp(0.0, 1.0);
         d.fill(
             Shape::Rect(Rect::new(0.0, 0.0, w, size.height)),
-            day::system_color(SystemColor::Accent),
+            SystemColor::Accent,
         );
     })
     .height(height)
@@ -602,14 +594,14 @@ fn address_input(browser: Browser) -> impl Piece {
             let (start, end) = omnibox.selection.get_untracked();
             start..end
         })
-        .on_key(move |key| match key.key.as_str() {
-            "ArrowUp" => {
+        .on_key(move |key| match key.key {
+            Key::ArrowUp => {
                 omnibox.arrow(false);
             }
-            "ArrowDown" => {
+            Key::ArrowDown => {
                 omnibox.arrow(true);
             }
-            "Escape" => omnibox.escape(browser),
+            Key::Escape => omnibox.escape(browser),
             _ => {}
         })
         .focused(omnibox.focused)
@@ -688,7 +680,7 @@ fn address_field(browser: Browser) -> impl Piece {
         .spacing(6.0)
         .align(VAlign::Center)
         .padding(Insets::new(5.0, 10.0, 5.0, 8.0))
-        .background(move || tone(0.06, 0.09))
+        .background(tone(0.06, 0.09))
         .corner_radius(10.0)
         .overlay_aligned(
             Alignment::Bottom,
@@ -721,28 +713,24 @@ fn tab_strip(browser: Browser) -> impl Piece {
     .spacing(4.0)
     .align(VAlign::Center)
     .padding(Insets::new(6.0, 8.0, 4.0, 8.0))
-    .background(move || tone(0.07, 0.0))
-    .background(move || {
-        if day::dark_mode() {
-            Color::rgba(0.0, 0.0, 0.0, 0.35)
-        } else {
-            Color::CLEAR
-        }
-    })
+    .background(Ink::adaptive(
+        Color::rgba(0.0, 0.0, 0.0, 0.07),
+        Color::rgba(0.0, 0.0, 0.0, 0.35),
+    ))
     .id(day::id!(tab_strip))
 }
 
 fn tab_chip(browser: Browser, key: String) -> impl Piece {
     let id: u64 = key.parse().unwrap_or_default();
     let selected = move || browser.tabs.selected().and_then(|k| k.parse().ok()) == Some(id);
-    let hovered = Signal::new(false);
+    let pointer = InteractionState::new();
     let Some(t) = untrack(|| browser.tab(&key)) else {
         return spacer().width(0.0).any();
     };
     // Safari's tab: the close button at the leading edge while the pointer is over the tab,
     // the icon and title centered in what remains.
     let close = switch(
-        move || hovered.get(),
+        move || pointer.hovered(),
         move |shown| {
             if *shown {
                 vector(res::vectors::close)
@@ -779,22 +767,15 @@ fn tab_chip(browser: Browser, key: String) -> impl Piece {
     .height(30.0)
     .background(move || {
         if selected() {
-            tone(0.0, 0.10)
-        } else if hovered.get() {
+            Ink::adaptive(Color::WHITE, Color::rgba(1.0, 1.0, 1.0, 0.10))
+        } else if pointer.hovered() {
             tone(0.05, 0.05)
         } else {
-            Color::CLEAR
-        }
-    })
-    .background(move || {
-        if selected() && !day::dark_mode() {
-            Color::WHITE
-        } else {
-            Color::CLEAR
+            Ink::CLEAR
         }
     })
     .corner_radius(7.0)
-    .on_hover(move |at| hovered.set(at.is_some()))
+    .interaction(pointer)
     .on_tap(move || {
         browser.select(&id.to_string());
     })
@@ -910,7 +891,7 @@ fn toolbar(browser: Browser) -> impl Piece {
     .spacing(8.0)
     .align(VAlign::Center)
     .padding(Insets::new(6.0, 10.0, 6.0, 10.0))
-    .background(move || day::system_color(SystemColor::Background))
+    .background(SystemColor::Background)
     .id(day::id!(toolbar))
 }
 
@@ -1077,19 +1058,18 @@ fn suggestions(browser: Browser) -> impl Piece {
     switch(compact, move |phone| {
         if *phone {
             scroll(suggestion_rows(browser))
-                .background(move || day::system_color(SystemColor::Background))
+                .background(SystemColor::Background)
                 .grow(Dimension::Both)
                 .id(day::id!(suggestions))
                 .any()
         } else {
             // At most a dozen rows: the panel sizes to them, as a desktop browser's does.
             suggestion_rows(browser)
-                .background(elevated)
-                .corner_radius(12.0)
-                .overlay(
-                    rounded_rectangle(12.0)
-                        .stroke(tone(0.12, 0.14), 1.0)
-                        .grow(Dimension::Both),
+                .surface(
+                    Surface::new()
+                        .fill(SystemColor::ElevatedSurface)
+                        .corner_radius(12.0)
+                        .border(tone(0.12, 0.14), 1.0),
                 )
                 .grow(Dimension::Width)
                 .max_width(820.0)
@@ -1228,9 +1208,9 @@ fn suggestion_row(
     .padding(Insets::new(8.0, 14.0, 8.0, 14.0))
     .background(move || {
         if highlighted() {
-            day::system_color(SystemColor::Accent).with_alpha(0.22)
+            SystemColor::Accent.with_alpha(0.22)
         } else {
-            Color::CLEAR
+            Ink::CLEAR
         }
     })
     .on_tap(move || omnibox.choose(browser, item()))
@@ -1268,10 +1248,10 @@ fn find_bar(browser: Browser) -> impl Piece {
             .placeholder(res::str::find_placeholder())
             .submit_label(SubmitLabel::Search)
             .on_submit(move || run(scripts::find_next()))
-            .on_key(move |key| match key.key.as_str() {
-                "ArrowDown" => run(scripts::find_next()),
-                "ArrowUp" => run(scripts::find_previous()),
-                "Escape" => close(),
+            .on_key(move |key| match key.key {
+                Key::ArrowDown => run(scripts::find_next()),
+                Key::ArrowUp => run(scripts::find_previous()),
+                Key::Escape => close(),
                 _ => {}
             })
             .focused(Signal::new(true))
@@ -1315,7 +1295,7 @@ fn find_bar(browser: Browser) -> impl Piece {
     .spacing(6.0)
     .align(VAlign::Center)
     .padding(Insets::new(6.0, 10.0, 6.0, 10.0))
-    .background(move || day::system_color(SystemColor::Surface))
+    .background(SystemColor::Surface)
     .id(day::id!(find_bar))
     .any()
 }
@@ -1391,27 +1371,15 @@ fn phone_bottom(browser: Browser) -> impl Piece {
             .any(),
         },
     )
-    .background(bar_color)
+    .background(BAR)
     .id(day::id!(bottom_bar))
 }
 
 /// The bars' backdrop: the grouped background Safari's bars sit on.
-fn bar_color() -> Color {
-    if day::dark_mode() {
-        Color::hex(0x1c1c1e)
-    } else {
-        Color::hex(0xf2f2f7)
-    }
-}
+const BAR: Ink = Ink::adaptive(Color::hex(0xf2f2f7), Color::hex(0x1c1c1e));
 
 /// The address pill's own color: white over the light bar, a lifted gray over the dark one.
-fn pill_color() -> Color {
-    if day::dark_mode() {
-        Color::hex(0x3a3a3c)
-    } else {
-        Color::hex(0xffffff)
-    }
-}
+const PILL: Ink = Ink::adaptive(Color::hex(0xffffff), Color::hex(0x3a3a3c));
 
 /// The site the page is on, as the bars show it at rest: `en.wikipedia.org`.
 fn resting_site(browser: Browser) -> String {
@@ -1455,16 +1423,16 @@ fn safari_pill_bar(browser: Browser) -> impl Piece {
             .single_line()
             .color(move || {
                 if has_page() {
-                    day::system_color(SystemColor::Text)
+                    SystemColor::Text
                 } else {
-                    day::system_color(SystemColor::SecondaryText)
+                    SystemColor::SecondaryText
                 }
             }),
             spacer(),
         ))
         .spacing(4.0)
         .align(VAlign::Center)
-        .background(pill_color)
+        .background(PILL)
         .on_tap(move || omnibox.focused.set(true))
         .id(day::id!(address_resting))
     };
@@ -1526,12 +1494,11 @@ fn safari_pill_bar(browser: Browser) -> impl Piece {
     .align(VAlign::Center)
     .height(44.0)
     .padding(Insets::new(0.0, 6.0, 0.0, 10.0))
-    .background(pill_color)
-    .corner_radius(12.0)
-    .overlay(
-        rounded_rectangle(12.0)
-            .stroke(tone(0.08, 0.1), 0.5)
-            .grow(Dimension::Both),
+    .surface(
+        Surface::new()
+            .fill(PILL)
+            .corner_radius(12.0)
+            .border(tone(0.08, 0.1), 0.5),
     )
     .overlay_aligned(
         Alignment::Bottom,
@@ -1551,7 +1518,7 @@ fn safari_pill_bar(browser: Browser) -> impl Piece {
     .spacing(10.0)
     .align(VAlign::Center)
     .padding(Insets::new(8.0, 20.0, 6.0, 20.0))
-    .background(bar_color)
+    .background(BAR)
 }
 
 /// One of the toolbar's five buttons: the same glyph size and the same share of the width each,
@@ -1647,7 +1614,7 @@ fn safari_toolbar(browser: Browser) -> impl Piece {
     .align(VAlign::Center)
     .height(44.0)
     .padding(Insets::new(0.0, 8.0, 2.0, 8.0))
-    .background(bar_color)
+    .background(BAR)
 }
 
 /// The tabs button's long-press menu: new tabs, and closing this one.
@@ -1669,7 +1636,7 @@ fn mini_bar(browser: Browser) -> impl Piece {
         .align(TextAlign::Center)
         .grow(Dimension::Width)
         .padding(Insets::new(6.0, 16.0, 4.0, 16.0))
-        .background(bar_color)
+        .background(BAR)
         .on_tap(move || {
             with_animation(AnimSpec::ease_out(220), || browser.chrome_hidden.set(false))
         })
@@ -1693,13 +1660,13 @@ fn chrome_bar(browser: Browser) -> impl Piece {
             move || (editing(), secure()),
             move |(editing, secure)| match (editing, secure) {
                 (false, true) => vector(res::vectors::lock)
-                    .tint(day::system_color(SystemColor::SecondaryText))
+                    .tint(SystemColor::SecondaryText)
                     .frame(16.0, 16.0)
                     .a11y(|a| a.label(res::str::secure_connection()))
                     .id(day::id!(address_lock))
                     .any(),
                 _ => vector(res::vectors::search)
-                    .tint(day::system_color(SystemColor::SecondaryText))
+                    .tint(SystemColor::SecondaryText)
                     .frame(18.0, 18.0)
                     .a11y(|a| a.hidden())
                     .any(),
@@ -1723,7 +1690,7 @@ fn chrome_bar(browser: Browser) -> impl Piece {
     .height(40.0)
     .padding(Insets::new(0.0, 14.0, 0.0, 10.0))
     // Chrome's omnibox: the theme's container tone on the bar's surface.
-    .background(move || day::system_color(SystemColor::Surface))
+    .background(SystemColor::Surface)
     .corner_radius(20.0)
     .overlay_aligned(
         Alignment::Bottom,
@@ -1766,14 +1733,14 @@ fn chrome_bar(browser: Browser) -> impl Piece {
                     })
                     .font(Font::Footnote)
                     .bold()
-                    .color(move || day::system_color(SystemColor::SecondaryText))
+                    .color(SystemColor::SecondaryText)
                     .align(TextAlign::Center)
                     .frame(22.0, 22.0)
                     // In the bar's icon color, beside the home, new-tab and menu glyphs.
-                    .overlay(
-                        rounded_rectangle(5.0)
-                            .stroke(day::system_color(SystemColor::SecondaryText), 2.0)
-                            .grow(Dimension::Both),
+                    .surface(
+                        Surface::new()
+                            .corner_radius(5.0)
+                            .border(SystemColor::SecondaryText, 2.0),
                     )
                     .padding(Insets::new(11.0, 13.0, 11.0, 13.0))
                     .on_tap(move || browser.show_overview())
@@ -1808,7 +1775,7 @@ fn chrome_bar(browser: Browser) -> impl Piece {
     .padding(Insets::new(0.0, 4.0, 0.0, 4.0))
     // The window's own surface, which the status bar above shows too, so the two read as one
     // bar, as in Chrome.
-    .background(move || day::system_color(SystemColor::Background))
+    .background(SystemColor::Background)
 }
 
 /// Chrome's ⋮ menu: the page's commands first, then the browser's.
@@ -2025,7 +1992,7 @@ fn overview_page(browser: Browser) -> impl Piece {
         ))
         .align(VAlign::Center)
         .padding(Insets::new(8.0, 16.0, 8.0, 16.0))
-        .background(move || day::system_color(SystemColor::Surface)),
+        .background(SystemColor::Surface),
     ))
     .grow(Dimension::Both)
     .id(day::id!(overview))
@@ -2066,7 +2033,7 @@ fn tab_card(browser: Browser, key: String) -> impl Piece {
             .any(),
         },
     )
-    .background(move || day::system_color(SystemColor::Background))
+    .background(SystemColor::Background)
     .aspect_ratio(0.78)
     .grow(Dimension::Width);
     let title = move || {
@@ -2078,13 +2045,10 @@ fn tab_card(browser: Browser, key: String) -> impl Piece {
         // Chrome's card: a header with the site's icon, title and close, over the page; the
         // selected tab's header takes a tint of the accent and its frame the accent itself. The
         // tint stays light so the title and the close glyph read on it in their usual colors.
-        let accent = move || day::system_color(SystemColor::Accent);
         column((
             row((
                 tab_icon(tab, 16.0),
-                title()
-                    .color(move || day::system_color(SystemColor::Text))
-                    .grow(Dimension::Width),
+                title().color(SystemColor::Text).grow(Dimension::Width),
                 close,
             ))
             .spacing(6.0)
@@ -2092,28 +2056,33 @@ fn tab_card(browser: Browser, key: String) -> impl Piece {
             .padding(Insets::new(6.0, 10.0, 6.0, 10.0))
             .background(move || {
                 if selected() {
-                    let a = accent();
-                    Color::rgba(a.r, a.g, a.b, 0.22)
+                    SystemColor::Accent.with_alpha(0.22)
                 } else {
-                    day::system_color(SystemColor::Surface)
+                    SystemColor::Surface.into()
                 }
             }),
             preview,
         ))
         .grow(Dimension::Width)
-        .corner_radius(16.0)
-        .overlay(when(selected, move || {
-            rounded_rectangle(16.0)
-                .stroke(accent(), 3.0)
-                .grow(Dimension::Both)
-        }))
+        .surface(move || {
+            Surface::new()
+                .corner_radius(16.0)
+                .border(SystemColor::Accent, if selected() { 3.0 } else { 0.0 })
+        })
         .any()
     } else {
         // Safari's card: the page itself, rounded, with a close button in its corner, and the
         // site's icon and title under it; the selected tab is ringed in the accent color.
         column((
             preview
-                .corner_radius(12.0)
+                .surface(move || {
+                    let (edge, width) = if selected() {
+                        (SystemColor::Accent.into(), 3.0)
+                    } else {
+                        (tone(0.1, 0.15), 0.5)
+                    };
+                    Surface::new().corner_radius(12.0).border(edge, width)
+                })
                 .overlay_aligned(
                     Alignment::TopTrailing,
                     close
@@ -2121,16 +2090,6 @@ fn tab_card(browser: Browser, key: String) -> impl Piece {
                         .background(move || Color::rgba(0.0, 0.0, 0.0, 0.45))
                         .corner_radius(13.0)
                         .padding(6.0),
-                )
-                .overlay(when(selected, || {
-                    rounded_rectangle(12.0)
-                        .stroke(day::system_color(SystemColor::Accent), 3.0)
-                        .grow(Dimension::Both)
-                }))
-                .overlay(
-                    rounded_rectangle(12.0)
-                        .stroke(tone(0.1, 0.15), 0.5)
-                        .grow(Dimension::Both),
                 )
                 .grow(Dimension::Width),
             row((spacer(), tab_icon(tab, 14.0), title(), spacer()))

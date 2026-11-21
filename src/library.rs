@@ -255,7 +255,7 @@ pub fn start_page(browser: Browser, tab: Tab) -> impl Piece {
         .aligned(Alignment::Top)
         .grow(Dimension::Width),
     )
-    .background(move || day::system_color(SystemColor::Background))
+    .background(SystemColor::Background)
     .id(day::id!(start_page, tab.id))
 }
 
