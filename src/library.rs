@@ -4,11 +4,9 @@
 //! Bookmarks and History lists. Reads go to the library worker ([`crate::store`]) and land in
 //! signals that keep their last value while the next read runs.
 
-use std::convert::Infallible;
 use std::future::Future;
 
 use day::prelude::*;
-use day::reactive::Resource;
 use day_persistence::DbError;
 use netskip_model::address;
 use netskip_model::complete::{self, Candidate};
@@ -43,51 +41,51 @@ fn version() -> u64 {
     VERSION.with(|v| v.get())
 }
 
-/// A signal holding what `fetch` last produced for `source`'s current value. The previous value
-/// stays while the next loads, and a superseded fetch never lands.
+/// A read-only projection of the current query. Library revisions refetch without clearing
+/// its value; a different query clears it, and a superseded fetch never lands.
 fn snapshot<S, T, F>(
     initial: T,
     source: impl Fn() -> S + 'static,
     fetch: impl Fn(S) -> F + 'static,
-) -> Signal<T>
+) -> Memo<T>
 where
     S: Clone + PartialEq + 'static,
-    T: 'static,
+    T: Clone + PartialEq + 'static,
     F: Future<Output = Result<T, DbError>> + 'static,
 {
-    let value = Signal::new(initial);
-    Resource::new(source, move |s| {
-        let fetched = fetch(s);
-        async move {
-            match fetched.await {
-                Ok(v) => value.set(v),
-                Err(e) => warn!("library read failed: {e}"),
+    let data = AsyncData::new(source, fetch);
+    watch(version, move |_, _| data.refetch());
+    Effect::new(move || {
+        data.with_error(|error| {
+            if let Some(error) = error {
+                warn!("library read failed: {error}");
             }
-            Ok::<(), Infallible>(())
-        }
+        })
     });
-    value
+    Memo::new(move || data.value().unwrap_or_else(|| initial.clone()))
 }
 
 /// Every bookmark, in order. Tracked.
-pub fn bookmarks() -> Signal<Vec<Bookmark>> {
-    snapshot(Vec::new(), version, |_| store::read(store::bookmarks))
+pub fn bookmarks() -> Memo<Vec<Bookmark>> {
+    snapshot(Vec::new(), || (), |_| store::read(store::bookmarks))
 }
 
 /// History, newest first, filtered by `query`.
-pub fn history_pages(query: Signal<String>) -> Signal<Vec<HistoryPage>> {
+pub fn history_pages(query: Signal<String>) -> Memo<Vec<HistoryPage>> {
     snapshot(
         Vec::new(),
-        move || (version(), query.get()),
-        |(_, q)| store::read(move |db| store::history(db, &q, 1000)),
+        move || query.get(),
+        |q| store::read(move |db| store::history(db, &q, 1000)),
     )
 }
 
 /// The start page's sites, from recent history and bookmarks.
-fn recent() -> Signal<Vec<Candidate>> {
-    snapshot(Vec::new(), version, |_| {
-        store::read(|db| store::recent_candidates(db, 400))
-    })
+fn recent() -> Memo<Vec<Candidate>> {
+    snapshot(
+        Vec::new(),
+        || (),
+        |_| store::read(|db| store::recent_candidates(db, 400)),
+    )
 }
 
 /// Bookmark a page, or remove its bookmark when it has one.
@@ -105,7 +103,7 @@ pub fn toggle_bookmark(url: String, title: String) {
 }
 
 /// Whether the page has a bookmark, against the bookmarks snapshot `marks`. Tracked.
-pub fn is_bookmarked(marks: Signal<Vec<Bookmark>>, url: &str) -> bool {
+pub fn is_bookmarked(marks: Memo<Vec<Bookmark>>, url: &str) -> bool {
     let key = address::history_key(url);
     key.is_some() && marks.with(|m| m.iter().any(|b| address::history_key(&b.url) == key))
 }
@@ -485,7 +483,7 @@ fn bookmarks_list(browser: Browser, query: Signal<String>, editing: Signal<bool>
             },
         )
         .on_activate(move |id: u64| {
-            if let Some(b) = marks.get_untracked().into_iter().find(|b| b.id == id) {
+            if let Some(b) = untrack(|| marks.get()).into_iter().find(|b| b.id == id) {
                 browser.load_in_current(&b.url, true);
             }
         })
@@ -620,7 +618,7 @@ fn history_list(browser: Browser, query: Signal<String>) -> impl Piece {
             },
         )
         .on_activate(move |id: u64| {
-            if let Some(p) = pages.get_untracked().into_iter().find(|p| p.id == id) {
+            if let Some(p) = untrack(|| pages.get()).into_iter().find(|p| p.id == id) {
                 browser.load_in_current(&p.url, true);
             }
         })
