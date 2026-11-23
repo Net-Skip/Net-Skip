@@ -89,7 +89,7 @@ undocumented_unsafe_blocks = "warn"
 unwrap_used = "warn"
 
 [workspace.package]
-version = "2.0.0"
+version = "2.1.0"
 
 # The bundled SQLite is C compiled at the profile's optimization level; unoptimized, a long
 # history makes completion visibly slower. Optimize it alone in debug builds.
