@@ -2234,7 +2234,7 @@ dependencies = [
 
 [[package]]
 name = "net-skip"
-version = "2.1.0"
+version = "2.1.1"
 dependencies = [
  "day-app",
  "day-build",

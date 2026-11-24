@@ -16,7 +16,7 @@ title = "Net Skip"
 artifact = "net-skip"
 # The Skip-based Net Skip shipped build 242 (version 1.5.5), and 2.0's first upload was 243; the
 # stores refuse a build number they have seen.
-build = 245
+build = 246
 targets = ["macos-appkit", "ios-uikit", "android-material", "linux-gtk", "linux-qt", "windows-winui", "harmony-arkui"]
 
 # The window's size and minimum size in points, for every platform with resizable windows.
