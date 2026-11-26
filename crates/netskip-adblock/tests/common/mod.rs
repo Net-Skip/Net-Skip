@@ -1,5 +1,5 @@
 // Copyright © The Daybrite Project
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: GPL-2.0-or-later
 
 //! Shared test harness: a scratch cache directory, a clock the test moves, a simulated list
 //! server with ETags, and a blocker wired to all three.

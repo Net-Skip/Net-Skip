@@ -1,5 +1,5 @@
 // Copyright © The Daybrite Project
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: GPL-2.0-or-later
 //! Address-bar completion: the inline completion typed text grows into, the suggestion list
 //! under the bar, and the frecency score both rank by.
 

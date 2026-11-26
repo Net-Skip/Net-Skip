@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Copyright © The Daybrite Project
-# SPDX-License-Identifier: MPL-2.0
+# SPDX-License-Identifier: GPL-2.0-or-later
 """A local server for what the fixture pages cannot stand in for: real HTTP responses.
 
 Fixture mode leaves the loopback alone, so a Net Skip started with NETSKIP_FIXTURES=1 (or

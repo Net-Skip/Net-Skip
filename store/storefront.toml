@@ -1,5 +1,5 @@
 # Copyright © The Daybrite Project
-# SPDX-License-Identifier: MPL-2.0
+# SPDX-License-Identifier: GPL-2.0-or-later
 #
 # The App Store and Google Play listing, also shown on the app's website:
 # https://daybrite.dev/docs/how-to/app-store-submissions#prepare-the-listing
@@ -41,7 +41,7 @@ Type a few letters in the address bar and Net Skip completes the site from your 
 
 Net Skip keeps your history and bookmarks on your device and contains no ads or tracking. Search suggestions, which send what you type in the address bar to your search engine, can be turned off in Settings.
 
-Net Skip is open source under the Mozilla Public License 2.0: github.com/Net-Skip/Net-Skip
+Net Skip is open source under GPL-2.0-or-later: github.com/Net-Skip/Net-Skip
 """
 keywords = ["browser", "web", "internet", "tabs", "private", "search", "kagi", "bookmarks", "history"]
 release-notes = """

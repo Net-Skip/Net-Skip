@@ -1,11 +1,11 @@
 # Copyright © The Daybrite Project
-# SPDX-License-Identifier: MPL-2.0
+# SPDX-License-Identifier: GPL-2.0-or-later
 
 [package]
 name = "netskip-adblock"
 version = "0.1.0"
 edition = "2024"
-license = "MPL-2.0"
+license = "GPL-2.0-or-later"
 description = "Net Skip's ad and tracker blocking: filter list catalog, blocking levels, list updates, and a request and cosmetic matcher"
 publish = false
 

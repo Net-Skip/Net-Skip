@@ -1,5 +1,5 @@
 # Copyright © The Daybrite Project
-# SPDX-License-Identifier: MPL-2.0
+# SPDX-License-Identifier: GPL-2.0-or-later
 #
 # What Net Skip tells sites it is (NETSKIP_FIXTURES=1): a browser by default, never an app's
 # embedded view, and whatever Settings chooses instead. WebKit and Android's WebView honor the

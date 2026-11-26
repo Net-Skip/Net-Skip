@@ -1,5 +1,5 @@
 # Copyright © The Daybrite Project
-# SPDX-License-Identifier: MPL-2.0
+# SPDX-License-Identifier: GPL-2.0-or-later
 #
 # The Hindi listing text: the same table as store/storefront.toml's [storefront.metadata], in a
 # file of its own so a translator edits one file per language. What it leaves out (the URLs) is
@@ -24,7 +24,7 @@ Net Skip आपके फ़ोन, टैबलेट और कंप्यू
 
 Net Skip आपका इतिहास और बुकमार्क आपके डिवाइस पर रखता है, और इसमें न विज्ञापन हैं, न ट्रैकिंग। खोज सुझाव, जो एड्रेस बार में आपका टाइप किया हुआ टेक्स्ट आपके खोज इंजन को भेजते हैं, सेटिंग्स में बंद किए जा सकते हैं।
 
-Net Skip, Mozilla Public License 2.0 के तहत ओपन सोर्स है: github.com/Net-Skip/Net-Skip
+Net Skip, GPL-2.0-or-later के तहत ओपन सोर्स है: github.com/Net-Skip/Net-Skip
 """
 keywords = ["ब्राउज़र", "वेब", "इंटरनेट", "टैब", "निजी", "खोज", "kagi", "बुकमार्क", "इतिहास"]
 release-notes = """

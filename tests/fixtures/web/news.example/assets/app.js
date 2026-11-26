@@ -1,4 +1,4 @@
-// Copyright © The Daybrite Project · SPDX-License-Identifier: MPL-2.0
+// Copyright © The Daybrite Project · SPDX-License-Identifier: GPL-2.0-or-later
 // The Daily Lantern's own script. It must always run, ad blocking or not.
 (function () {
   (window.__loaded = window.__loaded || []).push('app');

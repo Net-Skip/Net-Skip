@@ -1,5 +1,5 @@
 // Copyright © The Daybrite Project
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: GPL-2.0-or-later
 
 //! Hands the exported content rules to WebKit's own compiler, `WKContentRuleListStore`, on
 //! macOS. A custom harness, because the store reports on the main thread and only `main`

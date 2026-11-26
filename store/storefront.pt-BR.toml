@@ -1,5 +1,5 @@
 # Copyright © The Daybrite Project
-# SPDX-License-Identifier: MPL-2.0
+# SPDX-License-Identifier: GPL-2.0-or-later
 #
 # The Brazilian Portuguese listing text: the same table as store/storefront.toml's
 # [storefront.metadata], in a file of its own so a translator edits one file per language. What it
@@ -24,7 +24,7 @@ Digite algumas letras na barra de endereços e o Net Skip completa o site a part
 
 O Net Skip guarda seu histórico e seus favoritos no seu aparelho e não tem anúncios nem rastreamento. As sugestões de pesquisa, que enviam ao seu mecanismo de busca o que você digita na barra de endereços, podem ser desativadas em Ajustes.
 
-O Net Skip é de código aberto, sob a Mozilla Public License 2.0: github.com/Net-Skip/Net-Skip
+O Net Skip é de código aberto, sob a GPL-2.0-or-later: github.com/Net-Skip/Net-Skip
 """
 keywords = ["navegador", "web", "internet", "abas", "privado", "pesquisa", "kagi", "favoritos", "histórico"]
 release-notes = """

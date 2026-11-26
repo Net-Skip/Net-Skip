@@ -1,5 +1,5 @@
 // Copyright © The Daybrite Project
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: GPL-2.0-or-later
 
 //! The engine cache file (serialize, reload, same decisions; a damaged file is rebuilt) and
 //! the WebKit content rule export (valid JSON, rule shapes, chunking, versioning).

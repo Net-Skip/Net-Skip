@@ -1,10 +1,10 @@
 # Copyright © The Daybrite Project
-# SPDX-License-Identifier: MPL-2.0
+# SPDX-License-Identifier: GPL-2.0-or-later
 [package]
 name = "netskip-model"
 version = "0.1.0"
 edition = "2024"
-license = "MPL-2.0"
+license = "GPL-2.0-or-later"
 description = "Net Skip's browser model: address-bar input, search engines, autocomplete, tabs and history rules."
 publish = false
 

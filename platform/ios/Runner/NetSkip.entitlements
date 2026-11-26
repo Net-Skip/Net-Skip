@@ -2,7 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <!--
 Copyright © The Daybrite Project
-SPDX-License-Identifier: MPL-2.0
+SPDX-License-Identifier: GPL-2.0-or-later
 
 The entitlements the Skip-based Net Skip shipped with, kept so this version installs as an
 update with the same capabilities. com.apple.developer.web-browser is what lets people choose

@@ -1,5 +1,5 @@
 // Copyright © The Daybrite Project
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: GPL-2.0-or-later
 //! Net Skip: a web browser for phones, tablets and computers, built on
 //! [Day](https://daybrite.dev) with the platform's own web engine in every tab.
 //!

@@ -1,5 +1,5 @@
 // Copyright © The Daybrite Project
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: GPL-2.0-or-later
 //! Site icons: read from the page's `<link rel=icon>` (or `/favicon.ico`), scaled to 64 pixels,
 //! kept as PNG per site in memory and in the app's cache directory.
 

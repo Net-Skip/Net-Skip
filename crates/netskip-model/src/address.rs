@@ -1,5 +1,5 @@
 // Copyright © The Daybrite Project
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: GPL-2.0-or-later
 //! The address bar's text: deciding whether typed input is an address or a search, upgrading
 //! plain HTTP, and the short form the bar shows while it is not being edited.
 

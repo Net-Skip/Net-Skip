@@ -1,5 +1,5 @@
 // Copyright © The Daybrite Project
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: GPL-2.0-or-later
 
 //! Build time, cache size, load time and a few known decisions with real filter lists. The
 //! lists are not part of the repository (EasyList is share-alike); point `DAY_ADBLOCK_LISTS` at

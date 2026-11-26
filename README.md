@@ -1,6 +1,6 @@
 <!--
 Copyright © The Daybrite Project
-SPDX-License-Identifier: MPL-2.0
+SPDX-License-Identifier: GPL-2.0-or-later
 -->
 
 # Net Skip
@@ -67,7 +67,7 @@ day launch -t ios-uikit --env NETSKIP_FIXTURES=1 --script tests/server/server.ya
 
 ## License
 
-Net Skip is free software under the [Mozilla Public License 2.0](LICENSE). The interface icons
+Net Skip is free software under the [GNU General Public License, version 2 or later](LICENSE.txt). The interface icons
 under `resource/vectors/` other than `app_mark.svg` are
 [Material Symbols](https://github.com/google/material-design-icons) by Google, under the
 [Apache License 2.0](LICENSES/Apache-2.0.txt).

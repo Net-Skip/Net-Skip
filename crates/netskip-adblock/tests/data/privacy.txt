@@ -2,7 +2,7 @@
 ! Title: Day test privacy
 ! Expires: 6 hours
 ! Copyright © The Daybrite Project
-! SPDX-License-Identifier: MPL-2.0
+! SPDX-License-Identifier: GPL-2.0-or-later
 ! A hand-written list for netskip-adblock's tests. Every host is under .example.
 ||tracker.example^$third-party
 ||pixel.example/collect

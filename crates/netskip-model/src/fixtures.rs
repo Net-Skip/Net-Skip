@@ -1,5 +1,5 @@
 // Copyright © The Daybrite Project
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: GPL-2.0-or-later
 //! Fixture browsing: the address mapping that lets tests load web pages from files bundled with
 //! the app instead of the network.
 //!

@@ -1,5 +1,5 @@
 // Copyright © The Daybrite Project
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: GPL-2.0-or-later
 //! The browser's chrome around the pages.
 //!
 //! On a computer or a tablet: a tab strip, then a toolbar with Back, Forward, the address field

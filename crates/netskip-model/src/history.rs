@@ -1,5 +1,5 @@
 // Copyright © The Daybrite Project
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: GPL-2.0-or-later
 //! History rules: what a visit records, how the history list groups by day, and how far back
 //! each Clear History choice reaches.
 

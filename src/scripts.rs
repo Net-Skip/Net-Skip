@@ -1,5 +1,5 @@
 // Copyright © The Daybrite Project
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: GPL-2.0-or-later
 //! The scripts Net Skip runs in pages: reading the page's icons and finding text.
 //! Each is one expression; day-piece-webview evaluates it and returns its value as JSON.
 

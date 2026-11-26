@@ -1,5 +1,5 @@
 // Copyright © The Daybrite Project
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: GPL-2.0-or-later
 //! Per-platform touches Day's portable pieces leave to the app (https://daybrite.dev/docs/reference/tweaks):
 //! the address field drawn without its own frame, so the rounded bar around it is the one shape
 //! the user sees, as in Safari and Chrome.

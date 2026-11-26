@@ -1,5 +1,5 @@
 // Copyright © The Daybrite Project
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: GPL-2.0-or-later
 //! Settings: the search engine, how the address bar and new tabs behave, and clearing what the
 //! browser remembers (https://daybrite.dev/docs/reference/settings).
 

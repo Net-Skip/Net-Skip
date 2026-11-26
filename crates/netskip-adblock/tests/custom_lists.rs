@@ -1,5 +1,5 @@
 // Copyright © The Daybrite Project
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: GPL-2.0-or-later
 
 //! Changing the lists in use without a gap in protection: staging downloads and compiles new
 //! settings while the old ones keep blocking, applying them is immediate, a failed download is

@@ -1,5 +1,5 @@
 # Copyright © The Daybrite Project
-# SPDX-License-Identifier: MPL-2.0
+# SPDX-License-Identifier: GPL-2.0-or-later
 #
 # What a page asks of its browser (NETSKIP_FIXTURES=1): script dialogs, a download, a page that
 # does not load, and a link to another app. These are the app's to answer on WebKit and on

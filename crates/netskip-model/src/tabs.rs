@@ -1,5 +1,5 @@
 // Copyright © The Daybrite Project
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: GPL-2.0-or-later
 //! Tab rules: where a new tab goes, the recently closed list, and the saved session that
 //! reopens the tabs at the next launch.
 

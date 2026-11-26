@@ -1,5 +1,5 @@
 // Copyright © The Daybrite Project
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: GPL-2.0-or-later
 //! Fixture mode: browsing without a network, for dayscripts and demos.
 //!
 //! `NETSKIP_FIXTURES=1` at launch serves every page from the files under

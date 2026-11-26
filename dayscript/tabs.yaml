@@ -1,5 +1,5 @@
 # Copyright © The Daybrite Project
-# SPDX-License-Identifier: MPL-2.0
+# SPDX-License-Identifier: GPL-2.0-or-later
 #
 # Tabs (NETSKIP_FIXTURES=1): a link opening a new tab, switching, closing and reopening, the tab
 # strip on a wide window and the tab grid on a phone, and a private tab.

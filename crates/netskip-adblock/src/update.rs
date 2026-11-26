@@ -1,5 +1,5 @@
 // Copyright © The Daybrite Project
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: GPL-2.0-or-later
 
 //! List downloads: conditional requests, the `! Expires:` schedule, backoff after failures, and
 //! the cache directory's `state.json`.

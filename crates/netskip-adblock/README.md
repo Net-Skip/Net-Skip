@@ -1,6 +1,6 @@
 <!--
 Copyright © The Daybrite Project
-SPDX-License-Identifier: MPL-2.0
+SPDX-License-Identifier: GPL-2.0-or-later
 -->
 
 # netskip-adblock
@@ -123,7 +123,7 @@ Generate the Rust API reference with `cargo doc --no-deps --open`.
 
 Besides Day's own crates (`day-part-http` for downloads, `day-async` for the blocking pool and the
 timer, `day-spec` for the cache directory) and `serde`/`serde_json`, the crate uses one third-party
-crate: [adblock-rust](https://github.com/brave/adblock-rust) 0.13 (MPL-2.0), the engine Brave ships.
+crate: [adblock-rust](https://github.com/brave/adblock-rust) 0.13 ([MPL-2.0](../../LICENSES/MPL-2.0.txt)), the engine Brave ships.
 
 - Why: filter syntax is large. About 85% of EasyList's network rules are plain `||host^`, but the
   rest (options, `$domain=`, exceptions, `$important`, regular expressions, element hiding with
@@ -143,5 +143,5 @@ crate: [adblock-rust](https://github.com/brave/adblock-rust) 0.13 (MPL-2.0), the
 
 ## License
 
-[MPL-2.0](LICENSE). The filter lists are not part of this crate and carry their own licenses,
-listed above.
+This crate uses [GPL-2.0-or-later](../../LICENSE.txt).
+The filter lists carry the upstream licenses listed above.

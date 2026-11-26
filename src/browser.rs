@@ -1,5 +1,5 @@
 // Copyright © The Daybrite Project
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: GPL-2.0-or-later
 //! One window's browser: its tabs, what each tab shows, and the address bar's editing state.
 //!
 //! The tabs are a Day [`TabSet`] of string keys; `document_tabs` keeps every tab's web view

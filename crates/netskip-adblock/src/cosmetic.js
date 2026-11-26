@@ -1,5 +1,5 @@
 // Copyright © The Daybrite Project
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: GPL-2.0-or-later
 
 // Element hiding for netskip-adblock. Inject at document start into every frame. The script
 // asks the host for the page's hiding rules, then reports the classes and ids that appear in

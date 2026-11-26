@@ -1,5 +1,5 @@
 # Copyright © The Daybrite Project
-# SPDX-License-Identifier: MPL-2.0
+# SPDX-License-Identifier: GPL-2.0-or-later
 #
 # Tabs out of memory (NETSKIP_FIXTURES=1): a phone or tablet keeps the web views of the eight
 # tabs used last. The ninth tab lets the first one's page go; coming back to it loads the page

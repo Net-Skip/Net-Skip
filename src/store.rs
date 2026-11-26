@@ -1,5 +1,5 @@
 // Copyright © The Daybrite Project
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: GPL-2.0-or-later
 //! The browser's library on disk: history and bookmarks, in one SQLite file through
 //! day-persistence (https://daybrite.dev/docs/reference/persistence).
 //!

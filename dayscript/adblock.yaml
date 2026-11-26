@@ -1,5 +1,5 @@
 # Copyright © The Daybrite Project
-# SPDX-License-Identifier: MPL-2.0
+# SPDX-License-Identifier: GPL-2.0-or-later
 #
 # Content blocking on an ad-heavy page (NETSKIP_FIXTURES=1 NETSKIP_BLOCKING=aggressive): the ad and
 # tracker scripts, pixels and frames on news.example never load, the ad slots are hidden, and the

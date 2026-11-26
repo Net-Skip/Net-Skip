@@ -1,5 +1,5 @@
 // Copyright © The Daybrite Project
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: GPL-2.0-or-later
 //! What the library shows: the start page's Favorites and Frequently Visited, and the
 //! Bookmarks and History lists. Reads go to the library worker ([`crate::store`]) and land in
 //! signals that keep their last value while the next read runs.

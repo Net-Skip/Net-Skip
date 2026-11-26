@@ -1,5 +1,5 @@
 # Copyright © The Daybrite Project
-# SPDX-License-Identifier: MPL-2.0
+# SPDX-License-Identifier: GPL-2.0-or-later
 #
 # A development build that installs beside the store app (https://daybrite.dev/docs/flavors):
 # its own ids, so a local build never replaces the Net Skip from the App Store or Google Play,

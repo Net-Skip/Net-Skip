@@ -1,5 +1,5 @@
 # Copyright © The Daybrite Project
-# SPDX-License-Identifier: MPL-2.0
+# SPDX-License-Identifier: GPL-2.0-or-later
 #
 # The German listing text: the same table as store/storefront.toml's [storefront.metadata], in a
 # file of its own so a translator edits one file per language. What it leaves out (the URLs) is
@@ -24,7 +24,7 @@ Tippe ein paar Buchstaben in die Adressleiste, und Net Skip ergänzt die Website
 
 Net Skip speichert Verlauf und Lesezeichen auf deinem Gerät und enthält keine Werbung und kein Tracking. Suchvorschläge, die deine Eingabe in der Adressleiste an deine Suchmaschine senden, lassen sich in den Einstellungen ausschalten.
 
-Net Skip ist Open Source unter der Mozilla Public License 2.0: github.com/Net-Skip/Net-Skip
+Net Skip ist Open Source unter der GPL-2.0-or-later: github.com/Net-Skip/Net-Skip
 """
 keywords = ["Browser", "Webbrowser", "Internet", "Tabs", "privat", "Suche", "Kagi", "Lesezeichen", "Verlauf"]
 release-notes = """

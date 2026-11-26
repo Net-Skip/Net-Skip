@@ -1,5 +1,5 @@
 # Copyright © The Daybrite Project
-# SPDX-License-Identifier: MPL-2.0
+# SPDX-License-Identifier: GPL-2.0-or-later
 #
 # The address bar's details (NETSKIP_FIXTURES=1): inline completion and how deleting removes it,
 # the suggestion rows, the arrow keys and Escape on a keyboard, searches, and the text the bar

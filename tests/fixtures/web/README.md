@@ -1,6 +1,6 @@
 <!--
 Copyright © The Daybrite Project
-SPDX-License-Identifier: MPL-2.0
+SPDX-License-Identifier: GPL-2.0-or-later
 -->
 
 # Fixture web pages

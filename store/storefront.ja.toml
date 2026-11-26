@@ -1,5 +1,5 @@
 # Copyright © The Daybrite Project
-# SPDX-License-Identifier: MPL-2.0
+# SPDX-License-Identifier: GPL-2.0-or-later
 #
 # The Japanese listing text: the same table as store/storefront.toml's [storefront.metadata], in a
 # file of its own so a translator edits one file per language. What it leaves out (the URLs) is
@@ -24,7 +24,7 @@ Net Skipは、スマートフォン、タブレット、コンピュータで使
 
 Net Skipは履歴とブックマークをデバイス内に保存し、広告もトラッキングもありません。アドレスバーに入力した内容を検索エンジンに送信する検索候補は、設定でオフにできます。
 
-Net SkipはMozilla Public License 2.0のもとで公開されているオープンソースソフトウェアです：github.com/Net-Skip/Net-Skip
+Net SkipはGPL-2.0-or-laterのもとで公開されているオープンソースソフトウェアです：github.com/Net-Skip/Net-Skip
 """
 keywords = ["ブラウザ", "ウェブ", "インターネット", "タブ", "プライベート", "検索", "kagi", "ブックマーク", "履歴"]
 release-notes = """

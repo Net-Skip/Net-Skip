@@ -1,4 +1,4 @@
-// Copyright © The Daybrite Project · SPDX-License-Identifier: MPL-2.0
+// Copyright © The Daybrite Project · SPDX-License-Identifier: GPL-2.0-or-later
 // A pretend ad server script. It records that it ran and fills the leaderboard slot.
 (function () {
   (window.__loaded = window.__loaded || []).push('ads-banner');

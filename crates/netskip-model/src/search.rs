@@ -1,5 +1,5 @@
 // Copyright © The Daybrite Project
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: GPL-2.0-or-later
 //! Search engines: the catalog, query and suggestion URLs, the suggestion formats, and reading
 //! a search back out of a results page's URL.
 

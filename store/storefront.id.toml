@@ -1,5 +1,5 @@
 # Copyright © The Daybrite Project
-# SPDX-License-Identifier: MPL-2.0
+# SPDX-License-Identifier: GPL-2.0-or-later
 #
 # The Indonesian listing text: the same table as store/storefront.toml's [storefront.metadata], in
 # a file of its own so a translator edits one file per language. What it leaves out (the URLs) is
@@ -24,7 +24,7 @@ Ketik beberapa huruf di bilah alamat, dan Net Skip melengkapi situsnya dari riwa
 
 Net Skip menyimpan riwayat dan bookmark di perangkat Anda, tanpa iklan dan tanpa pelacakan. Saran pencarian, yang mengirim apa yang Anda ketik di bilah alamat ke mesin pencari Anda, dapat dimatikan di Pengaturan.
 
-Net Skip adalah sumber terbuka di bawah Mozilla Public License 2.0: github.com/Net-Skip/Net-Skip
+Net Skip adalah sumber terbuka di bawah GPL-2.0-or-later: github.com/Net-Skip/Net-Skip
 """
 keywords = ["peramban", "browser", "web", "internet", "tab", "privat", "pencarian", "kagi", "bookmark", "riwayat"]
 release-notes = """

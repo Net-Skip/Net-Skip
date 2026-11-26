@@ -1,5 +1,5 @@
 # Copyright © The Daybrite Project
-# SPDX-License-Identifier: MPL-2.0
+# SPDX-License-Identifier: GPL-2.0-or-later
 #
 # The Simplified Chinese listing text: the same table as store/storefront.toml's
 # [storefront.metadata], in a file of its own so a translator edits one file per language. What it
@@ -24,7 +24,7 @@ Net Skip 是一款适用于手机、平板电脑和电脑的网页浏览器。�
 
 Net Skip 将你的历史记录和书签保存在设备上，没有广告，也没有跟踪。搜索建议会将你在地址栏中输入的内容发送给搜索引擎，你可以在设置中将其关闭。
 
-Net Skip 是开源软件，采用 Mozilla Public License 2.0 授权：github.com/Net-Skip/Net-Skip
+Net Skip 是开源软件，采用 GPL-2.0-or-later 授权：github.com/Net-Skip/Net-Skip
 """
 keywords = ["浏览器", "网页", "互联网", "标签页", "无痕", "隐私", "搜索", "kagi", "书签", "历史记录"]
 release-notes = """

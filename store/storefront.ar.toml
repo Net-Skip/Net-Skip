@@ -1,5 +1,5 @@
 # Copyright © The Daybrite Project
-# SPDX-License-Identifier: MPL-2.0
+# SPDX-License-Identifier: GPL-2.0-or-later
 #
 # The Arabic listing text: the same table as store/storefront.toml's [storefront.metadata], in a
 # file of its own so a translator edits one file per language. What it leaves out (the URLs) is
@@ -24,7 +24,7 @@ description = """
 
 يحفظ Net Skip سجلك وإشاراتك المرجعية على جهازك، ولا إعلانات فيه ولا تتبّع. ويمكنك إيقاف اقتراحات البحث، التي ترسل ما تكتبه في شريط العناوين إلى محرك البحث، من الإعدادات.
 
-‏Net Skip مفتوح المصدر بموجب رخصة Mozilla Public License 2.0:‏ github.com/Net-Skip/Net-Skip
+‏Net Skip مفتوح المصدر بموجب رخصة GPL-2.0-or-later:‏ github.com/Net-Skip/Net-Skip
 """
 keywords = ["متصفح", "ويب", "إنترنت", "علامات تبويب", "خاص", "بحث", "kagi", "إشارات مرجعية", "سجل"]
 release-notes = """

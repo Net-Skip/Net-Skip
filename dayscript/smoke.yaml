@@ -1,5 +1,5 @@
 # Copyright © The Daybrite Project
-# SPDX-License-Identifier: MPL-2.0
+# SPDX-License-Identifier: GPL-2.0-or-later
 #
 # Launch, load a fixture page from the address bar, and capture the browser.
 # Run with NETSKIP_FIXTURES=1 (CI's launch-env), so no page comes from the network.

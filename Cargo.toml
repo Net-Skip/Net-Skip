@@ -1,10 +1,10 @@
 # Copyright © The Daybrite Project
-# SPDX-License-Identifier: MPL-2.0
+# SPDX-License-Identifier: GPL-2.0-or-later
 [package]
 name = "net-skip"
 version.workspace = true
 edition = "2024"
-license = "MPL-2.0"
+license = "GPL-2.0-or-later"
 description = "Net Skip: a web browser for phones, tablets and computers, built with Day."
 # Generates typed `res::` constants from `resource/` and the fixture site table (see build.rs).
 build = "build.rs"

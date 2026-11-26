@@ -1,5 +1,5 @@
 // Copyright © The Daybrite Project
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: GPL-2.0-or-later
 
 //! Downloads: asking before a file is saved, saving it where the user looks for downloads, and
 //! the list in the library that shows each file's progress and opens it.

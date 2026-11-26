@@ -1,5 +1,5 @@
 // Copyright © The Daybrite Project
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: GPL-2.0-or-later
 //! The clock and the local time zone, for history's day headings and visit times. The host
 //! already carries the zone rules (`localtime_r` on Unix, the registry behind Win32's
 //! converters), so the offset is asked of it rather than bundled.

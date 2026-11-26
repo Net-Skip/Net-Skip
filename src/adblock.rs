@@ -1,5 +1,5 @@
 // Copyright © The Daybrite Project
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: GPL-2.0-or-later
 //! Ad and tracker blocking, with Vivaldi's levels: Off, Light (the default), Strong and
 //! Aggressive, chosen in Settings and per site from the page menu. The engine and the filter
 //! lists are netskip-adblock's: the lists download from their publishers and stay current, and

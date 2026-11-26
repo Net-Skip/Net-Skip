@@ -1,5 +1,5 @@
 // Copyright © The Daybrite Project
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: GPL-2.0-or-later
 
 //! The updater against a simulated list server and a clock the test moves: first download,
 //! conditional requests and `304`, failures that keep the last good copy, backoff, mirrors,

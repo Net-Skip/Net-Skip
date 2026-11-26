@@ -1,5 +1,5 @@
 // Copyright © The Daybrite Project
-// SPDX-License-Identifier: MPL-2.0
+// SPDX-License-Identifier: GPL-2.0-or-later
 //! Generates the typed `res::` constants for `resource/` (https://daybrite.dev/docs/how-to/resources)
 //! and the table of fixture web pages under `tests/fixtures/web/` that fixture mode serves
 //! (src/fixtures.rs).

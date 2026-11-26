@@ -1,5 +1,5 @@
 # Copyright © The Daybrite Project
-# SPDX-License-Identifier: MPL-2.0
+# SPDX-License-Identifier: GPL-2.0-or-later
 #
 # The tour behind the store listings and the website gallery (store/storefront.toml names the
 # captures). It runs in every language and both appearances, against the fixture pages
