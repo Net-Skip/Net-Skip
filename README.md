@@ -74,3 +74,19 @@ under `resource/vectors/` other than `app_mark.svg` are
 
 Net Skip is published by [The App Fair Project](https://appfair.org).
 # Net-Skip
+
+## Release dependency policy
+
+Tagged App Fair releases use external Rust dependencies from crates.io and a checked-in
+`Cargo.lock`. First-party crates within this repository remain workspace/path dependencies.
+The tag workflow selects `day-deps: release`: it checks the lock with `cargo metadata --locked`,
+rejects Git/local source overrides, preserves every resolved version, and installs the published
+Day CLI matching the locked framework. It never updates or regenerates a release lock.
+Development/main and scheduled compatibility builds may resolve different versions.
+
+Prepare the release lock in a clean checkout without machine-local `.cargo` patches, run the
+app's tests against that crates.io graph, and include the validated lock in the release commit
+before tagging. Missing published dependencies must be released first; a Git fallback is not
+permitted. After local patched development, regenerate/validate the crates.io lock in isolation
+so the release does not inherit machine-local sources. App Fair submission rebuilds use the
+same pinned lock and CLI. Committing or pushing still requires the maintainer's permission.

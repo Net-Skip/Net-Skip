@@ -4,14 +4,9 @@
 # Scaffolded project guidance belongs to the app, even with a global AGENTS.md ignore.
 !/AGENTS.md
 
-# Not Cargo.lock. This is an application, and Cargo's guidance for an end product is to commit
-# the lock: it is what makes a build reproducible for everyone who checks the repo out, and what
-# lets CI pass `--locked` (the shared `build-day-app` workflow's clippy/check/test legs do, and
-# `--locked` REFUSES to create a missing lock rather than resolving fresh). Run a build once and
-# commit the file it writes.
-
-# Machine-local: `day patch --local <day-checkout>` writes this to build against a checkout
-# instead of the git dependency. CI has no such file and resolves git.
+# Commit a crates.io-only Cargo.lock for reproducible release tags. Generate and validate
+# it without local patches; a development lock can contain machine-local dependencies.
+# Only the machine-local overrides from `day patch --local` are ignored here.
 /.cargo/config.toml
 
 # What the desktop leaves behind in any directory it shows.

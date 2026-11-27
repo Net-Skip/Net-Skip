@@ -10,8 +10,9 @@
 name: "Net-Skip"
 
 # A push or a pull request builds against day's main branch, so a change there that breaks this
-# app shows up before it is released. The nightly run and a version tag build against the newest
-# day release. A manual run builds against the release too, unless `day-main` is ticked.
+# app shows up before it is released. The nightly run builds against the newest
+# day release. Version tags use the checked-in crates.io lock unchanged. A manual run
+# tests published releases too, unless `day-main` is ticked.
 on:
   push:
     branches: ["**"]
@@ -59,7 +60,7 @@ jobs:
       targets: all
       target-packages: |
         windows-winui: webview2-runtime
-      day-deps: ${{ inputs.day-main && 'main' || 'auto' }}
+      day-deps: ${{ startsWith(github.ref, 'refs/tags/') && 'release' || inputs.day-main && 'main' || 'auto' }}
       # Formatting and the unit tests of both crates (the model's rules and the app's store,
       # fixtures, favicons and scripts) before any target builds.
       preflight-checks: fmt test
