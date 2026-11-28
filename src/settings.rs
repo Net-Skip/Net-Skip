@@ -304,6 +304,8 @@ pub fn install() -> Prefs {
                         ),
                 ),
         )
+        // The App Fair group: about the project, the donation link, the other App Fair apps.
+        .provider(&day_piece_appfair::APP_FAIR)
         .install()
 }
 

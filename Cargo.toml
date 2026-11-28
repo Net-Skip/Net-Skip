@@ -32,6 +32,8 @@ name = "dayapp"
 [dependencies]
 day = { package = "day-app", version = "0.*", features = ["model"] }
 day-piece-settings = "0.*"
+# The App Fair group every App Fair app carries in its settings.
+day-piece-appfair = "0.*"
 day-piece-webview = "0.*"
 day-persistence = "0.*"
 day-part-http = "0.*"
